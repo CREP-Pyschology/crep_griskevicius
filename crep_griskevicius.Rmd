@@ -1,0 +1,240 @@
+---
+title: 'CREP_Griskevicius.Rmd'
+author: "Jordan Wagge"
+date: "Last Updated `r Sys.Date()`"
+output: 
+  html_document:
+      toc: true
+      toc_float: true
+---
+
+```{r packages, include=FALSE}
+
+packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr")
+
+## Now load or install&load all
+package.check <- lapply(
+  packages,
+  FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  }
+)
+```
+```{r setup}
+url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
+data <- read.csv(url)
+glimpse(data)
+```
+
+```{r}
+data[data == ""] <- NA              
+```
+
+```{r}
+# Descriptive statistics for project characteristics
+frq(data$project_code)
+frq(data$survey_language)
+frq(data$country)
+frq(data$institute_code)
+frq(data$setting)
+frq(data$condition)
+
+n_projects <- length(unique(data$project_code[data$project_code != "NANA"]))
+
+n_survey_language <- length(unique(data$survey_language[data$survey_language != "NANA"]))
+
+n_country <- length(unique(data$country[data$country != "NANA"]))
+
+n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
+
+```
+
+
+## Introduction
+
+The Collaborative Replications and Education Project (Wagge et al., 2019b), or CREP, is one of several initiatives that seeks to improve undergraduate training in research methods. CREP’s role includes selecting studies to be closely replicated by students, structuring the methods for the replication, reviewing projects both before and after data collection, and facilitating the publication of a pooled analysis (such as the present paper). While CREP has a pedagogical mission, we hope to also advance science by providing additional evidence for the boundaries of published effects. 
+	
+CREP participants are students and instructors at institutions around the world. We offer CREP as one alternative to the traditional undergraduate research project; while different models may work better for some instructors, institutions, and students, the CREP offers some benefits that other models may not. First, students learn methods by closely matching the work of scholars in the field. Second, students get to participate in authentic research (Grahe, CITE) that may eventually be published in a pooled analysis and will also be available on the Open Science Framework (osf.io) to meta-analytic researchers in the future.
+
+Third, students learn the importance of many key open science practices and issues such as preregistration, replication, open methods, and open data (Kidwell et al., 2016). Fourth, students engage with reviewers (CREP team members) external to their institution. Several CREP studies have been published (e.g., Ghelfi et al., 2020; Leighton et al., 2018; Wagge et al., 2019a) and others have been included in meta-analyses (Lehman et al., 2018).
+  
+The present report documents a pooled analysis of data collected by teams who signed up to replicate one of CREP’s earliest selections for replication: Experiment 1 from Griskevicius et al. (2010). 
+
+### Status competition and pro-environmental behavior
+
+Can pro-environmental behavior be promoted by inducing status competition? In their paper, Griskevicius and colleagues (2010) reported results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claim that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. Authors of the original study claim that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products.   
+
+In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable over their green counterparts. In experimental condition participants read a cover “status” story that elicited “a desire for social status”, and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in control motive condition. Second control condition did not include cover story and participants simply selected among products. However, the original study did not find a difference between two control conditions, thus it was decided to replicate the experiment in CREP with only the first control condition.  
+
+## Method
+
+### CREP process
+
+This study was selected for replication using the process outlined in Wagge and colleagues (2019). Briefly, in 2014, CREP volunteers located citations for the most-cited 2010 papers from the flagship empirical journals in psychology and its subdisciplines. In this way, CREP was able to both narrow down the pool for selection while also guaranteeing that the paper we selected was both recent and high-interest. The goal was not to find the best paper for replication in terms of the field’s specific needs, but rather to find a set of recent, high-interest papers (good candidates for replication). Once the pool of citations had been gathered, CREP coders read the Method section for each paper and indicated whether it was feasible for student teams to replicate in a semester (on a scale of 1-5) and also whether they thought it would be interesting to students (again, on a scale of 1-5) – the feasibility ratings were used to narrow down a final pool, while the interest ratings were used in the final decision-making process if all other factors weighed equally. Documentation of the coding process can be found here: https://osf.io/9kzje/wiki/home/. Once a final pool of papers was narrowed down, CREP recruited professors to look again at the feasibility and interest to narrow it down more, and then the CREP leadership team engaged in internal conversation to select the study or studies that would be selected that year. The process in 2014 resulted in several selected studies, including Experiment 1 from Griskevicius and colleagues.
+	
+Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals, and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius can be found here: https://osf.io/vdo0i/wiki/home/. There are two key notes from this correspondence that will be discussed in the context of our results in this paper: first, Dr. Griskevicius noted that the effect may not replicate if participants didn’t equate “green” choices with prosocial behavior. Second, Dr. Griskevicius noted that the connection between “green” choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
+
+### This project process
+  
+Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. After data-collection, project pages were revised to include the dataset, short report about the obtained results and completion pledge. After obtaining a positive review, replication was considered successful and the project was completed. Since 2013, 32 groups from eight different countries expressed interest in conducting CREP Griskevicius et al (2010). Five groups dropped out before data collection, and two groups did not follow the CREP procedure. In addition, six groups obtained positive pre-data collection review but, due to COVID-19 pandemic, had to cancel the data collection project. Final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries. Overview of groups participating in this project is provided in Table XX. Over the years, this project included about 30 reviewers, 3 CREP assistants and 3 executive reviewers. 
+
+### Disclosures
+
+#### Preregistrations
+
+Each lab preregistered their materials, protocol and analytical strategy on Open Science Framework (OSF) before data collection (ADD osf PAGE HERE). 
+
+#### Data, Materials and Resources
+
+All groups who completed data collection, uploaded data, analysis, and short description of results to their OSF project page. All datasets, materials, analytical scripts and other materials can be found on the central project OSF page (add OSF project page here). 
+
+#### Ethical approval
+
+Each lab obtained Institutional Review Board or similar institution approval before starting with data collection (individual approvals are available on groups’ project pages). All data were collected in accordance with the Declaration of Helsinki. We also obtained ethical approval for meta-analysis from the IRB of the Department of Psychology, University of Belgrade (Protocol #2021-69).
+
+### Participants
+
+```{r}
+frq(data$recoded_race)
+frq(data$nationality)
+frq(data$gender)
+```
+
+### Procedures
+
+### Materials
+
+## Results
+
+### Confirmatory Analyses
+
+#### Green car
+
+```{r}
+# From Experiment 1: 
+# Original paper: 37.2% of participants chose the green
+# car in the control condition, 54.5% of participants chose it in the
+# status condition, chi2(1, N = 168) = 4.56, p = .033, phi = .165
+
+# Our results:
+# Combine no story & control story into a new variable, control
+
+data$new_condition <- recode(data$condition, "Control story" = "Control", "No story" = "Control", "Status" = "Status")
+
+# Percentage selected green car by condition 
+car_table <- table(data$new_condition, data$greencar)
+prop.table(car_table, 1)
+  
+# Chi square test with Phi
+chisq.test(car_table)
+phi(car_table, digits = 3)
+```
+
+#### Green cleaner
+
+```{r}
+# Original paper: choice of the green cleaner increased from 25.7% in the
+# control condition to 41.8% in the status condition, chisq(1, N =
+# 168) = 4.52, p = .034, phi = .164
+
+# Our results: 
+# Percentage selected green soap by condition
+soap_table <- table(data$new_condition, data$greensoap)
+prop.table(soap_table, 1)
+  
+# Chi square test
+chisq.test(soap_table)
+  
+# Phi coefficient
+phi(soap_table, digits = 3)
+```
+
+#### Green dishwasher
+```{r}
+# Original paper: Choice of the green dishwasher
+# also increased from 34.5% in the control condition to 49.1% in the
+# status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
+
+# Our results: 
+# Percentage selected green dishwasher by condition
+dishwasher_table <- table(data$new_condition, data$greendishwasher)
+prop.table(dishwasher_table, 1)
+  
+# Chi square test
+chisq.test(dishwasher_table)
+  
+# Phi coefficient
+phi(dishwasher_table, digits = 3)
+```
+
+#### Composite Green Score
+```{r}
+# Original paper: In
+# addition to examining the influence of status motives on each
+# product individually, we also analyzed the effect of status when the
+# three products were combined into a composite. As predicted, a
+# one-way analysis of variance (ANOVA) on the product composite
+# showed a significant effect of status, F(1, 166) = 8.53, p = .004,
+# d = 0.47.
+
+# Our results: *insert code*
+# Compute composite green score; recode Y as 1 and N as 0 for green products
+
+data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
+data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
+data$greensoap <- recode(data$greensoap, "Yes" = 1, "No" = 0)
+
+data$total <- data$greencar + data$greendishwasher + data$greensoap
+
+# Do ANOVA by condition (status, no story, control story)
+ungrouped.aov <- aov(data$total ~ condition, data = data)
+summary(ungrouped.aov)
+  
+# Do ANOVA by new condition (control v status)
+grouped.aov <- aov(data$total ~ new_condition, data = data)
+summary(grouped.aov)
+
+data$total<- as.numeric(data$total)
+cohen.d(total ~ new_condition, data = data)
+
+```
+### Exploratory Analyses
+
+## Discussion
+
+## References
+
+Frank, M. C., & Saxe, R. (2012). Teaching replication. Perspectives on Psychological Science, 7(6), 600-604. 
+
+Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O’Brien, J., Paulk, A., Peck, T., Sashihara, M., … Sullivan, D. (2020). Reexamining the effect of gustatory disgust on moral judgment: A multilab direct replication of Eskine, Kacinik, and Prinz (2011). Advances in Methods and Practices in Psychological Science, 3–23. https://doi.org/10.1177/2515245919881152
+
+
+Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the Undiscovered Resource of Student Research. Perspectives on Psychological Science, 7(6), 605–607. https://doi.org/10.1177/1745691612459057 
+
+
+Griskevicius, V., Tybur, J. M., & Van den Bergh, B. (2010). Going green to be seen: status, reputation, and conspicuous conservation. Journal of personality and social psychology, 98(3), 392.
+
+Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L. S., ... & Nosek, B. A. (2016). Badges to acknowledge open practices: A simple, low-cost, effective method for increasing transparency. PLoS biology, 14(5), e1002456.
+
+Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-esteem, self disclosure, self-expression, and connection on Facebook: A collaborative replication meta-analysis. Psi Chi Journal of Psychological Research, 23(2). https://doi.org/10.24839/2325-7342.JN23.2.94
+
+Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-analysis of the effect of red on perceived attractiveness. Evolutionary Psychology, 16(4), 1474704918802412.
+
+Perlman, B., & McCann, L. I. (2005). Undergraduate research experiences in psychology: A national study of courses and curricula. Teaching of Psychology, 32(1), 5-14. 
+
+R Core Team. (2020). R: A language and environment for statistical computing. R Foundation for Statistical Computing. https://www.R-project.org/ 
+
+R Studio Team. (2016). RStudio: Integrated Development for R. RStudio Inc. http://www.rstudio.com/ 
+
+Standing, L. G., Grenier, M., Lane, E. A., Roberts, M. S., & Sykes, S. J. (2014). Using replication projects in teaching research methods. Psychology Teaching Review, 20(1), 96-104. 
+
+Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. E. (2019a). A demonstration of the Collaborative Replications and Education Project: Replication attempts of the red-romance effect. Collabra: Psychology, 5(1), 5. https://doi.org/10.1525/collabra.177
+
+Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The collaborative replications and education project. Frontiers in psychology, 10, 247
+
+Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses?.
+
+
