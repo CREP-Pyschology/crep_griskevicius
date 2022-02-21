@@ -10,7 +10,11 @@ output:
 
 ```{r packages, include=FALSE}
 
+<<<<<<< HEAD
 packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr")
+=======
+packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc")
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -28,6 +32,7 @@ url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20
 data <- read.csv(url)
 glimpse(data)
 ```
+<<<<<<< HEAD
 
 ```{r}
 data[data == ""] <- NA              
@@ -103,6 +108,35 @@ frq(data$nationality)
 frq(data$gender)
 ```
 
+=======
+## Introduction
+
+Insert introduction here
+
+## Method
+
+```{r}
+# Descriptive statistics
+# N: overall, project, country, institution, condition, race, gender
+frq(data$project)
+frq(data$country)
+frq(data$institution)
+frq(data$condition)
+frq(data$race)
+frq(data$gender)
+
+# Differences between settings (online, lab, group/solo) <- original paper
+# had participants completing tasks in small groups in a computer lab
+
+# Exclusions
+# Lump control conditions together? Story/no story?
+# Then run Ns again
+```
+
+
+### Participants
+
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 ### Procedures
 
 ### Materials
@@ -111,15 +145,22 @@ frq(data$gender)
 
 ### Confirmatory Analyses
 
+<<<<<<< HEAD
 #### Green car
 
 ```{r}
+=======
+```{r}
+# ADD GRAPHS
+
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 # From Experiment 1: 
 # Original paper: 37.2% of participants chose the green
 # car in the control condition, 54.5% of participants chose it in the
 # status condition, chi2(1, N = 168) = 4.56, p = .033, phi = .165
 
 # Our results:
+<<<<<<< HEAD
 # Combine no story & control story into a new variable, control
 
 data$new_condition <- recode(data$condition, "Control story" = "Control", "No story" = "Control", "Status" = "Status")
@@ -136,11 +177,24 @@ phi(car_table, digits = 3)
 #### Green cleaner
 
 ```{r}
+=======
+  # Percentage selected green car by condition
+ # car_table <- table(data$condition, data$greencar)
+#  prop.table(car_table, 1)
+  
+  # Chi square test
+ # chisq.test(car_table)
+  
+  # Phi coefficient
+  # phi(car_table, digits = 3)
+  
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 # Original paper: choice of the green cleaner increased from 25.7% in the
 # control condition to 41.8% in the status condition, chisq(1, N =
 # 168) = 4.52, p = .034, phi = .164
 
 # Our results: 
+<<<<<<< HEAD
 # Percentage selected green soap by condition
 soap_table <- table(data$new_condition, data$greensoap)
 prop.table(soap_table, 1)
@@ -154,11 +208,24 @@ phi(soap_table, digits = 3)
 
 #### Green dishwasher
 ```{r}
+=======
+  # Percentage selected green soap by condition
+#  soap_table <- table(data$condition, data$greensoap)
+#  prop.table(soap_table, 1)
+  
+  # Chi square test
+ # chisq.test(soap_table)
+  
+  # Phi coefficient
+  # phi(soap_table, digits = 3)
+
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 # Original paper: Choice of the green dishwasher
 # also increased from 34.5% in the control condition to 49.1% in the
 # status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
 
 # Our results: 
+<<<<<<< HEAD
 # Percentage selected green dishwasher by condition
 dishwasher_table <- table(data$new_condition, data$greendishwasher)
 prop.table(dishwasher_table, 1)
@@ -172,6 +239,18 @@ phi(dishwasher_table, digits = 3)
 
 #### Composite Green Score
 ```{r}
+=======
+  # Percentage selected green dishwasher by condition
+ # dishwasher_table <- table(data$condition, data$greendishwasher)
+#  prop.table(dishwasher_table, 1)
+  
+  # Chi square test
+#  chisq.test(dishwasher_table)
+  
+  # Phi coefficient
+  # phi(dishwasher_table, digits = 3)
+
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 # Original paper: In
 # addition to examining the influence of status motives on each
 # product individually, we also analyzed the effect of status when the
@@ -181,6 +260,7 @@ phi(dishwasher_table, digits = 3)
 # d = 0.47.
 
 # Our results: *insert code*
+<<<<<<< HEAD
 # Compute composite green score; recode Y as 1 and N as 0 for green products
 
 data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
@@ -201,10 +281,26 @@ data$total<- as.numeric(data$total)
 cohen.d(total ~ new_condition, data = data)
 
 ```
+=======
+  # Compute composite green score
+  # Count Y responses across rows
+#  data$count.Y <- apply(data, 1, function(x) length(which(x=="Y")))
+  
+  # do ANOVA by condition
+#  composite.aov <- aov(count.Y ~ condition, data = data)
+ # summary(composite.aov)
+  
+  # effect size
+ # cohen.d(data$count.Y, data$condition)
+```
+
+
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
 ### Exploratory Analyses
 
 ## Discussion
 
+<<<<<<< HEAD
 ## References
 
 Frank, M. C., & Saxe, R. (2012). Teaching replication. Perspectives on Psychological Science, 7(6), 600-604. 
@@ -238,3 +334,20 @@ Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., W
 Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses?.
 
 
+=======
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+>>>>>>> 35e95650bacc3bca7f7ea82843aaa0814e7bc60f
