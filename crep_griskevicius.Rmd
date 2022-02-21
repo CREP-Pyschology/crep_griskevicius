@@ -9,7 +9,6 @@ output:
 ---
 
 ```{r packages, include=FALSE}
-
 packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr")
 
 ## Now load or install&load all
@@ -23,6 +22,7 @@ package.check <- lapply(
   }
 )
 ```
+
 ```{r setup}
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
@@ -51,7 +51,6 @@ n_country <- length(unique(data$country[data$country != "NANA"]))
 n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
 
 ```
-
 
 ## Introduction
 
@@ -99,7 +98,6 @@ Each lab obtained Institutional Review Board or similar institution approval bef
 
 ```{r}
 frq(data$recoded_race)
-frq(data$nationality)
 frq(data$gender)
 ```
 
@@ -180,7 +178,7 @@ phi(dishwasher_table, digits = 3)
 # showed a significant effect of status, F(1, 166) = 8.53, p = .004,
 # d = 0.47.
 
-# Our results: *insert code*
+# Our results:
 # Compute composite green score; recode Y as 1 and N as 0 for green products
 
 data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
@@ -201,6 +199,7 @@ data$total<- as.numeric(data$total)
 cohen.d(total ~ new_condition, data = data)
 
 ```
+
 ### Exploratory Analyses
 
 ## Discussion
@@ -236,5 +235,3 @@ Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJ
 Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The collaborative replications and education project. Frontiers in psychology, 10, 247
 
 Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses?.
-
-

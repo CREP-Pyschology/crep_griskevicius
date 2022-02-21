@@ -424,63 +424,6 @@ n_institutes &lt;- length(unique(data$institute_code[data$institute_code != &quo
 ## Other                                     |   62 |  2.18 |    4.60 |  30.34
 ## White                                     |  939 | 33.03 |   69.66 | 100.00
 ## &lt;NA&gt;                                      | 1495 | 52.59 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
-<pre class="r"><code>frq(data$nationality)</code></pre>
-<pre><code>## x &lt;character&gt; 
-## # total N=2843 valid N=280 mean=10.36 sd=14.38
-## 
-## Value                                |    N | Raw % | Valid % | Cum. %
-## ----------------------------------------------------------------------
-## American                             |    1 |  0.04 |    0.36 |   0.36
-## Brazilian                            |    3 |  0.11 |    1.07 |   1.43
-## British                              |  201 |  7.07 |   71.79 |  73.21
-## British and United States of America |    1 |  0.04 |    0.36 |  73.57
-## British Pakistani                    |    1 |  0.04 |    0.36 |  73.93
-## British/American                     |    1 |  0.04 |    0.36 |  74.29
-## British/Australian                   |    1 |  0.04 |    0.36 |  74.64
-## British/French                       |    1 |  0.04 |    0.36 |  75.00
-## British/German                       |    1 |  0.04 |    0.36 |  75.36
-## British/Italian                      |    1 |  0.04 |    0.36 |  75.71
-## British/Maltese Dual                 |    1 |  0.04 |    0.36 |  76.07
-## China                                |    1 |  0.04 |    0.36 |  76.43
-## CHINA                                |    2 |  0.07 |    0.71 |  77.14
-## chinese                              |    2 |  0.07 |    0.71 |  77.86
-## Chinese                              |    1 |  0.04 |    0.36 |  78.21
-## Czech                                |    1 |  0.04 |    0.36 |  78.57
-## Dutch                                |    2 |  0.07 |    0.71 |  79.29
-## English                              |    6 |  0.21 |    2.14 |  81.43
-## English-Hungarian                    |    1 |  0.04 |    0.36 |  81.79
-## german                               |    1 |  0.04 |    0.36 |  82.14
-## German                               |    1 |  0.04 |    0.36 |  82.50
-## Greek                                |    2 |  0.07 |    0.71 |  83.21
-## Hong Kong                            |    1 |  0.04 |    0.36 |  83.57
-## Hong Kong Chinese                    |    1 |  0.04 |    0.36 |  83.93
-## Indian                               |    1 |  0.04 |    0.36 |  84.29
-## Indonesian                           |    1 |  0.04 |    0.36 |  84.64
-## irish                                |    1 |  0.04 |    0.36 |  85.00
-## Irish                                |    3 |  0.11 |    1.07 |  86.07
-## Irish English                        |    1 |  0.04 |    0.36 |  86.43
-## Italian                              |    1 |  0.04 |    0.36 |  86.79
-## kenyan                               |    1 |  0.04 |    0.36 |  87.14
-## Korean                               |    1 |  0.04 |    0.36 |  87.50
-## Malaysian                            |    1 |  0.04 |    0.36 |  87.86
-## Maltese                              |    1 |  0.04 |    0.36 |  88.21
-## Nepali                               |    1 |  0.04 |    0.36 |  88.57
-## Nigerian                             |    1 |  0.04 |    0.36 |  88.93
-## Peruvian                             |    1 |  0.04 |    0.36 |  89.29
-## polish                               |    1 |  0.04 |    0.36 |  89.64
-## portuguses                           |    1 |  0.04 |    0.36 |  90.00
-## Romanian                             |    1 |  0.04 |    0.36 |  90.36
-## Scottish                             |    2 |  0.07 |    0.71 |  91.07
-## Serbian                              |    1 |  0.04 |    0.36 |  91.43
-## Singaporean                          |    2 |  0.07 |    0.71 |  92.14
-## Spanish                              |    1 |  0.04 |    0.36 |  92.50
-## Thai                                 |    1 |  0.04 |    0.36 |  92.86
-## UK                                   |    4 |  0.14 |    1.43 |  94.29
-## UK British                           |    1 |  0.04 |    0.36 |  94.64
-## Ukrainian                            |    1 |  0.04 |    0.36 |  95.00
-## Welsh                                |   13 |  0.46 |    4.64 |  99.64
-## Welsh (British)                      |    1 |  0.04 |    0.36 | 100.00
-## &lt;NA&gt;                                 | 2563 | 90.15 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
 <pre class="r"><code>frq(data$gender)</code></pre>
 <pre><code>## x &lt;character&gt; 
 ## # total N=2843 valid N=2654 mean=1.95 sd=1.32
@@ -600,7 +543,7 @@ phi(dishwasher_table, digits = 3)</code></pre>
 # showed a significant effect of status, F(1, 166) = 8.53, p = .004,
 # d = 0.47.
 
-# Our results: *insert code*
+# Our results:
 # Compute composite green score; recode Y as 1 and N as 0 for green products
 
 data$greencar &lt;- recode(data$greencar, &quot;Yes&quot; = 1, &quot;No&quot; = 0)
