@@ -1,17 +1,17 @@
 ---
-title: 'CREP_Griskevicius.Rmd'
+title: "CREP_Griskevicius.Rmd"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
-output: 
+output:
   html_document:
-      toc: true
-      toc_float: true
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 ```{r packages, include=FALSE}
-
-packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr")
-packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc")
+packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "devtools", "kableExtra", "knitr", "apa")
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -23,19 +23,22 @@ package.check <- lapply(
     }
   }
 )
+
+# Install insert_table -- uncomment if not installed
+# devtools::install_github("lbusett/insert_table")
 ```
-```{r setup}
+
+```{r setup, include = FALSE}
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
 glimpse(data)
 ```
 
-
-```{r}
+```{r, include = FALSE}
 data[data == ""] <- NA              
 ```
 
-```{r}
+```{r, include = TRUE}
 # Descriptive statistics for project characteristics
 frq(data$project_code)
 frq(data$survey_language)
@@ -53,7 +56,6 @@ n_country <- length(unique(data$country[data$country != "NANA"]))
 n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
 
 ```
-
 
 ## Introduction
 
@@ -99,7 +101,7 @@ Each lab obtained Institutional Review Board or similar institution approval bef
 
 ### Participants
 
-```{r}
+```{r, include = TRUE}
 frq(data$recoded_race)
 frq(data$gender)
 ```
@@ -112,70 +114,41 @@ frq(data$gender)
 
 ### Confirmatory Analyses
 
-#### Green car
-
-```{r}
-# From Experiment 1: 
-# Original paper: 37.2% of participants chose the green
-# car in the control condition, 54.5% of participants chose it in the
-# status condition, chi2(1, N = 168) = 4.56, p = .033, phi = .165
-
-# Our results:
+#### Composite Green Score
+```{r, include = TRUE}
 # Combine no story & control story into a new variable, control
-
 data$new_condition <- recode(data$condition, "Control story" = "Control", "No story" = "Control", "Status" = "Status")
 
-# Percentage selected green car by condition 
-car_table <- table(data$new_condition, data$greencar)
-prop.table(car_table, 1)
-  
-# Chi square test with Phi
-chisq.test(car_table)
-phi(car_table, digits = 3)
+# Compute composite green score; recode Y as 1 and N as 0 for green products
+
+data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
+data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
+data$greensoap <- recode(data$greensoap, "Yes" = 1, "No" = 0)
+
+data$total <- data$greencar + data$greendishwasher + data$greensoap
+
+# Descriptives for composite score
+frq(data$total)
+mean.composite <- round(mean(data$total, na.rm = TRUE), digits = 2)
+sd.composite <- round(sd(data$total, na.rm = TRUE), digits = 2)
+
 ```
 
-#### Green cleaner
+Following the procedures used in the original study, we computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (_SD_ = `r sd.composite`). A distribution of composite scores can be seen in Figure X. 
 
-```{r}
-  
-# Original paper: choice of the green cleaner increased from 25.7% in the
-# control condition to 41.8% in the status condition, chisq(1, N =
-# 168) = 4.52, p = .034, phi = .164
-
-# Our results: 
-# Percentage selected green soap by condition
-soap_table <- table(data$new_condition, data$greensoap)
-prop.table(soap_table, 1)
-  
-# Chi square test
-chisq.test(soap_table)
-  
-# Phi coefficient
-phi(soap_table, digits = 3)
+```{r, include = TRUE}
+# Histogram for composite scores
+qplot(data$total, 
+      geom="histogram",
+      binwidth = 1,
+      main = "Composite 'Green' Score Frequency",
+      fill=I("grey"),
+      col=I("black"),
+      xlab = "Composite Score")
 ```
 
-#### Green dishwasher
-```{r}
+```{r, include = TRUE}
 
-# Original paper: Choice of the green dishwasher
-# also increased from 34.5% in the control condition to 49.1% in the
-# status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
-
-# Our results: 
-# Percentage selected green dishwasher by condition
-dishwasher_table <- table(data$new_condition, data$greendishwasher)
-prop.table(dishwasher_table, 1)
-  
-# Chi square test
-chisq.test(dishwasher_table)
-  
-# Phi coefficient
-phi(dishwasher_table, digits = 3)
-```
-
-#### Composite Green Score
-```{r}
-  
 # Original paper: In
 # addition to examining the influence of status motives on each
 # product individually, we also analyzed the effect of status when the
@@ -184,17 +157,14 @@ phi(dishwasher_table, digits = 3)
 # showed a significant effect of status, F(1, 166) = 8.53, p = .004,
 # d = 0.47.
 
-# Compute composite green score; recode Y as 1 and N as 0 for green products
-data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
-data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
-data$greensoap <- recode(data$greensoap, "Yes" = 1, "No" = 0)
-
-data$total <- data$greencar + data$greendishwasher + data$greensoap
+# Our results:
 
 # Do ANOVA by condition (status, no story, control story)
 ungrouped.aov <- aov(data$total ~ condition, data = data)
 summary(ungrouped.aov)
-  
+
+TukeyHSD(ungrouped.aov)
+
 # Do ANOVA by new condition (control v status)
 grouped.aov <- aov(data$total ~ new_condition, data = data)
 summary(grouped.aov)
@@ -202,9 +172,111 @@ summary(grouped.aov)
 data$total<- as.numeric(data$total)
 cohen.d(total ~ new_condition, data = data)
 
+#Compare confidence intervals of the effect size -- MOTE
 ```
 
+Griskevicius and colleagues reported a significant effect of status (two levels: control and status) on the composite score, _F_(1, 166) = 8.53, _p_ = .004, _d_ = 0.47. The same test using our data did not reveal a significant effect, _F_(1, 2793) = 1.83, _p_ = .174, _d_ = 0.05.
+
+### Green choices by products
+
+Table X summarizes the original results and our results for the products that participants selected by product and condition. 
+
+#### Green car
+
+```{r, include = TRUE}
+# From Experiment 1: 
+# Original paper: 37.2% of participants chose the green
+# car in the control condition, 54.5% of participants chose it in the
+# status condition, chi2(1, N = 168) = 4.56, p = .033, phi = .165
+
+# Our results:
+# Percentage selected green car by condition 
+car_table <- table(data$new_condition, data$greencar)
+print(car_table)
+prop.table(car_table, 1)
+  
+# Chi square test with Phi
+chisq_apa(chisq.test(car_table))
+phi(car_table, digits = 3)
+
+```
+
+The original paper found that the green car selection was significantly higher in the status condition (54.5%) than in the control condition (37.2%), chi2(1, N = 168) = 4.56, p = .033, phi = .165. We were unable to detect any effect of condition on green selection with our data, however, chi2(1, N = 2801) = 0.06, p = .81, phi = -0.005.
+
+#### Green cleaner
+
+```{r, include = TRUE}
+# Original paper: choice of the green cleaner increased from 25.7% in the
+# control condition to 41.8% in the status condition, chisq(1, N =
+# 168) = 4.52, p = .034, phi = .164
+
+# Our results: 
+# Percentage selected green soap by condition
+soap_table <- table(data$new_condition, data$greensoap)
+print(soap_table)
+prop.table(soap_table, 1)
+  
+# Chi square test
+chisq_apa(chisq.test(soap_table))
+  
+# Phi coefficient
+phi(soap_table, digits = 3)
+```
+
+Similarly, the original paper found that participants in the status condition selected the green cleaner more frequently than participants in the control condition, chisq(1, N = 168) = 4.52, p = .034, phi = .164, while we were unable to detect an effect, chi2(1, N = 2800) = 3.81, p = .051, phi = -0.038. 
+
+#### Green dishwasher
+```{r, include = TRUE}
+# Original paper: Choice of the green dishwasher
+# also increased from 34.5% in the control condition to 49.1% in the
+# status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
+
+# Our results: 
+# Percentage selected green dishwasher by condition
+dishwasher_table <- table(data$new_condition, data$greendishwasher)
+print(dishwasher_table)
+prop.table(dishwasher_table, 1)
+  
+# Chi square test
+chisq_apa(chisq.test(dishwasher_table))
+  
+# Phi coefficient
+phi(dishwasher_table, digits = 3)
+```
+
+Finally, the original paper also reported greater that selection of the green dishwasher was more likely in the status condition than the control condition (49.1% and 34.5%, respectively), chisq(1, N = 168) = 3.30, p = .069, eff size .140, while we found no such effect, chisq(1, N = 2804) = 0.23, p = .63, phi = -0.01.
+
 ### Exploratory Analyses
+
+When we first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about poliical orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable. Using this method of collapsing data, we found that n = 356 participants identified as conservative, while n = 482 participants identified as liberal. 
+
+#### Composite by liberal/conservative and condition
+```{r, include= TRUE}
+
+politics.aov <- aov(data$total ~ LiborCon + new_condition + LiborCon:new_condition, data = data)
+summary(politics.aov)
+
+library(data.table)
+
+print(aggregate(data$total, list(data$LiborCon), FUN=mean, na.rm = TRUE))   
+print(aggregate(data$total, list(data$LiborCon), FUN=sd, na.rm = TRUE))               
+
+```
+
+We conducted a 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (_M_ = 1.31, _SD_ = 0.97) than participants who identified as conservative (_M_ = 1.31, _SD_ = 1.00), _F_(1, 731) = 63.37, _p_ < .001, eta^2 = .08. As we found earlier, there was also no main effect of condition (status and control, with no story and control story grouped together). There was also no interaction between the two variables, _F_(1,731) = 3.14, _p_ = .08. 
+
+#### Composite by political party and condition
+```{r, include= TRUE}
+
+party.aov <- aov(data$total ~ RorD + new_condition + RorD:new_condition, data = data)
+summary(party.aov)
+
+print(aggregate(data$total, list(data$RorD), FUN=mean, na.rm = TRUE))   
+print(aggregate(data$total, list(data$RorD), FUN=sd, na.rm = TRUE))   
+
+```
+
+Similarly, when we grouped participants into "Republican" and "Democrat" categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (_M_ = 1.52, _SD_ = 1.05) than participants who identified as Republican (_M_ = 1.08, _SD_ = 0.85), _F_(1, 250) = 13.55, _p_ < .001, eta^2 = .05. There was, however, no interaction between political party and condition, _F_(1, 250) = 0.13, _p_ = .72. 
 
 ## Discussion
 
@@ -239,5 +311,3 @@ Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJ
 Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The collaborative replications and education project. Frontiers in psychology, 10, 247
 
 Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses?.
-
-
