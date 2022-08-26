@@ -48,6 +48,7 @@ n_projects <- length(unique(data$project_code[data$project_code != "NANA"]))
 
 n_survey_language <- length(unique(data$survey_language[data$survey_language != "NANA"]))
 
+# JORDAN -> WTF IS THIS OUTPUT
 n_country <- length(unique(data$country[data$country != "NANA"]))
 
 n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
@@ -184,6 +185,7 @@ phi(dishwasher_table, digits = 3)
 
 # Our results:
 # Compute composite green score; recode Y as 1 and N as 0 for green products
+# Jordan -> write tetrachoric correlation for internal consistency of composite scale
 
 data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
 data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
@@ -194,6 +196,10 @@ data$total <- data$greencar + data$greendishwasher + data$greensoap
 # Do ANOVA by condition (status, no story, control story)
 ungrouped.aov <- aov(data$total ~ condition, data = data)
 summary(ungrouped.aov)
+
+# JORDAN INSERT EFFECT SIZE MEASURE
+# DO GRAPH TO LOOK AT DIFFS BTW GROUPS
+
   
 # Do ANOVA by new condition (control v status)
 grouped.aov <- aov(data$total ~ new_condition, data = data)
@@ -205,6 +211,8 @@ cohen.d(total ~ new_condition, data = data)
 ```
 
 ### Exploratory Analyses
+
+Ask Nate Green to write the exploratory analyses he suggested
 
 ## Discussion
 
