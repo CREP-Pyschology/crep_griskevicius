@@ -3,13 +3,14 @@ title: "CREP_Griskevicius.Rmd"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  pdf_document:
-    toc: yes
-  word_document:
-    toc: yes
-  html_document:
-    toc: yes
+  pdf_document: 
+    highlight: monochrome
+  html_document: 
     toc_float: yes
+    highlight: monochrome
+    theme: journal
+  word_document: 
+    highlight: monochrome
 ---
 
 ```{r packages, include=FALSE}
@@ -27,7 +28,7 @@ package.check <- lapply(
 )
 ```
 
-```{r setup}
+```{r setup, echo = FALSE}
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
 ```
