@@ -28,14 +28,14 @@ package.check <- lapply(
 )
 ```
 
-```{r setup}
+```{r setup, echo = FALSE}
 
 # Loading data from source
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
 ```
 
-```{r, echo = FALSE}
+```{r, echo=FALSE}
 data[data == ""] <- NA              
 ```
 
@@ -45,9 +45,9 @@ Ljiljana B. Lazarević, Faculty of Philosophy, University of Belgrade Čika Ljub
 
 **Author contribution:** to be filled in
 
-**Conflict of interest statement:** The authors report no conflict of interest.  
+**Conflict of interest statement:** The authors report no conflict of interest.
 
-**Funding statement:** Do we have some funding?
+**Funding statement:** This project was funded in part by NSF Award 2141930 to J. Wagge.
 
 **Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol \# 2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study (all ethics approvals can be found on the project pages from the individual sites: <https://osf.io/4bfwu/>). This study complied with the ethics code outlined in the Declaration of Helsinki.
 
@@ -69,7 +69,6 @@ n_projects <- length(unique(data$project_code[data$project_code != "NANA"]))
 n_survey_language <- length(unique(data$survey_language[data$survey_language != "NANA"]))
 n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
 n_country <- length(unique(data$country[data$country != "NANA"]))
-
 ```
 
 ## Introduction
@@ -126,12 +125,12 @@ Data were collected in accordance with the Declaration of Helsinki. This researc
 
 ### Sample
 
-```{r}
+```{r, echo = FALSE}
 frq(data$recoded_race)
 frq(data$gender)
 ```
 
-> Note from Jordan: Need to double-check the numbers in the paragraph below.
+> Note from Jordan: Need to double-check the numbers in the paragraph below. Need to add demographics (race, age, gender etc)
 
 Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from 3798 participants. We use datasets collected by 24 groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here. The complete dataset is available here: <https://osf.io/azq76/>.
 
@@ -144,6 +143,8 @@ Data were collected in the lab, or online. Each group documented the type of dat
 ### Treatment of missing data, data preparation, and data analysis
 
 > JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
+>
+> Question from Jordan: Should we also exclude age \< 18 yo?
 
 We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
 
@@ -156,7 +157,7 @@ We also conduct exploratory analyses to test the moderating role of political or
 
 #### Composite Green Score
 
-```{r}
+```{r, echo = FALSE}
 # Original paper: In
 # addition to examining the influence of status motives on each
 # product individually, we also analyzed the effect of status when the
@@ -171,7 +172,6 @@ We also conduct exploratory analyses to test the moderating role of political or
 data$new_condition <- recode(data$condition, "control story" = "Control", "no story" = "Control", "status story" = "Status")
 
 # Compute composite green score; recode Y as 1 and N as 0 for green products
-# Jordan -> write tetrachoric correlation for internal consistency of composite scale-> or some way of addressing internal consistency. Note from Michał on collaborator draft: "can we report internal consistency reliability here for the composite score?" "I would like somebody more knowledgable with the matter to comment here, but I think that Cronbach Alpha can be used in such a case - it is just critical to use standardized alpha (not the "raw" one, as it will be biased in a case of a binary variable)"
 
 data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
 data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
@@ -204,6 +204,8 @@ data$total<- as.numeric(data$total)
 
 ```
 
+> Jordan -\> write tetrachoric correlation for internal consistency of composite scale-\> or some way of addressing internal consistency. Note from Michał on collaborator draft: "can we report internal consistency reliability here for the composite score?" "I would like somebody more knowledgable with the matter to comment here, but I think that Cronbach Alpha can be used in such a case - it is just critical to use standardized alpha (not the"raw" one, as it will be biased in a case of a binary variable)"
+
 Following the procedure used in the original study, we computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**).
 
 Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r grouped.out$full_result`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$full_result`. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
@@ -212,7 +214,7 @@ The rest of our analyses combine the "control story" and "no story" conditions i
 
 #### Green car
 
-```{r}
+```{r, echo = FALSE}
 # From Experiment 1: 
 # Original paper: 37.2% of participants chose the green
 # car in the control condition, 54.5% of participants chose it in the
@@ -237,7 +239,7 @@ The original paper found that the green car selection was higher in the status c
 
 #### Green cleaner
 
-```{r}
+```{r, echo = FALSE}
 # Original paper: choice of the green cleaner increased from 25.7% in the
 # control condition to 41.8% in the status condition, chisq(1, N =
 # 168) = 4.52, p = .034, phi = .164
@@ -259,7 +261,7 @@ Similarly, the original paper found that participants in the status condition se
 
 #### Green dishwasher
 
-```{r}
+```{r, echo = FALSE}
 # Original paper: Choice of the green dishwasher
 # also increased from 34.5% in the control condition to 49.1% in the
 # status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
@@ -287,14 +289,14 @@ JORDAN TO-DO:
 
 When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
-```{r}
+```{r, echo = FALSE}
 n.conservative = sum(data$LiborCon=='Conservative', na.rm = TRUE)
 n.liberal = sum(data$LiborCon=='Liberal', na.rm = TRUE)
 ```
 
 Using this method of collapsing data, we found that n = `r n.conservative` participants identified as conservative, while n = `r n.liberal` participants identified as liberal.
 
-```{r}
+```{r, echo = FALSE}
 # Insert 2 x 2 factorial ANOVA with condition & political orientation on composite green score
 
 aov.out <- aov(total ~ LiborCon * new_condition, data = data)
@@ -326,12 +328,12 @@ We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conserv
 
 > Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
 
-```{r}
+```{r, echo = FALSE}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
 n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
 ```
 
-```{r}
+```{r, echo = FALSE}
 # Insert 2 x 2 factorial ANOVA with condition & political party on composite green score
 
 aov.out2 <- aov(total ~ RorD * new_condition, data = data)
@@ -360,30 +362,30 @@ Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 
 
 ## References
 
-Frank, M. C., & Saxe, R. (2012). Teaching replication. Perspectives on Psychological Science, 7(6), 600-604.
+Frank, M. C., & Saxe, R. (2012). Teaching Replication. *Perspectives on Psychological Science*, *7*(6), 600--604. <https://doi.org/10.1177/1745691612460686>
 
-Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O'Brien, J., Paulk, A., Peck, T., Sashihara, M., ... Sullivan, D. (2020). Reexamining the effect of gustatory disgust on moral judgment: A multilab direct replication of Eskine, Kacinik, and Prinz (2011). Advances in Methods and Practices in Psychological Science, 3--23. <https://doi.org/10.1177/2515245919881152>
+Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O'Brien, J., Paulk, A., Peck, T., Sashihara, M., ... Sullivan, D. (2020). Reexamining the Effect of Gustatory Disgust on Moral Judgment: A Multilab Direct Replication of Eskine, Kacinik, and Prinz (2011). *Advances in Methods and Practices in Psychological Science*, *3*(1), 3--23. <https://doi.org/10.1177/2515245919881152>
 
-Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the Undiscovered Resource of Student Research. Perspectives on Psychological Science, 7(6), 605--607. <https://doi.org/10.1177/1745691612459057>
+Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the Undiscovered Resource of Student Research Projects. *Perspectives on Psychological Science*, *7*(6), 605--607. <https://doi.org/10.1177/1745691612459057>
 
-Griskevicius, V., Tybur, J. M., & Van den Bergh, B. (2010). Going green to be seen: status, reputation, and conspicuous conservation. Journal of personality and social psychology, 98(3), 392.
+Griskevicius, V., Tybur, J. M., & Van den Bergh, B. (2010). Going green to be seen: Status, reputation, and conspicuous conservation. *Journal of Personality and Social Psychology*, *98*(3), 392--404. <https://doi.org/10.1037/a0017346>
 
-Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L. S., ... & Nosek, B. A. (2016). Badges to acknowledge open practices: A simple, low-cost, effective method for increasing transparency. PLoS biology, 14(5), e1002456.
+Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., Kennett, C., Slowik, A., Sonnleitner, C., Hess-Holden, C., Errington, T. M., Fiedler, S., & Nosek, B. A. (2016). Badges to Acknowledge Open Practices: A Simple, Low-Cost, Effective Method for Increasing Transparency. *PLOS Biology*, *14*(5), e1002456. <https://doi.org/10.1371/journal.pbio.1002456>
 
-Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-esteem, self disclosure, self-expression, and connection on Facebook: A collaborative replication meta-analysis. Psi Chi Journal of Psychological Research, 23(2). <https://doi.org/10.24839/2325-7342.JN23.2.94>
+Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-Analysis of the Effect of Red on Perceived Attractiveness. *Evolutionary Psychology*, *16*(4), 1474704918802412. <https://doi.org/10.1177/1474704918802412>
 
-Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-analysis of the effect of red on perceived attractiveness. Evolutionary Psychology, 16(4), 1474704918802412.
+Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-Esteem, Self-Disclosure, Self-Expression, and Connection on Facebook: A Collaborative Replication Meta-Analysis. *Psi Chi Journal of Psychological Research*, *23*(2), 98--109. <https://doi.org/10.24839/2325-7342.JN23.2.98>
 
-Perlman, B., & McCann, L. I. (2005). Undergraduate research experiences in psychology: A national study of courses and curricula. Teaching of Psychology, 32(1), 5-14.
+Perlman, B., & McCann, L. I. (1999). The Most Frequently Listed Courses in the Undergraduate Psychology Curriculum. *Teaching of Psychology*, *26*(3), 177--182. <https://doi.org/10.1207/S15328023TOP260303>
 
-R Core Team. (2020). R: A language and environment for statistical computing. R Foundation for Statistical Computing. <https://www.R-project.org/>
+R Core Team. (2021). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. <https://www.R-project.org/>
 
-R Studio Team. (2016). RStudio: Integrated Development for R. RStudio Inc. <http://www.rstudio.com/>
+RStudio Team. (2020). *RStudio: Integrated Development Environment for R*. RStudio, PBC. <http://www.rstudio.com/>
 
-Standing, L. G., Grenier, M., Lane, E. A., Roberts, M. S., & Sykes, S. J. (2014). Using replication projects in teaching research methods. Psychology Teaching Review, 20(1), 96-104.
+Standing, L. G., Grenier, M., Lane, E. A., Roberts, M. S., & Sykes, S. J. (2014). Using replication projects in teaching research methods. *Psychology Teaching Review*, *20*(1), 96--104.
 
-Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. E. (2019a). A demonstration of the Collaborative Replications and Education Project: Replication attempts of the red-romance effect. Collabra: Psychology, 5(1), 5. <https://doi.org/10.1525/collabra.177>
+Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. (2019). A Demonstration of the Collaborative Replication and Education Project: Replication Attempts of the Red-Romance Effect. *Collabra: Psychology*, *5*(1), 5. <https://doi.org/10.1525/collabra.177>
 
-Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The collaborative replications and education project. Frontiers in psychology, 10, 247
+Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing Research With Undergraduate Students via Replication Work: The Collaborative Replications and Education Project. *Frontiers in Psychology*, *10*, 247. <https://doi.org/10.3389/fpsyg.2019.00247>
 
-Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses?.
+Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. (2022). Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses? *Psychology Learning & Teaching*, 147572572211019. <https://doi.org/10.1177/14757257221101942>
