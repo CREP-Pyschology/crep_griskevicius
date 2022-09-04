@@ -3,15 +3,15 @@ title: "CREP_Griskevicius.Rmd"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
+  word_document:
+    toc: yes
   html_document:
     toc: yes
     toc_float: yes
-  word_document:
-    toc: yes
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja")
+packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex")
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -253,9 +253,10 @@ Using this method of collapsing data, we found that n = `r n.conservative` parti
 ```{r}
 # Insert 2 x 2 factorial ANOVA with condition & political orientation on composite green score
 
-con_by_pol.out <- aov(data$total ~ data$new_condition * data$LiborCon)
-apa_print(con_by_pol.out)
-summary(con_by_pol.out)
+aov.out <- aov(total ~ LiborCon * new_condition, data = data)
+apa_anova <- apa_print(aov.out)
+
+
 
 mean.liberal <- mean(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
 mean.conservative <- mean(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
@@ -263,20 +264,45 @@ mean.conservative <- mean(data$total[data$LiborCon=="Conservative"], na.rm = TRU
 sd.liberal <- sd(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
 sd.conservative <- sd(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
 
+mean.control <- mean(data$total[data$new_condition=="Control"], na.rm = TRUE)
+
+mean.status <- mean(data$total[data$new_condition=="Status"], na.rm = TRUE)
+
+sd.control <- sd(data$total[data$new_condition=="Control"], na.rm = TRUE)
+
+sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
+
 ```
 
 #### Liberal/conservative
 
-We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation (liberal or conservative) interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r con_by_pol.out$full_result$LiborCon`. As we found earlier, there was also no main effect of condition (following approach by Griskevicius et al., we merged control and "no story" conditions into one status and control, with no story and control story grouped together). There was also no interaction between the two variables, *F*(XXX) = XXX, *p* = XXX
+We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation (liberal or conservative) interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition control (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
 
 ```{r}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
 n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
 ```
 
+```{r}
+# Insert 2 x 2 factorial ANOVA with condition & political party on composite green score
+
+aov.out2 <- aov(total ~ RorD * new_condition, data = data)
+apa_anova2 <- apa_print(aov.out2)
+
+
+
+mean.rep <- mean(data$total[data$RorD=="Republican"], na.rm = TRUE)
+mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
+
+sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
+sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
+
+
+```
+
 #### Democrat/republican
 
-Similarly, when we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = XXX, *SD* = XXX) than participants who identified as Republican (*M* = XXX, *SD* = XXX), *F*(1, XXX) = XXX, *p* \< XXX, eta\^2 = XXX There was, however, no interaction between political party and condition, *F*(1, XXX) = XXX, *p* = XXX
+Similarly, when we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (_M_ = `r mean.dem`, _SD_ = `r sd.dem`) than participants who identified as Republican (_M_ = `r mean.rep`, _SD_ = `r sd.rep`), `r apa_anova2$full$RorD`. There was, however, no interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`.
 
 ## Discussion
 
