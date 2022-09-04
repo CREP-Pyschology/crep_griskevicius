@@ -3,6 +3,8 @@ title: "CREP_Griskevicius.Rmd"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
+  pdf_document:
+    toc: yes
   word_document:
     toc: yes
   html_document:
@@ -68,7 +70,7 @@ The present report documents a pooled analysis of data collected by teams who si
 
 Can pro-environmental behavior be promoted by inducing status competition? In their paper, Griskevicius and colleagues (2010) reported results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claim that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. Authors of the original study claim that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products.
 
-In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable over their green counterparts. In experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in control motive condition. Second control condition did not include cover story and participants simply selected among products. However, the original study did not find a difference between two control conditions, thus it was decided to replicate the experiment in CREP with only the first control condition.
+In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable than their green counterparts. In the experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in the control motive condition. The second control condition did not include a cover story, and participants simply selected among products. In the original paper, using a one-way analysis of variance (ANOVA) on the product composite found a large effect of status prime (d=0.47). To summarize, the first experiment of Griskevicius et al (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior. 
 
 ## Method
 
@@ -78,34 +80,53 @@ This study was selected for replication using the process outlined in Wagge and 
 
 Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals, and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius can be found here: <https://osf.io/vdo0i/wiki/home/>. There are two key notes from this correspondence that will be discussed in the context of our results in this paper: first, Dr. Griskevicius noted that the effect may not replicate if participants didn't equate "green" choices with prosocial behavior. Second, Dr. Griskevicius noted that the connection between "green" choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
 
-### This project process
+### CREP project process
 
-Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. After data-collection, project pages were revised to include the dataset, short report about the obtained results and completion pledge. After obtaining a positive review, replication was considered successful and the project was completed. Since 2013, 32 groups from eight different countries expressed interest in conducting CREP Griskevicius et al (2010). Five groups dropped out before data collection, and two groups did not follow the CREP procedure. In addition, six groups obtained positive pre-data collection review but, due to COVID-19 pandemic, had to cancel the data collection project. Final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries. Overview of groups participating in this project is provided in Table XX. Over the years, this project included about 30 reviewers, 3 CREP assistants and 3 executive reviewers.
+Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was completed. Since 2013, 49 groups from nine different countries expressed interest in conducting CREP Griskevicius et al (2010). Eleven groups did not provide their data and one group did not provide the codebook with us, five groups did not complete data collection, three groups did not create the OSF page, four groups dropped out before data collection, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is provided in Table XX in Supplementary materials (<https://osf.io/vc5rh/>). Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
+
+#### Target sample size
+
+The sample size for each group was set to 82 respondents. In CREP, for each project, the sample size was determined to be at least half of the original N. For this study, the targeted sample size was set to 84, but unfortunately, in the documentation file, there was a typo (N=82). However, with multiple groups collecting data, and in this particular case with close to 3,800 participants, we have adequate statistical power to detect a very small focal effect.
+
+#### Differences from the original study
+
+The original study was conducted in a lab, where participants were tested in small groups. Replications were conducted both in the lab and online. Some groups conducted direct replication and some groups included extension variables. Characteristics of the replications are given in Table XX in Supplementary materials (<https://osf.io/7zybp/>).
 
 ### Disclosures
 
 #### Preregistrations
 
-Each lab preregistered their materials, protocol and analytical strategy on Open Science Framework (OSF) before data collection (ADD osf PAGE HERE).
+Each lab preregistered its materials, protocol, and analytical strategy on Open Science Framework (OSF) before data collection. Additionally, this meta-analysis was pre-registered: <https://osf.io/ach3n>.
 
 #### Data, Materials and Resources
 
-All groups who completed data collection, uploaded data, analysis, and short description of results to their OSF project page. All datasets, materials, analytical scripts and other materials can be found on the central project OSF page (add OSF project page here).
+The authors of the original study provided materials for replications. All groups who completed data collection, uploaded data, analysis, and a short description of results to their OSF project page. All datasets, materials, analytical scripts, and other materials can be found on the central project OSF page (<https://osf.io/rh2nw/>). The complete codebook for the dataset is available at <https://osf.io/7nkhq/>.
+
+#### Reporting
+
+We report how we determined our sample size, all data exclusions, all manipulations, and all measures in the study.
 
 #### Ethical approval
 
-Each lab obtained Institutional Review Board or similar institution approval before starting with data collection (individual approvals are available on groups' project pages). All data were collected in accordance with the Declaration of Helsinki. We also obtained ethical approval for meta-analysis from the IRB of the Department of Psychology, University of Belgrade (Protocol #2021-69).
+Data were collected in accordance with the Declaration of Helsinki. This research was approved under an "umbrella" ethics proposal at the University of Belgrade, Serbia. Overarching IRB approval was obtained from the IRB of the Department of Psychology, University of Belgrade, Serbia (<https://osf.io/pcwhg/>). In addition, all groups obtained local IRB approvals which are available on our OSF project page: <https://osf.io/4bfwu/>
 
-### Participants
+### Sample
 
 ```{r}
 frq(data$recoded_race)
 frq(data$gender)
 ```
 
-### Procedures
+Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged dataset contained data collected from 3798 participants. We use datasets collected by 24 groups. All individual datasets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here. The complete dataset is available here: <https://osf.io/azq76/>.
 
-### Materials
+### Procedure
+
+Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration of their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available in Table XX in Supplementary materials (<https://osf.io/vc5rh/>).
+
+### Treatment of missiong data, data preparation, and data analysis
+
+We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (ADD LINK HERE). Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.\
+We also conduct exploratory analyses to test the moderating role of political orientation. We run 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacts with the condition in its association with the composite green score.
 
 ## Results
 
@@ -302,7 +323,7 @@ sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
 #### Democrat/republican
 
-Similarly, when we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (_M_ = `r mean.dem`, _SD_ = `r sd.dem`) than participants who identified as Republican (_M_ = `r mean.rep`, _SD_ = `r sd.rep`), `r apa_anova2$full$RorD`. There was, however, no interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`.
+Similarly, when we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. There was, however, no interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`.
 
 ## Discussion
 
