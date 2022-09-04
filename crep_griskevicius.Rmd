@@ -1,16 +1,16 @@
 ---
-title: "CREP_Griskevicius.Rmd"
+title: "Collaborative registered replication of Griskevicius et al (2010): Can pro-environmental behavior be promoted by inducing status competition?"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  pdf_document: 
-    highlight: tango
+  word_document: 
+    highlight: monochrome
   html_document: 
     toc_float: yes
     highlight: monochrome
     theme: journal
-  word_document: 
-    highlight: monochrome
+  pdf_document: 
+    highlight: tango
 ---
 
 ```{r packages, include=FALSE}
@@ -39,13 +39,27 @@ data <- read.csv(url)
 data[data == ""] <- NA              
 ```
 
+**Corresponding author**:
+
+Ljiljana B. Lazarević, Faculty of Philosophy, University of Belgrade Čika Ljubina 18-20, 11000 Belgrade, Serbia Email: [ljiljana.lazarevic\@f.bg.ac.rs](mailto:ljiljana.lazarevic@f.bg.ac.rs) Phone: +381 64 1287 614
+
+**Author contribution:** to be filled in
+
+**Conflict of interest statement:** The authors report no conflict of interest.  
+
+**Funding statement:** Do we have some funding?
+
+**Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol \# 2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study (all ethics approvals can be found on the project pages from the individual sites: <https://osf.io/4bfwu/>). This study complied with the ethics code outlined in the Declaration of Helsinki.
+
+**Acknowledgment:** The authors would like to thank all students, supervisors, and reviewers who contributed to this CREP project. The authors would like to specifically thank Drs. Jon Grahe, Mark Brandt, and Hans IJzerman for their vision and early dedication to the CREP.
+
 ```{r}
 
 # Descriptive statistics for project characteristics
 # Frequency tables for project code, survey language, countries, institute code, setting, and condition
 frq(data$project_code)
 frq(data$survey_language)
-frq(data$countries)
+frq(data$country)
 frq(data$institute_code)
 frq(data$setting)
 frq(data$condition)
@@ -62,27 +76,25 @@ n_country <- length(unique(data$country[data$country != "NANA"]))
 
 The Collaborative Replications and Education Project (Wagge et al., 2019b), or CREP, is one of several initiatives that seeks to improve undergraduate training in research methods. CREP's role includes selecting studies to be closely replicated by students, structuring the methods for the replication, reviewing projects both before and after data collection, and facilitating the publication of a pooled analysis (such as the present paper). While CREP has a pedagogical mission, we hope to also advance science by providing additional evidence for the boundaries of published effects.
 
-CREP participants are students and instructors at institutions around the world. We offer CREP as one alternative to the traditional undergraduate research project; while different models may work better for some instructors, institutions, and students, the CREP offers some benefits that other models may not. First, students learn methods by closely matching the work of scholars in the field. Second, students get to participate in authentic research (Grahe, CITE) that may eventually be published in a pooled analysis and will also be available on the Open Science Framework (osf.io) to meta-analytic researchers in the future.
-
-Third, students learn the importance of many key open science practices and issues such as preregistration, replication, open methods, and open data (Kidwell et al., 2016). Fourth, students engage with reviewers (CREP team members) external to their institution. Several CREP studies have been published (e.g., Ghelfi et al., 2020; Leighton et al., 2018; Wagge et al., 2019a) and others have been included in meta-analyses (Lehman et al., 2018).
+CREP participants are students and instructors at institutions around the world. We offer CREP as one alternative to the traditional undergraduate research project; while different models may work better for some instructors, institutions, and students, the CREP offers some benefits that other models may not. First, students learn methods by closely matching the work of scholars in the field. Second, students get to participate in authentic research (Grahe, CITE) that may eventually be published in a pooled analysis and will also be available on the Open Science Framework (osf.io) to meta-analytic researchers in the future. Third, students learn the importance of many key open science practices and issues such as preregistration, replication, open methods, and open data (Kidwell et al., 2016). Fourth, students engage with reviewers (CREP team members) external to their institution. Several CREP studies have been published (e.g., Ghelfi et al., 2020; Leighton et al., 2018; Wagge et al., 2019a) and others have been included in meta-analyses (Lehman et al., 2018).
 
 The present report documents a pooled analysis of data collected by teams who signed up to replicate one of CREP's earliest selections for replication: Experiment 1 from Griskevicius et al. (2010).
 
-### Status competition and pro-environmental behavior
+### The original study: Status competition and pro-environmental behavior
 
-Can pro-environmental behavior be promoted by inducing status competition? In their paper, Griskevicius and colleagues (2010) reported results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claim that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. Authors of the original study claim that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products.
+Can pro-environmental behavior be promoted by inducing status competition? Griskevicius and colleagues (2010) tried to give an answer to this question and reported the results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, the authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claimed that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. These authors claimed that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products. To conclude, the original study suggested that status competition can promote pro-environmental behavior.
 
 In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable than their green counterparts. In the experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in the control motive condition. The second control condition did not include a cover story, and participants simply selected among products. In the original paper, using a one-way analysis of variance (ANOVA) on the product composite found a large effect of status prime (d=0.47). To summarize, the first experiment of Griskevicius et al (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior. 
 
 ## Method
 
-### CREP process
+### CREP Procedures
 
-This study was selected for replication using the process outlined in Wagge and colleagues (2019). Briefly, in 2014, CREP volunteers located citations for the most-cited 2010 papers from the flagship empirical journals in psychology and its subdisciplines. In this way, CREP was able to both narrow down the pool for selection while also guaranteeing that the paper we selected was both recent and high-interest. The goal was not to find the best paper for replication in terms of the field's specific needs, but rather to find a set of recent, high-interest papers (good candidates for replication). Once the pool of citations had been gathered, CREP coders read the Method section for each paper and indicated whether it was feasible for student teams to replicate in a semester (on a scale of 1-5) and also whether they thought it would be interesting to students (again, on a scale of 1-5) -- the feasibility ratings were used to narrow down a final pool, while the interest ratings were used in the final decision-making process if all other factors weighed equally. Documentation of the coding process can be found here: <https://osf.io/9kzje/wiki/home/>. Once a final pool of papers was narrowed down, CREP recruited professors to look again at the feasibility and interest to narrow it down more, and then the CREP leadership team engaged in internal conversation to select the study or studies that would be selected that year. The process in 2014 resulted in several selected studies, including Experiment 1 from Griskevicius and colleagues.
+This study was selected for replication using the process outlined in Wagge and colleagues (2019). Briefly, in 2014, CREP volunteers located citations for the most-cited 2010 papers from the flagship empirical journals in psychology and its subdisciplines. In this way, CREP was able to narrow down the pool for selection while also guaranteeing that the paper we selected was both recent and high-interest. The goal was not to find the **best** paper for replication in terms of the field's specific needs, but rather to find a set of recent, high-interest papers, that is, **good** candidates for replication. Once the pool of citations had been gathered, CREP coders read the Method section for each paper and indicated whether it was feasible for student teams to replicate in a semester on a scale of 1 (low) -5 (high) and also whether they thought it would be interesting to students, again, on a scale of 1 (low) -5(high). The feasibility ratings were used to narrow down a final pool, while the interest ratings were used in the final decision-making process if all other factors weighted equally. Documentation of the coding process can be found here: <https://osf.io/9kzje/wiki/home/>. Once a final pool of papers was narrowed down, CREP recruited psychology professors to look again at the feasibility and interest to narrow it down more, and then the CREP leadership team engaged in internal conversation to select the study or studies that would be selected that year. The process in 2014 resulted in several selected studies, including Experiment 1 from Griskevicius and colleagues.
 
-Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals, and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius can be found here: <https://osf.io/vdo0i/wiki/home/>. There are two key notes from this correspondence that will be discussed in the context of our results in this paper: first, Dr. Griskevicius noted that the effect may not replicate if participants didn't equate "green" choices with prosocial behavior. Second, Dr. Griskevicius noted that the connection between "green" choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
+Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius are available here: <https://osf.io/vdo0i/wiki/home/>. Two key points from this correspondence will be discussed in the context of our results in this paper. First, Dr. Griskevicius noted that the effect may not replicate if participants didn't equate "green" choices with prosocial behavior. Second, Dr. Griskevicius noted that the connection between "green" choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
 
-### CREP project process
+### CREP Project Process
 
 Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was completed. Since 2013, 49 groups from nine different countries expressed interest in conducting CREP Griskevicius et al (2010). Eleven groups did not provide their data and one group did not provide the codebook with us, five groups did not complete data collection, three groups did not create the OSF page, four groups dropped out before data collection, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is provided in Table XX in Supplementary materials (<https://osf.io/vc5rh/>). Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
 
@@ -119,15 +131,21 @@ frq(data$recoded_race)
 frq(data$gender)
 ```
 
-Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged dataset contained data collected from 3798 participants. We use datasets collected by 24 groups. All individual datasets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here. The complete dataset is available here: <https://osf.io/azq76/>.
+> Note from Jordan: Need to double-check the numbers in the paragraph below.
+
+Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from 3798 participants. We use datasets collected by 24 groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here. The complete dataset is available here: <https://osf.io/azq76/>.
 
 ### Procedure
 
 Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration of their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available in Table XX in Supplementary materials (<https://osf.io/vc5rh/>).
 
-### Treatment of missiong data, data preparation, and data analysis
+> Note from Jordan: We need to update the deviations
 
-We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (ADD LINK HERE). Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
+### Treatment of missing data, data preparation, and data analysis
+
+> JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
+
+We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
 
 \
 We also conduct exploratory analyses to test the moderating role of political orientation. We run 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacts with the condition in its association with the composite green score.
@@ -150,10 +168,10 @@ We also conduct exploratory analyses to test the moderating role of political or
 # Our results:
 # Combine no story & control story into a new variable, control
 
-data$new_condition <- recode(data$condition, "control story" = "Control", "no story" = "Control", "status" = "Status")
+data$new_condition <- recode(data$condition, "control story" = "Control", "no story" = "Control", "status story" = "Status")
 
 # Compute composite green score; recode Y as 1 and N as 0 for green products
-# Jordan -> write tetrachoric correlation for internal consistency of composite scale
+# Jordan -> write tetrachoric correlation for internal consistency of composite scale-> or some way of addressing internal consistency. Note from Michał on collaborator draft: "can we report internal consistency reliability here for the composite score?" "I would like somebody more knowledgable with the matter to comment here, but I think that Cronbach Alpha can be used in such a case - it is just critical to use standardized alpha (not the "raw" one, as it will be biased in a case of a binary variable)"
 
 data$greencar <- recode(data$greencar, "Yes" = 1, "No" = 0)
 data$greendishwasher <- recode(data$greendishwasher, "Yes" = 1, "No" = 0)
@@ -186,7 +204,7 @@ data$total<- as.numeric(data$total)
 
 ```
 
-Following the procedure used in the original study, we computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`).
+Following the procedure used in the original study, we computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**).
 
 Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r grouped.out$full_result`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$full_result`. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
 
@@ -263,7 +281,9 @@ Finally, the original paper also reported greater that selection of the green di
 
 ### Exploratory Analyses
 
-JORDAN: Work on incorporating revisions from collaborators Ask Nate Green to write the exploratory analyses he suggested
+JORDAN TO-DO:
+
+1.  Make a variable that combines lab, lab individual and lab groups and compare results across that with in-person
 
 When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
@@ -300,7 +320,11 @@ sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
 
 #### Liberal/conservative
 
-We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation (liberal or conservative) interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition control (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
+> Note from Michał in google doc: this tool isn't really described in such a way that a reader could use it in their own research. I suggest to either describe it here in more detail, including the response format, or do it in the Appendix (I think this option will be even better, as those are exploratory analysis, so these should not occupy too much of the main body of the article).
+
+We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
+
+> Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
 
 ```{r}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
@@ -326,7 +350,11 @@ sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
 #### Democrat/republican
 
-Similarly, when we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. There was, however, no interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`.
+> Suggestion from Aleksandra in doc: describe how dem/rep collapsed
+
+Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. We were unable to detect an interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$full$new_condition`.
+
+> Note from Michał in doc re: "no effect" verbiage in draft: again, I wouldn't go that far and say that there was no interaction, given F and p-values here; it is rather that you did not have sufficient power to detect this interaction, but to me, those number indicate that there was some effect, albeit weak (please, report effect size here) and therefore with this sample size you were unable to detect it. Weak effects aren't any inferior to strong effects in my opinion. For instance, Sulloway in his research on birth order effects often makes a claim that even if effects appear weak such as d = 0.1, those still have profound meaning for society, because basically everybody is under influence of this effect. Here, too, being liberal vs. conservative is something that concerns almost everyone, as generally speaking, everybody has some political views, which, as these data suggest, may moderate a propensity to buy green vs non-green goods
 
 ## Discussion
 
