@@ -4,7 +4,7 @@ author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
   pdf_document: 
-    highlight: monochrome
+    highlight: tango
   html_document: 
     toc_float: yes
     highlight: monochrome
@@ -28,17 +28,21 @@ package.check <- lapply(
 )
 ```
 
-```{r setup, echo = FALSE}
+```{r setup}
+
+# Loading data from source
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
 ```
 
-```{r}
+```{r, echo = FALSE}
 data[data == ""] <- NA              
 ```
 
 ```{r}
+
 # Descriptive statistics for project characteristics
+# Frequency tables for project code, survey language, countries, institute code, setting, and condition
 frq(data$project_code)
 frq(data$survey_language)
 frq(data$countries)
@@ -46,13 +50,10 @@ frq(data$institute_code)
 frq(data$setting)
 frq(data$condition)
 
+# Counting number of unique projects, survey languages, institutes, and countries to report in manuscript
 n_projects <- length(unique(data$project_code[data$project_code != "NANA"]))
-
 n_survey_language <- length(unique(data$survey_language[data$survey_language != "NANA"]))
-
-# JORDAN -> WTF IS THIS OUTPUT
 n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]))
-
 n_country <- length(unique(data$country[data$country != "NANA"]))
 
 ```
@@ -126,7 +127,9 @@ Data were collected in the lab, or online. Each group documented the type of dat
 
 ### Treatment of missiong data, data preparation, and data analysis
 
-We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (ADD LINK HERE). Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.\
+We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (ADD LINK HERE). Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
+
+\
 We also conduct exploratory analyses to test the moderating role of political orientation. We run 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacts with the condition in its association with the composite green score.
 
 ## Results
@@ -147,7 +150,7 @@ We also conduct exploratory analyses to test the moderating role of political or
 # Our results:
 # Combine no story & control story into a new variable, control
 
-data$new_condition <- recode(data$condition, "Control story" = "Control", "No story" = "Control", "Status" = "Status")
+data$new_condition <- recode(data$condition, "control story" = "Control", "no story" = "Control", "status" = "Status")
 
 # Compute composite green score; recode Y as 1 and N as 0 for green products
 # Jordan -> write tetrachoric correlation for internal consistency of composite scale
@@ -180,7 +183,6 @@ summary(grouped.aov)
 grouped.out <- apa_print(grouped.aov)
 
 data$total<- as.numeric(data$total)
-cohen.d(total ~ new_condition, data = data)
 
 ```
 
