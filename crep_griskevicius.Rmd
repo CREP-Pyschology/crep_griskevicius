@@ -3,14 +3,14 @@ title: "Collaborative registered replication of Griskevicius et al (2010): Can p
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  word_document: 
-    highlight: monochrome
+  pdf_document: 
+    highlight: tango
   html_document: 
     toc_float: yes
     highlight: monochrome
     theme: journal
-  pdf_document: 
-    highlight: tango
+  word_document: 
+    highlight: monochrome
 ---
 
 ```{r packages, include=FALSE}
