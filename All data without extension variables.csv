@@ -8,63 +8,41 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 7,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,Yes,,,,female,Female,21,21,,
 8,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,21,21,,
 9,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,20,20,,
-10,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,17,17,,
-11,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,18,18,,
 12,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,19,19,,
 13,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,19,19,,
-14,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,Yes,,,,male,Male,18,18,,
 15,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,21,21,,
-16,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,18,18,,
 17,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,21,21,,
 18,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,Yes,,,,female,Female,19,19,,
-19,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,female,Female,18,18,,
 20,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,22,22,,
-21,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,18,18,,
 22,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,Yes,,,,female,Female,19,19,,
 23,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,19,19,,
-24,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,18,18,,
 25,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,21,21,,
 26,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,22,22,,
 27,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,male,Male,23,23,,
 28,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,19,19,,
 29,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,Yes,,,,female,Female,19,19,,
-30,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,female,Female,18,18,,
 31,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,21,21,,
 32,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,male,Male,22,22,,
 33,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,Yes,,,,female,Female,20,20,,
 34,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,25,25,,
 35,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,female,Female,19,19,,
-36,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,18,18,,
 37,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,19,19,,
 38,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,20,20,,
 39,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,Yes,,,,female,Female,20,20,,
 40,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,female,Female,21,21,,
 41,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,20,20,,
-42,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,18,18,,
-43,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,18,18,,
-44,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,18,18,,
 45,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,male,Male,20,20,,
 46,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,23,23,,
 47,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,21,21,,
-48,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,18,18,,
 49,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,22,22,,
-50,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,18,18,,
-51,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,18,18,,
-52,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,Yes,,,,female,Female,18,18,,
 53,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,20,20,,
-54,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,male,Male,18,18,,
 55,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,male,Male,23,23,,
 56,22,Dutch,The Netherlands,18,Lab,no story,No,No,Yes,,,,male,Male,19,19,,
 57,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,No,,,,female,Female,20,20,,
-58,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,male,Male,18,18,,
-59,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,18,18,,
 60,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,male,Male,19,19,,
 61,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,male,Male,23,23,,
 62,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,No,,,,female,Female,20,20,,
-63,22,Dutch,The Netherlands,18,Lab,no story,Yes,Yes,Yes,,,,female,Female,18,18,,
-64,22,Dutch,The Netherlands,18,Lab,no story,No,No,No,,,,female,Female,18,18,,
 65,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,No,,,,female,Female,20,20,,
-66,22,Dutch,The Netherlands,18,Lab,no story,Yes,No,Yes,,,,female,Female,18,18,,
 67,22,Dutch,The Netherlands,18,Lab,no story,No,Yes,Yes,,,,female,Female,19,19,,
 68,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,Yes,,,,female,Female,20,20,,
 69,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,Yes,,,,female,Female,23,23,,
@@ -94,7 +72,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 93,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,Yes,,,,female,Female,19,19,,
 94,22,Dutch,The Netherlands,18,Lab,control story,No,Yes,No,,,,female,Female,20,20,,
 95,22,Dutch,The Netherlands,18,Lab,control story,No,Yes,Yes,,,,female,Female,20,20,,
-96,22,Dutch,The Netherlands,18,Lab,control story,No,Yes,No,,,,female,Female,17,17,,
 97,22,Dutch,The Netherlands,18,Lab,control story,No,Yes,Yes,,,,male,Male,19,19,,
 98,22,Dutch,The Netherlands,18,Lab,control story,No,No,Yes,,,,female,Female,19,19,,
 99,22,Dutch,The Netherlands,18,Lab,control story,No,No,No,,,,female,Female,24,24,,
@@ -128,7 +105,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 127,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,No,,,,female,Female,19,19,,
 128,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,No,,,,female,Female,20,20,,
 129,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,No,,,,male,Male,19,19,,
-130,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,Yes,,,,female,Female,17,17,,
 131,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,Yes,,,,female,Female,19,19,,
 132,22,Dutch,The Netherlands,18,Lab,control story,Yes,Yes,No,,,,female,Female,18,18,,
 133,22,Dutch,The Netherlands,18,Lab,control story,Yes,No,No,,,,male,Male,18,18,,
@@ -730,8 +706,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 729,21,English,USA,17,,status story,Yes,No,Yes,,White,,female,Female,18,18,,Conservative
 730,21,English,USA,17,,no story,Yes,No,No,,White,,female,Female,21,21,,Conservative
 731,21,English,USA,17,,status story,Yes,Yes,Yes,,White,,female,Female,21,21,,Conservative
-732,21,English,USA,17,,control story,Yes,Yes,Yes,,Hispanic or Latino,,male,Male,17,17,,Conservative
-733,21,English,USA,17,,no story,No,No,No,,White,,female,Female,17,17,,Conservative
 734,21,English,USA,17,,no story,Yes,No,Yes,,White,,female,Female,21,21,,Conservative
 735,21,English,USA,17,,no story,Yes,Yes,No,,White,,female,Female,19,19,,Conservative
 736,21,English,USA,17,,no story,Yes,No,No,,White,,male,Male,25,25,,Conservative
@@ -1022,7 +996,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1021,1,English,USA,1,Lab,control story,No,No,No,White,White,,other,Other,20,20,,Conservative
 1022,1,English,USA,1,Lab,control story,No,Yes,No,other,Other,,Male,Male,19,19,,Liberal
 1023,11,English,USA,2,Online,no story,Yes,Yes,No,white,White,,Female,Female,18,18,,
-1024,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Female,Female,17,17,,
 1025,11,English,USA,2,Online,control story,Yes,Yes,Yes,white,White,,Female,Female,19,19,,
 1026,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Female,Female,19,19,,
 1027,11,English,USA,2,Online,no story,No,No,No,white,White,,Male,Male,20,20,,
@@ -1036,7 +1009,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1035,11,English,USA,2,Online,control story,,,,,,,,,,,,
 1036,11,English,USA,2,Online,control story,Yes,Yes,Yes,white,White,,Female,Female,20,20,,
 1037,11,English,USA,2,Online,control story,,,,,,,,,,,,
-1038,11,English,USA,2,Online,no story,Yes,Yes,No,white,White,,Female,Female,17,17,,
 1039,11,English,USA,2,Online,status story,,,,,,,,,,,,
 1040,11,English,USA,2,Online,control story,Yes,Yes,No,white,White,,Male,Male,18,18,,
 1041,11,English,USA,2,Online,no story,Yes,No,Yes,white,White,,Male,Male,19,19,,
@@ -1070,12 +1042,10 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1069,11,English,USA,2,Online,no story,Yes,Yes,No,hispanic,Hispanic or Latino,,Female,Female,32,32,,
 1070,11,English,USA,2,Online,no story,No,Yes,No,hispanic,Hispanic or Latino,,Male,Male,26,26,,
 1071,11,English,USA,2,Online,no story,Yes,No,Yes,white,White,,Male,Male,19,19,,
-1072,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Male,Male,16,16,,
 1073,11,English,USA,2,Online,status story,No,Yes,No,white,White,,Male,Male,36,36,,
 1074,11,English,USA,2,Online,no story,Yes,Yes,No,white,White,,Female,Female,47,47,,
 1075,11,English,USA,2,Online,status story,No,Yes,No,white,White,,Female,Female,23,23,,
 1076,11,English,USA,2,Online,control story,Yes,No,No,white,White,,Male,Male,21,21,,
-1077,11,English,USA,2,Online,no story,Yes,No,No,white,White,,Male,Male,17,17,,
 1078,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Male,Male,19,19,,
 1079,11,English,USA,2,Online,no story,Yes,No,No,white,White,,Male,Male,19,19,,
 1080,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Female,Female,19,19,,
@@ -1137,7 +1107,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1136,11,English,USA,2,Online,status story,No,Yes,No,hispanic,Hispanic or Latino,,Male,Male,20,20,,
 1137,11,English,USA,2,Online,no story,Yes,No,Yes,white,White,,Female,Female,21,21,,
 1138,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Male,Male,20,20,,
-1139,11,English,USA,2,Online,no story,No,Yes,Yes,white,White,,Male,Male,17,17,,
 1140,11,English,USA,2,Online,control story,No,No,No,white,White,,Female,Female,19,19,,
 1141,11,English,USA,2,Online,no story,No,No,No,white,White,,Female,Female,31,31,,
 1142,11,English,USA,2,Online,no story,No,No,No,other,Other,,Male,Male,22,22,,
@@ -1225,7 +1194,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1224,11,English,USA,2,Online,status story,Yes,Yes,Yes,white,White,,Female,Female,21,21,,
 1225,11,English,USA,2,Online,no story,No,No,No,white,White,,Female,Female,23,23,,
 1226,11,English,USA,2,Online,control story,Yes,No,No,hispanic,Hispanic or Latino,,Female,Female,20,20,,
-1227,11,English,USA,2,Online,control story,No,Yes,Yes,white,White,,Male,Male,16,16,,
 1228,11,English,USA,2,Online,no story,No,Yes,Yes,white,White,,Female,Female,21,21,,
 1229,11,English,USA,2,Online,no story,Yes,Yes,Yes,asian,Asian or Asian Indian,,Female,Female,20,20,,
 1230,11,English,USA,2,Online,control story,Yes,Yes,No,white,White,,Female,Female,20,20,,
@@ -1326,7 +1294,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1325,11,English,USA,2,Online,control story,No,No,Yes,white,White,,Male,Male,21,21,,
 1326,11,English,USA,2,Online,no story,Yes,Yes,No,hispanic,Hispanic or Latino,,Female,Female,20,20,,
 1327,11,English,USA,2,Online,control story,Yes,No,No,hispanic,Hispanic or Latino,,Female,Female,18,18,,
-1328,11,English,USA,2,Online,status story,Yes,Yes,Yes,black,Black or African American,,Female,Female,17,17,,
 1329,17,English,USA,12,Online,control story,Yes,No,Yes,white,White,,Male,Male,26,26,,Conservative
 1330,17,English,USA,12,Online,control story,No,No,No,white,White,,Female,Female,23,23,,Conservative
 1331,17,English,USA,12,Online,control story,Yes,No,No,white,White,,Male,Male,28,28,,Conservative
@@ -1545,7 +1512,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 1544,16,English,USA,11,lab - groups,control story,Yes,No,Yes,Black/African-American,Black or African American,,Female,Female,19,19,Democrat,Conservative
 1545,16,English,USA,11,lab - groups,no story,No,Yes,,White,White,,Female,Female,18,18,Republican,Conservative
 1546,16,English,USA,11,lab - groups,status story,Yes,No,No,White,White,,Male,Male,19,19,Republican,
-1547,16,English,USA,11,lab - groups,no story,No,Yes,No,Black/African-American,Black or African American,,Female,Female,17,17,Democrat,Conservative
 1548,16,English,USA,11,lab - groups,control story,Yes,No,Yes,White,White,,,,36,36,Democrat,Liberal
 1549,16,English,USA,11,lab - groups,no story,No,No,Yes,Black/African-American,Black or African American,,Female,Female,18,18,Democrat,Liberal
 1550,16,English,USA,11,lab - groups,no story,No,No,Yes,Black/African-American,Black or African American,,Female,Female,18,18,Democrat,
@@ -2108,7 +2074,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 2107,14,English,UK,9,Online,control story,Yes,Yes,Yes,Scottish,,Scottish,Male,Male,38,38,,
 2108,14,English,UK,9,Online,no story,Yes,Yes,Yes,British,,British,Male,Male,70,70,,
 2109,14,English,UK,9,Online,control story,No,No,No,Irish,,Irish,Female,Female,57,57,,
-2110,14,English,UK,9,Online,control story,Yes,Yes,No,British,,British,Female,Female,16,16,,
 2111,14,English,UK,9,Online,no story,No,Yes,Yes,British,,British,Female,Female,18,18,,
 2112,14,English,UK,9,Online,control story,Yes,Yes,Yes,British,,British,Male,Male,80,80,,
 2113,14,English,UK,9,Lab,control story,Yes,Yes,Yes,British,,British,Male,Male,19,19,,
@@ -2237,7 +2202,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 2236,14,English,UK,9,Online,control story,Yes,Yes,Yes,British,,British,Female,Female,36,36,,
 2237,14,English,UK,9,Online,no story,Yes,Yes,Yes,Welsh,,Welsh,Female,Female,43,43,,
 2238,14,English,UK,9,Online,control story,Yes,Yes,Yes,British,,British,Male,Male,22,22,,
-2239,14,English,UK,9,Online,no story,Yes,Yes,Yes,British,,British,Female,Female,17,17,,
 2240,14,English,UK,9,Online,control story,No,No,Yes,British,,British,Female,Female,44,44,,
 2241,14,English,UK,9,Lab,control story,Yes,Yes,Yes,british,,British,Female,Female,19,19,,
 2242,14,English,UK,9,Lab,control story,Yes,Yes,Yes,British,,British,Female,Female,18,18,,
@@ -2325,7 +2289,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 2324,13,English,Canada,8,lab - groups,no story,No,No,Yes,None given ,,,Female,Female,19,19,,Liberal
 2325,13,English,Canada,8,lab - groups,status story,No,Yes,No,None given ,,,Male,Male,19,19,,Liberal
 2326,13,English,Canada,8,lab - groups,control story,Yes,Yes,No,None given ,,,Female,Female,18,18,,Conservative
-2327,13,English,Canada,8,lab - groups,status story,No,No,Yes,None given ,,,Male,Male,17,17,,Conservative
 2328,13,English,Canada,8,lab - groups,control story,Yes,Yes,Yes,None given ,,,Female,Female,26,26,,Liberal
 2329,13,English,Canada,8,lab - groups,no story,No,Yes,No,None given ,,,Female,Female,19,19,,Liberal
 2330,13,English,Canada,8,lab - groups,no story,No,No,Yes,None given ,,,Female,Female,18,18,,
@@ -2363,9 +2326,7 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 2362,13,English,Canada,8,lab - groups,no story,Yes,No,Yes,None given ,,,Female,Female,18,18,,Liberal
 2363,13,English,Canada,8,lab - groups,control story,No,No,No,None given ,,,Male,Male,19,19,,
 2364,13,English,Canada,8,lab - groups,status story,No,No,No,None given ,,,Female,Female,18,18,,Liberal
-2365,13,English,Canada,8,lab - groups,control story,No,Yes,Yes,None given ,,,Female,Female,17,17,,
 2366,13,English,Canada,8,lab - groups,status story,No,Yes,Yes,None given ,,,Female,Female,20,20,,
-2367,13,English,Canada,8,lab - groups,no story,Yes,Yes,Yes,None given ,,,Female,Female,17,17,,Conservative
 2368,13,English,Canada,8,lab - groups,control story,Yes,Yes,Yes,None given ,,,Female,Female,18,18,,Liberal
 2369,13,English,Canada,8,lab - groups,status story,No,Yes,Yes,None given ,,,Female,Female,22,22,,Liberal
 2370,13,English,Canada,8,lab - groups,control story,No,Yes,No,None given ,,,Female,Female,18,18,,Liberal
@@ -3398,7 +3359,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 3397,5,English,USA,6,Online,control story,Yes,Yes,No,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,18,18,,
 3398,5,English,USA,6,Online,control story,Yes,No,Yes,Middle Eastern or North African,Middle Eastern or North African,,Male,Male,22,22,,
 3399,5,English,USA,6,Online,control story,No,Yes,Yes,Asian or Asian Indian,Asian or Asian Indian,,Male,Male,18,18,,
-3400,5,English,USA,6,Online,control story,Yes,Yes,No,Black or African American,Black or African American,,Female,Female,17,17,,
 3401,5,English,USA,6,Online,control story,Yes,No,No,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Female,Female,19,19,,
 3402,5,English,USA,6,Online,control story,No,Yes,No,Asian or Asian Indian,Asian or Asian Indian,,Female,Female,19,19,,
 3403,5,English,USA,6,Online,control story,No,Yes,No,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Female,Female,22,22,,
@@ -3409,7 +3369,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 3408,5,English,USA,6,Online,control story,No,No,No,Black or African American,Black or African American,,Male,Male,27,27,,
 3409,5,English,USA,6,Online,control story,No,Yes,Yes,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,18,18,,
 3410,5,English,USA,6,Online,control story,No,Yes,No,Asian or Asian Indian,Asian or Asian Indian,,Male,Male,29,29,,
-3411,5,English,USA,6,Online,control story,Yes,No,No,Black or African American,Black or African American,,Male,Male,17,17,,
 3412,5,English,USA,6,Online,control story,Yes,No,Yes,Middle Eastern or North African,Middle Eastern or North African,,Male,Male,24,24,,
 3413,5,English,USA,6,Online,status story,Yes,Yes,Yes,Middle Eastern or North African,Middle Eastern or North African,,Male,Male,19,19,,
 3414,5,English,USA,6,Online,status story,Yes,No,Yes,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,22,22,,
@@ -3427,7 +3386,6 @@ participant_id,project_code,survey_language,country,institute_code,setting,condi
 3426,5,English,USA,6,Online,status story,No,No,Yes,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,19,19,,
 3427,5,English,USA,6,Online,status story,No,No,No,Black or African American,Black or African American,,Male,Male,31,31,,
 3428,5,English,USA,6,Online,status story,Yes,No,Yes,Middle Eastern or North African,Middle Eastern or North African,,Female,Female,20,20,,
-3429,5,English,USA,6,Online,status story,No,Yes,Yes,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,17,17,,
 3430,5,English,USA,6,Online,status story,No,Yes,Yes,"Hispanic, Latino, or Spanish",Hispanic or Latino,,Male,Male,22,22,,
 3431,5,English,USA,6,Online,status story,No,No,Yes,Asian or Asian Indian,Asian or Asian Indian,,Male,Male,20,20,,
 3432,5,English,USA,6,Online,status story,Yes,No,Yes,Black or African American,Black or African American,,Female,Female,19,19,,
