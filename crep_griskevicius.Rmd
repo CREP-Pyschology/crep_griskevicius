@@ -14,7 +14,7 @@ output:
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex")
+packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm")
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -128,6 +128,7 @@ Data were collected in accordance with the Declaration of Helsinki. This researc
 ```{r, echo = FALSE}
 frq(data$recoded_race)
 frq(data$gender)
+describe(data$age)
 ```
 
 > Note from Jordan: Need to double-check the numbers in the paragraph below. Need to add demographics (race, age, gender etc)
@@ -144,7 +145,6 @@ Data were collected in the lab, or online. Each group documented the type of dat
 
 > JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
 >
-> Question from Jordan: Should we also exclude age \< 18 yo?
 
 We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
 
@@ -202,11 +202,15 @@ grouped.out <- apa_print(grouped.aov)
 
 data$total<- as.numeric(data$total)
 
+# Subset the data for the green/not green choices
+choicevars <- c("greencar", "greensoap", "greendishwasher")
+choice.data <- data[choicevars]
+
+cronbach.alpha(choice.data, standardized = FALSE, na.rm = TRUE)
+
 ```
 
-> Jordan -\> write tetrachoric correlation for internal consistency of composite scale-\> or some way of addressing internal consistency. Note from Michał on collaborator draft: "can we report internal consistency reliability here for the composite score?" "I would like somebody more knowledgable with the matter to comment here, but I think that Cronbach Alpha can be used in such a case - it is just critical to use standardized alpha (not the"raw" one, as it will be biased in a case of a binary variable)"
-
-Following the procedure used in the original study, we computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**).
+Despite low internal consistency of the three items (Cronbach's alpha = 0.38), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**). 
 
 Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r grouped.out$full_result`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$full_result`. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
 
@@ -285,7 +289,28 @@ Finally, the original paper also reported greater that selection of the green di
 
 JORDAN TO-DO:
 
-1.  Make a variable that combines lab, lab individual and lab groups and compare results across that with in-person
+```{r}
+# Make a variable that combines lab, lab individual and lab groups and compare results across that with in-person
+
+data$Groups.New <- 0
+data$Groups.New <- ifelse(data$setting=="Online",1,0)
+frq(data$Groups.New)
+
+# Chi square test of independence for green car
+test.groups.car <- chisq.test(table(data$Groups.New, data$greencar))
+test.groups.car
+
+# Chi square test of independence for green soap
+test.groups.soap <- chisq.test(table(data$Groups.New, data$greensoap))
+test.groups.soap
+
+# Chi square test of independence for green dishwasher
+test.groups.dishwasher <- chisq.test(table(data$Groups.New, data$greendishwasher))
+test.groups.dishwasher
+
+
+```
+
 
 When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
@@ -322,11 +347,7 @@ sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
 
 #### Liberal/conservative
 
-> Note from Michał in google doc: this tool isn't really described in such a way that a reader could use it in their own research. I suggest to either describe it here in more detail, including the response format, or do it in the Appendix (I think this option will be even better, as those are exploratory analysis, so these should not occupy too much of the main body of the article).
-
 We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
-
-> Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
 
 ```{r, echo = FALSE}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
@@ -339,6 +360,8 @@ n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
 aov.out2 <- aov(total ~ RorD * new_condition, data = data)
 apa_anova2 <- apa_print(aov.out2)
 
+etaSquared(aov.out2)
+
 
 
 mean.rep <- mean(data$total[data$RorD=="Republican"], na.rm = TRUE)
@@ -347,16 +370,11 @@ mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
 sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
-
 ```
 
 #### Democrat/republican
 
-> Suggestion from Aleksandra in doc: describe how dem/rep collapsed
-
 Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. We were unable to detect an interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$full$new_condition`.
-
-> Note from Michał in doc re: "no effect" verbiage in draft: again, I wouldn't go that far and say that there was no interaction, given F and p-values here; it is rather that you did not have sufficient power to detect this interaction, but to me, those number indicate that there was some effect, albeit weak (please, report effect size here) and therefore with this sample size you were unable to detect it. Weak effects aren't any inferior to strong effects in my opinion. For instance, Sulloway in his research on birth order effects often makes a claim that even if effects appear weak such as d = 0.1, those still have profound meaning for society, because basically everybody is under influence of this effect. Here, too, being liberal vs. conservative is something that concerns almost everyone, as generally speaking, everybody has some political views, which, as these data suggest, may moderate a propensity to buy green vs non-green goods
 
 ## Discussion
 
