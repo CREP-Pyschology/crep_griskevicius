@@ -14,7 +14,15 @@ output:
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm")
+packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm")
+
+library(tidyverse)
+library(viridis)
+library(colorspace)
+library(gghalves)
+library(ggthemes)
+library(skimr)
+library(Superpower)
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -33,6 +41,7 @@ package.check <- lapply(
 # Loading data from source
 url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
 data <- read.csv(url)
+orig.data <- data
 ```
 
 ```{r, echo=FALSE}
@@ -99,7 +108,7 @@ Groups signed up for the project and prepared OSF project pages for pre-data col
 
 #### Target sample size
 
-The sample size for each group was set to 82 respondents. In CREP, for each project, the sample size was determined to be at least half of the original N. For this study, the targeted sample size was set to 84, but unfortunately, in the documentation file, there was a typo (N=82). However, with multiple groups collecting data, and in this particular case with close to 3,800 participants, we have adequate statistical power to detect a very small focal effect.
+The sample size for each group was set to 82 respondents. In CREP, for each project, the sample size was determined to be at least half of the original N. For this study, the targeted sample size was set to 84, but unfortunately, in the documentation file, there was a typo (N=82). However, with multiple groups collecting data, and in this particular case with `r count(orig.data)` participants, we have adequate statistical power to detect a very small focal effect.
 
 #### Differences from the original study
 
@@ -125,34 +134,81 @@ Data were collected in accordance with the Declaration of Helsinki. This researc
 
 ### Sample
 
-```{r, include = FALSE}
-frq(data$recoded_race)
+```{r, echo = TRUE, include = FALSE}
 frq(data$gender)
 describe(data$age)
+
+gender <- table(data$gender)
+
+n.gender.women <- as.numeric(gender[1])
+n.gender.men <- as.numeric(gender[3])
+n.gender.gendervariant <- as.numeric(gender[2])
+n.gender.nonbinarytrans <- as.numeric(gender[4])
+n.gender.prefernot <- as.numeric(gender[6])
+n.gender.other <- as.numeric(gender[5])
+
+n.gender.else <- n.gender.gendervariant+n.gender.nonbinarytrans+n.gender.other+n.gender.prefernot
+
+n.gender.na <- as.numeric(sum(is.na(data$gender)))
+
+mean.age <- round(mean(data$age, na.rm = TRUE), digits = 2)
+n.age.na <- as.numeric(sum(is.na(data$age)))
+sd.age <- round(sd(data$age, na.rm = TRUE), digits = 2)
+
 ```
 
-> Note from Jordan: Need to double-check the numbers in the paragraph below. Need to add demographics (race, age, gender etc)
+Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from `r count(orig.data)` participants. We use datasets collected by `r n_projects` groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here (XXX- do we need a link here?). The complete dataset is available here: <https://osf.io/azq76/>.
 
-Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from `r count(data)` participants. We use datasets collected by `r n_projects` groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here (XXX- do we need a link here?). The complete dataset is available here: <https://osf.io/azq76/>.
+We removed 21 participants prior to posting the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with `r count(orig.data)` participants. The final sample included `r n.gender.women` women and `r n.gender.men` men with `r n.gender.else` participants reporting a gender of gender variant/nonconforming, “other,” “prefer not to say,” or transgender/non-binary. An additional `r n.gender.na` participants did not indicate their gender, either by choice or because the survey they completed did not request this information.  The mean reported age for participants was `r mean.age` years (*SD* = `r sd.age`). `r n.age.na` participants did not report their age. 
 
-We removed 21 participants from the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with 3,756 participants.
-The final sample included 2,287 women and 970 men with 18 participants reporting a gender of gender variant/nonconforming, “other,” “prefer not to say,” or transgender/non-binary. An additional 481 participants did not indicate their gender, either by choice or because the survey they completed did not request this information.  average age 24.03 years (SD = 10.23). Age for 956 participants was unreported. Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: white (71.34%, n = 1339), black (n = 130, 6.92%), Asian (n = 131, 6.98%), Hispanic/Latino (n = 151, 8.04%), Middle Eastern (n = 28, 1.49%), Multiracial (n = 8, 0.43%), Native Hawaiian or Pacific Islander (n = 5, 0.27%), and “other” (n = 71, 3.78%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (n = 1879).
+```{r, include = FALSE}
+frq(data$recoded_race)
+race.table <- table(data$recoded_race)
+
+n.race.na <- as.numeric(sum(is.na(data$recoded_race)))
+n.race.african <- as.numeric(race.table[1])
+n.race.hispanic <- as.numeric(race.table[5])
+n.race.indigenous <- as.numeric(race.table[2])
+n.race.asian <- as.numeric(race.table[3])
+n.race.black <- as.numeric(race.table[4])
+n.race.middleeastern <- as.numeric(race.table[6])
+n.race.multiracial <- as.numeric(race.table[7])
+n.race.pacific <- as.numeric(race.table[8])
+n.race.other <- as.numeric(race.table[9])
+n.race.white <- as.numeric(race.table[10])
+
+n.total.reported.race <- n.race.african + n.race.hispanic + n.race.asian + n.race.black + n.race.indigenous + n.race.middleeastern + n.race.multiracial + n.race.other + n.race.pacific + n.race.white
+
+prop.race.white <- round(100*(n.race.white / n.total.reported.race), digits = 2)
+prop.race.black <- round(100*(n.race.black + n.race.african) / n.total.reported.race, digits = 2)
+prop.race.asian <- round(100*(n.race.asian / n.total.reported.race), digits = 2)
+prop.race.hispanic <- round(100*(n.race.hispanic / n.total.reported.race), digits = 2)
+prop.race.middleeastern <- round(100*(n.race.middleeastern / n.total.reported.race), digits = 2)
+prop.race.multiracial <- round(100*(n.race.multiracial / n.total.reported.race), digits = 2)
+prop.race.pacific <- round(100*(n.race.pacific / n.total.reported.race), digits = 2)
+prop.race.other <- round(100*(n.race.other / n.total.reported.race), digits = 2)
+prop.race.na <- round(100*(n.race.na) / (n.race.na + n.total.reported.race), digits = 2)
+
+
+```
+
+Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: White (*n* = `r n.race.white`, `r prop.race.white`%), Black (*n* = `r n.race.black`, `r prop.race.black`%), Asian (*n* = `r n.race.asian`, `r prop.race.asian`%), Hispanic/Latino (*n* = `r n.race.hispanic`, `r prop.race.hispanic`%), Middle Eastern (*n* = `r n.race.middleeastern`, `r prop.race.middleeastern`%), Multiracial (*n* = `r n.race.multiracial`, `r prop.race.multiracial`%), Native Hawaiian or Pacific Islander (*n* = `r n.race.pacific`, `r prop.race.pacific`%), and “other” (*n* = `r n.race.other`, `r prop.race.other`%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (*n* = `r n.race.na`, `r prop.race.na`% of total).
 
 
 ### Procedure
 
 Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration of their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available in Table XX in Supplementary materials (<https://osf.io/vc5rh/>).
 
-> Note from Jordan: We need to update the deviations based on the CREP audit
-
 ### Treatment of missing data, data preparation, and data analysis
 
 > JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
 >
 
-We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
+We excluded participants without responses for the dependent variables. To create a merged dataset, we accessed all individual datasets through each team's OSF page when this was available, and contacted teams directly for their data when it was not. When necessary, we also contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. A codebook for our merged data set with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. This link includes number of participants, country, institution, race, gender, conditions, and any extension variables added by each team.
 
-We also conduct exploratory analyses to test the moderating role of political orientation. We run 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacts with the condition in its association with the composite green score.
+To note, the original study conducted data collection in a computer lab and tested participants in small groups; therefore, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). We also conduct the same analyses as the original paper: for each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
+
+In our exploratory analyses, we test the moderating role of political orientation. We also run 2 x 2 factorial ANOVAs to determine whether political orientation (liberal/conservative) or political party (democrat/republican) interacts with the condition in its association with the composite green score.
 
 ## Results
 
@@ -191,7 +247,7 @@ summary(ungrouped.aov)
 ungrouped.out <- apa_print(ungrouped.aov)
 
 # post hoc testing
-TukeyHSD(ungrouped.aov)
+tukey.ungrouped <- TukeyHSD(ungrouped.aov)
 
 # Ungrouped bar graph
 ggplot(data[!is.na(data$condition), ], mapping=aes(x=condition, y=total))+
@@ -201,7 +257,9 @@ ggplot(data[!is.na(data$condition), ], mapping=aes(x=condition, y=total))+
 # Do ANOVA by new condition (control v status)
 grouped.aov <- aov(data$total ~ new_condition, data = data)
 summary(grouped.aov)
-grouped.out <- apa_print(grouped.aov)
+apa.grouped.out <- apa_print(grouped.aov)
+apa.grouped.eta <- apa.grouped.out$table$estimate
+
 
 data$total<- as.numeric(data$total)
 
@@ -218,7 +276,7 @@ cron.x <- round(cron.x, digits = 2)
 
 Despite low internal consistency of the three items (Cronbach's alpha = `r cron.x`), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**). 
 
-Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, XXX INSERT F RESULTS HERE. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, XXX INSERT F RESULTS HERE. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
+The original paper by Griskevicius and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r apa.grouped.out$statistic`, $\eta^2$ = `r apa.grouped.eta`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$statistic`, $\eta^2$ = `r ungrouped.out$table$estimate`. Post-hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05 (no story/control = `r round(tukey.ungrouped$condition[10], digits = 2)`, status story/control = `r round(tukey.ungrouped$condition[11], digits = 2)`, status story/no story = `r round(tukey.ungrouped$condition[12], digits = 2)`).
 
 The rest of our analyses combine the "control story" and "no story" conditions into one control group.
 
@@ -432,7 +490,7 @@ n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
 aov.out2 <- aov(total ~ RorD * new_condition, data = data)
 apa_anova2 <- apa_print(aov.out2)
 
-etaSquared(aov.out2)
+RorDeta <- etaSquared(aov.out2)
 
 
 
@@ -442,13 +500,14 @@ mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
 sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
+
 ```
 
 #### Democrat/republican
 
 JORDAN TO-DO: Replace results below with full F results
 
-Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. We were unable to detect an interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$full$new_condition`.
+Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$statistic$RorD`, `r RorDeta[1,2]`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, `r RorDeta[3,2]`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$statistic$new_condition`, `r RorDeta[2,2]`.
 
 ## Discussion
 
@@ -459,11 +518,17 @@ In this multi-lab replication study we followed the analytical strategy as in th
 Per recommendation of original authors, exploratory analyses included testing if political orientation moderates significantly main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on selection of green products, but the main effect of condition was absent. When political party was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but moderation effect of political party on product select was absent again. 
 
 Add: discuss reliability of composite score
+
 Discuss that only some moderators had sufficient number of data collected to be analyzed
+
 Discuss differences -online and lab
+
 2 vs 3 conditions
+
 What else?
+
 	Effect over time
+
 	US vs rest
 
 
@@ -473,19 +538,19 @@ What else?
 
 Frank, M. C., & Saxe, R. (2012). Teaching Replication. *Perspectives on Psychological Science*, *7*(6), 600--604. <https://doi.org/10.1177/1745691612460686>
 
-Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O'Brien, J., Paulk, A., Peck, T., Sashihara, M., ... Sullivan, D. (2020). Reexamining the Effect of Gustatory Disgust on Moral Judgment: A Multilab Direct Replication of Eskine, Kacinik, and Prinz (2011). *Advances in Methods and Practices in Psychological Science*, *3*(1), 3--23. <https://doi.org/10.1177/2515245919881152>
+Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O'Brien, J., Paulk, A., Peck, T., Sashihara, M., ... Sullivan, D. (2020). Reexamining the effect of gustatory disgust on moral judgment: A multilab direct replication of Eskine, Kacinik, and Prinz (2011). *Advances in Methods and Practices in Psychological Science*, *3*(1), 3--23. <https://doi.org/10.1177/2515245919881152>
 
-Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the Undiscovered Resource of Student Research Projects. *Perspectives on Psychological Science*, *7*(6), 605--607. <https://doi.org/10.1177/1745691612459057>
+Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the undiscovered resource of student research projects. *Perspectives on Psychological Science*, *7*(6), 605--607. <https://doi.org/10.1177/1745691612459057>
 
 Griskevicius, V., Tybur, J. M., & Van den Bergh, B. (2010). Going green to be seen: Status, reputation, and conspicuous conservation. *Journal of Personality and Social Psychology*, *98*(3), 392--404. <https://doi.org/10.1037/a0017346>
 
-Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., Kennett, C., Slowik, A., Sonnleitner, C., Hess-Holden, C., Errington, T. M., Fiedler, S., & Nosek, B. A. (2016). Badges to Acknowledge Open Practices: A Simple, Low-Cost, Effective Method for Increasing Transparency. *PLOS Biology*, *14*(5), e1002456. <https://doi.org/10.1371/journal.pbio.1002456>
+Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., Kennett, C., Slowik, A., Sonnleitner, C., Hess-Holden, C., Errington, T. M., Fiedler, S., & Nosek, B. A. (2016). Badges to acknowledge open practices: A simple, low-Cost, effective method for increasing transparency. *PLOS Biology*, *14*(5), e1002456. <https://doi.org/10.1371/journal.pbio.1002456>
 
-Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-Analysis of the Effect of Red on Perceived Attractiveness. *Evolutionary Psychology*, *16*(4), 1474704918802412. <https://doi.org/10.1177/1474704918802412>
+Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-analysis of the effect of red on perceived attractiveness. *Evolutionary Psychology*, *16*(4), 1474704918802412. <https://doi.org/10.1177/1474704918802412>
 
-Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-Esteem, Self-Disclosure, Self-Expression, and Connection on Facebook: A Collaborative Replication Meta-Analysis. *Psi Chi Journal of Psychological Research*, *23*(2), 98--109. <https://doi.org/10.24839/2325-7342.JN23.2.98>
+Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-esteem, self-disclosure, self-expression, and connection on Facebook: A collaborative replication meta-analysis. *Psi Chi Journal of Psychological Research*, *23*(2), 98--109. <https://doi.org/10.24839/2325-7342.JN23.2.98>
 
-Perlman, B., & McCann, L. I. (1999). The Most Frequently Listed Courses in the Undergraduate Psychology Curriculum. *Teaching of Psychology*, *26*(3), 177--182. <https://doi.org/10.1207/S15328023TOP260303>
+Perlman, B., & McCann, L. I. (1999). The most frequently listed courses in the undergraduate psychology curriculum. *Teaching of Psychology*, *26*(3), 177--182. <https://doi.org/10.1207/S15328023TOP260303>
 
 R Core Team. (2021). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. <https://www.R-project.org/>
 
@@ -493,8 +558,8 @@ RStudio Team. (2020). *RStudio: Integrated Development Environment for R*. RStud
 
 Standing, L. G., Grenier, M., Lane, E. A., Roberts, M. S., & Sykes, S. J. (2014). Using replication projects in teaching research methods. *Psychology Teaching Review*, *20*(1), 96--104.
 
-Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. (2019). A Demonstration of the Collaborative Replication and Education Project: Replication Attempts of the Red-Romance Effect. *Collabra: Psychology*, *5*(1), 5. <https://doi.org/10.1525/collabra.177>
+Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. (2019). A demonstration of the Collaborative Replication and Education Project: Replication attempts of the red-romance effect. *Collabra: Psychology*, *5*(1), 5. <https://doi.org/10.1525/collabra.177>
 
-Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing Research With Undergraduate Students via Replication Work: The Collaborative Replications and Education Project. *Frontiers in Psychology*, *10*, 247. <https://doi.org/10.3389/fpsyg.2019.00247>
+Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The Collaborative Replications and Education Project. *Frontiers in Psychology*, *10*, 247. <https://doi.org/10.3389/fpsyg.2019.00247>
 
-Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. (2022). Teaching Research in Principle and in Practice: What Do Psychology Instructors Think of Research Projects in Their Courses? *Psychology Learning & Teaching*, 147572572211019. <https://doi.org/10.1177/14757257221101942>
+Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. (2022). Teaching research in principle and in practice: What do psychology instructors think of research projects in their courses? *Psychology Learning & Teaching*, 147572572211019. <https://doi.org/10.1177/14757257221101942>
