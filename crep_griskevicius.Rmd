@@ -3,14 +3,14 @@ title: "Collaborative registered replication of Griskevicius et al (2010): Can p
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  pdf_document: 
-    highlight: tango
+  word_document: 
+    highlight: monochrome
   html_document: 
     toc_float: yes
     highlight: monochrome
     theme: journal
-  word_document: 
-    highlight: monochrome
+  pdf_document: 
+    highlight: tango
 ---
 
 ```{r packages, include=FALSE}
@@ -49,11 +49,11 @@ Ljiljana B. Lazarević, Faculty of Philosophy, University of Belgrade Čika Ljub
 
 **Funding statement:** This project was funded in part by NSF Award 2141930 to J. Wagge.
 
-**Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol \# 2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study (all ethics approvals can be found on the project pages from the individual sites: <https://osf.io/4bfwu/>). This study complied with the ethics code outlined in the Declaration of Helsinki.
+**Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol #2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study (all ethics approvals can be found on the project pages from the individual sites: <https://osf.io/4bfwu/>). This study complied with the ethics code outlined in the Declaration of Helsinki.
 
 **Acknowledgment:** The authors would like to thank all students, supervisors, and reviewers who contributed to this CREP project. The authors would like to specifically thank Drs. Jon Grahe, Mark Brandt, and Hans IJzerman for their vision and early dedication to the CREP.
 
-```{r}
+```{r, include = FALSE}
 
 # Descriptive statistics for project characteristics
 # Frequency tables for project code, survey language, countries, institute code, setting, and condition
@@ -83,7 +83,7 @@ The present report documents a pooled analysis of data collected by teams who si
 
 Can pro-environmental behavior be promoted by inducing status competition? Griskevicius and colleagues (2010) tried to give an answer to this question and reported the results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, the authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claimed that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. These authors claimed that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products. To conclude, the original study suggested that status competition can promote pro-environmental behavior.
 
-In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable than their green counterparts. In the experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in the control motive condition. The second control condition did not include a cover story, and participants simply selected among products. In the original paper, using a one-way analysis of variance (ANOVA) on the product composite found a large effect of status prime (d=0.47). To summarize, the first experiment of Griskevicius et al (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior. 
+In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable than their green counterparts. In the experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in the control motive condition. The second control condition did not include a cover story, and participants simply selected among products. In the original paper, using a one-way analysis of variance (ANOVA) on the product composite found a large effect of status prime (d=0.47). To summarize, the first experiment of Griskevicius et al (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior.
 
 ## Method
 
@@ -95,7 +95,7 @@ Once this study was selected, the CREP leadership team sent an email to Dr. Gris
 
 ### CREP Project Process
 
-Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was completed. Since 2013, 49 groups from nine different countries expressed interest in conducting CREP Griskevicius et al (2010). Eleven groups did not provide their data and one group did not provide the codebook with us, five groups did not complete data collection, three groups did not create the OSF page, four groups dropped out before data collection, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is provided in Table XX in Supplementary materials (<https://osf.io/vc5rh/>). Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
+Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was completed. Since 2013, 49 groups from nine different countries expressed interest in conducting CREP Griskevicius et al (2010). Eleven groups did not provide their data and one group did not provide the codebook with us, five groups did not complete data collection, three groups did not create the OSF page, four groups dropped out before data collection, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is provided in Table XX in Supplementary materials (<https://osf.io/vc5rh/>) (XXX THIS LINK IS BAD). Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
 
 #### Target sample size
 
@@ -125,7 +125,7 @@ Data were collected in accordance with the Declaration of Helsinki. This researc
 
 ### Sample
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 frq(data$recoded_race)
 frq(data$gender)
 describe(data$age)
@@ -133,13 +133,17 @@ describe(data$age)
 
 > Note from Jordan: Need to double-check the numbers in the paragraph below. Need to add demographics (race, age, gender etc)
 
-Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from 3798 participants. We use datasets collected by 24 groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here. The complete dataset is available here: <https://osf.io/azq76/>.
+Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from `r count(data)` participants. We use datasets collected by `r n_projects` groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here (XXX- do we need a link here?). The complete dataset is available here: <https://osf.io/azq76/>.
+
+We removed 21 participants from the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with 3,756 participants.
+The final sample included 2,287 women and 970 men with 18 participants reporting a gender of gender variant/nonconforming, “other,” “prefer not to say,” or transgender/non-binary. An additional 481 participants did not indicate their gender, either by choice or because the survey they completed did not request this information.  average age 24.03 years (SD = 10.23). Age for 956 participants was unreported. Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: white (71.34%, n = 1339), black (n = 130, 6.92%), Asian (n = 131, 6.98%), Hispanic/Latino (n = 151, 8.04%), Middle Eastern (n = 28, 1.49%), Multiracial (n = 8, 0.43%), Native Hawaiian or Pacific Islander (n = 5, 0.27%), and “other” (n = 71, 3.78%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (n = 1879).
+
 
 ### Procedure
 
 Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration of their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available in Table XX in Supplementary materials (<https://osf.io/vc5rh/>).
 
-> Note from Jordan: We need to update the deviations
+> Note from Jordan: We need to update the deviations based on the CREP audit
 
 ### Treatment of missing data, data preparation, and data analysis
 
@@ -148,7 +152,6 @@ Data were collected in the lab, or online. Each group documented the type of dat
 
 We exclude participants without values on the dependent variables. No replacement of missing values was performed. To create a merged dataset, all individual datasets were accessed and data quality was checked. We contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks when missing. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. Codebook with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. We report descriptive statistics for each group participating in the project and overall. It includes a number of participants, country, institution, race, gender, conditions, and extension variables if used. As part of confirmatory analyses, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). To note, the original study conducted data collection in a computer lab and tested participants in small groups. For each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
 
-\
 We also conduct exploratory analyses to test the moderating role of political orientation. We run 2 x 2 factorial ANOVA to determine whether political orientation (liberal or conservative) interacts with the condition in its association with the composite green score.
 
 ## Results
@@ -157,7 +160,7 @@ We also conduct exploratory analyses to test the moderating role of political or
 
 #### Composite Green Score
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # Original paper: In
 # addition to examining the influence of status motives on each
 # product individually, we also analyzed the effect of status when the
@@ -179,8 +182,8 @@ data$greensoap <- recode(data$greensoap, "Yes" = 1, "No" = 0)
 
 data$total <- data$greencar + data$greendishwasher + data$greensoap
 describe(data$total)
-mean.composite <- mean(data$total, na.rm = TRUE)
-sd.composite <-sd(data$total, na.rm = TRUE)
+mean.composite <- round(mean(data$total, na.rm = TRUE),digit = 2)
+sd.composite <-round(sd(data$total, na.rm = TRUE), digits = 3)
 
 # Do ANOVA by condition (status, no story, control story)
 ungrouped.aov <- aov(data$total ~ condition, data = data)
@@ -206,19 +209,22 @@ data$total<- as.numeric(data$total)
 choicevars <- c("greencar", "greensoap", "greendishwasher")
 choice.data <- data[choicevars]
 
-cronbach.alpha(choice.data, standardized = FALSE, na.rm = TRUE)
+cron <- cronbach.alpha(choice.data, standardized = FALSE, na.rm = TRUE)
+cron.x <- cron[1]
+cron.x <- as.numeric(cron.x)
+cron.x <- round(cron.x, digits = 2)
 
 ```
 
-Despite low internal consistency of the three items (Cronbach's alpha = 0.38), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**). 
+Despite low internal consistency of the three items (Cronbach's alpha = `r cron.x`), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**). 
 
-Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r grouped.out$full_result`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$full_result`. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
+Griskevicus and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, XXX INSERT F RESULTS HERE. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, XXX INSERT F RESULTS HERE. Post hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05.
 
 The rest of our analyses combine the "control story" and "no story" conditions into one control group.
 
 #### Green car
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # From Experiment 1: 
 # Original paper: 37.2% of participants chose the green
 # car in the control condition, 54.5% of participants chose it in the
@@ -235,15 +241,33 @@ prop.table(car_table, 1)
 print(car_table)
   
 # Chi square test with Phi
-chisq.test(car_table)
-phi(car_table, digits = 3)
+chisq.car <- chisq.test(car_table)
+
+# Create reported values for r snippets
+chisq.car.stat <- round(as.numeric(chisq.car[1]), digits = 2)
+chisq.car.p <- round(as.numeric(chisq.car[3]), digits = 2)
+chisq.car.df <- as.numeric(chisq.car[2])
+car.phi <- round(phi(car_table, digits = 3), digits = 3)
+
+n.control.car.no <- as.numeric(car_table[1,1])
+n.control.car.yes <- as.numeric(car_table[1,2])
+n.status.car.no <- as.numeric(car_table[2,1])
+n.status.car.yes <- as.numeric(car_table[2,2])
+
+total.car.yes <- n.control.car.yes + n.status.car.yes
+total.car.no <- n.control.car.no + n.status.car.no
+total.car.n <- total.car.yes + total.car.no
+
+prop.status.car.yes <- round(100*n.status.car.yes/(n.status.car.yes + n.status.car.no), digits = 2)
+prop.control.car.yes <- round(100*n.control.car.yes/(n.control.car.yes + n.control.car.no), digits = 2)
+
 ```
 
-The original paper found that the green car selection was higher in the status condition (54.5%) than in the control condition (37.2%), chi2(1, N = 168) = 4.56, p = .033, phi = .165. In our sample, 55.55% of control participants selected the green car, compared to 54.84% of the status participants. We were unable to detect an effect of condition on green selection, chi2(1, N = 3749) = 0.14, p = .70, phi = -0.007.
+The original paper found that the green car selection was higher in the status condition (54.5%) than in the control condition (37.2%), $\chi^2$(1, N = 168) = 4.56, *p* = .033, $\phi$ = .165. In our sample, `r prop.control.car.yes`% of control participants selected the green car, compared to `r prop.status.car.yes`% of the status participants. We were unable to detect an effect of condition on green selection, $\chi^2$(`r chisq.car.df`, N = `r total.car.n`) = `r chisq.car.stat`, *p* = `r chisq.car.p`, $\phi$ = `r car.phi`.
 
 #### Green cleaner
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # Original paper: choice of the green cleaner increased from 25.7% in the
 # control condition to 41.8% in the status condition, chisq(1, N =
 # 168) = 4.52, p = .034, phi = .164
@@ -255,17 +279,38 @@ print(soap_table)
 prop.table(soap_table, 1)
   
 # Chi square test
-chisq.test(soap_table)
+chisq.soap <- chisq.test(soap_table)
   
 # Phi coefficient
 phi(soap_table, digits = 3)
+
+# Create reported values for r snippets
+chisq.soap.stat <- round(as.numeric(chisq.soap[1]), digits = 2)
+chisq.soap.p <- round(as.numeric(chisq.soap[3]), digits = 2)
+chisq.soap.df <- as.numeric(chisq.soap[2])
+soap.phi <- round(phi(soap_table, digits = 3), digits = 3)
+
+n.control.soap.no <- as.numeric(soap_table[1,1])
+n.control.soap.yes <- as.numeric(soap_table[1,2])
+n.status.soap.no <- as.numeric(soap_table[2,1])
+n.status.soap.yes <- as.numeric(soap_table[2,2])
+
+total.soap.yes <- n.control.soap.yes + n.status.soap.yes
+total.soap.no <- n.control.soap.no + n.status.soap.no
+total.soap.n <- total.soap.yes + total.soap.no
+
+prop.status.soap.yes <- round(100*n.status.soap.yes/(n.status.soap.yes + n.status.soap.no), digits = 2)
+prop.control.soap.yes <- round(100*n.control.soap.yes/(n.control.soap.yes + n.control.soap.no), digits = 2)
+
+
+
 ```
 
-Similarly, the original paper found that participants in the status condition selected the green cleaner more frequently than participants in the control condition (41.8% and 25.7%, respectively), chisq(1, N = 168) = 4.52, p = .034, phi = .164. In our sample, 56.92% of the control and 55.03% of the status participants selected the green cleaner. As with the "car" selection, we were unable to detect an effect of condition on choice of cleaner, chi2(1, N = 3748) = 1.17, p = 0.28, phi = -0.02.
+Similarly, the original paper found that participants in the status condition selected the green cleaner more frequently than participants in the control condition (41.8% and 25.7%, respectively), $\chi^2$(1, N = 168) = 4.52, *p* = .034, $\phi$ = .164. In our sample, `r prop.control.soap.yes`% of the control and `r prop.status.soap.yes`% of the status participants selected the green cleaner. As with the "car" selection, we were unable to detect an effect of condition on choice of cleaner, $\chi^2$(`r chisq.soap.df`, N = `r total.soap.n`) = `r chisq.soap.stat`, *p* = `r chisq.soap.p`, $\phi$ = `r soap.phi`.
 
 #### Green dishwasher
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # Original paper: Choice of the green dishwasher
 # also increased from 34.5% in the control condition to 49.1% in the
 # status condition, chisq(1, N = 168) = 3.30, p = .069, eff size .140
@@ -277,19 +322,35 @@ print(dishwasher_table)
 prop.table(dishwasher_table, 1)
   
 # Chi square test
-chisq.test(dishwasher_table)
+chisq.dishwasher <- chisq.test(dishwasher_table)
   
 # Phi coefficient
 phi(dishwasher_table, digits = 3)
+
+# Create reported values for r snippets
+chisq.dishwasher.stat <- round(as.numeric(chisq.dishwasher[1]), digits = 2)
+chisq.dishwasher.p <- round(as.numeric(chisq.dishwasher[3]), digits = 2)
+chisq.dishwasher.df <- as.numeric(chisq.dishwasher[2])
+dishwasher.phi <- round(phi(dishwasher_table, digits = 3), digits = 3)
+
+n.control.dishwasher.no <- as.numeric(dishwasher_table[1,1])
+n.control.dishwasher.yes <- as.numeric(dishwasher_table[1,2])
+n.status.dishwasher.no <- as.numeric(dishwasher_table[2,1])
+n.status.dishwasher.yes <- as.numeric(dishwasher_table[2,2])
+
+total.dishwasher.yes <- n.control.dishwasher.yes + n.status.dishwasher.yes
+total.dishwasher.no <- n.control.dishwasher.no + n.status.dishwasher.no
+total.dishwasher.n <- total.dishwasher.yes + total.dishwasher.no
+
+prop.status.dishwasher.yes <- round(100*n.status.dishwasher.yes/(n.status.dishwasher.yes + n.status.dishwasher.no), digits = 2)
+prop.control.dishwasher.yes <- round(100*n.control.dishwasher.yes/(n.control.dishwasher.yes + n.control.dishwasher.no), digits = 2)
 ```
 
-Finally, the original paper also reported greater that selection of the green dishwasher was more likely in the status condition than the control condition (49.1% and 34.5%, respectively), chisq(1, N = 168) = 3.30, p = .069, eff size .140, while we found no such effect when comparing the 52.84% of control participants who selected the green dishwasher to the 51.75% of status prime participants who did the same, chisq(1, N = 3752) = 0.37, p = .54, phi = -0.01.
+Finally, the original paper also reported greater that selection of the green dishwasher was more likely in the status condition than the control condition (49.1% and 34.5%, respectively), $\chi^2$(1, N = 168) = 3.30, *p* = .069, $\phi$ = .140, while we found no such effect when comparing the `r prop.control.dishwasher.yes`% of control participants who selected the green dishwasher to the `r prop.status.dishwasher.yes`% of status prime participants who did the same, $\chi^2$(`r chisq.dishwasher.df`, N = `r total.dishwasher.n`) = `r chisq.dishwasher.stat`, *p* = `r chisq.dishwasher.p`, $\phi$ = `r dishwasher.phi`.
 
 ### Exploratory Analyses
 
-JORDAN TO-DO:
-
-```{r}
+```{r, include= FALSE}
 # Make a variable that combines lab, lab individual and lab groups and compare results across that with in-person
 
 data$Groups.New <- 0
@@ -311,17 +372,23 @@ test.groups.dishwasher
 
 ```
 
+JORDAN TO-DO: 
+-Look at US versus elsewhere
+-Look at the effect over time
+-Look at how to compare effect sizes over time
+
+To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just “lab”) into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
 
 When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 n.conservative = sum(data$LiborCon=='Conservative', na.rm = TRUE)
 n.liberal = sum(data$LiborCon=='Liberal', na.rm = TRUE)
 ```
 
 Using this method of collapsing data, we found that n = `r n.conservative` participants identified as conservative, while n = `r n.liberal` participants identified as liberal.
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # Insert 2 x 2 factorial ANOVA with condition & political orientation on composite green score
 
 aov.out <- aov(total ~ LiborCon * new_condition, data = data)
@@ -347,14 +414,19 @@ sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
 
 #### Liberal/conservative
 
+JORDAN TO-DO: Replace results below with full F results
+
 We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
 
-```{r, echo = FALSE}
+Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
+
+
+```{r, include = FALSE}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
 n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
 ```
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 # Insert 2 x 2 factorial ANOVA with condition & political party on composite green score
 
 aov.out2 <- aov(total ~ RorD * new_condition, data = data)
@@ -374,9 +446,28 @@ sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
 #### Democrat/republican
 
+JORDAN TO-DO: Replace results below with full F results
+
 Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$full$RorD`. We were unable to detect an interaction between political party and condition, `r apa_anova2$full$RorD_new_condition`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$full$new_condition`.
 
 ## Discussion
+
+Original study conducted by Griskevicius et al (2010) concluded that proenviromental behavior can be promoted using status competition. That is, earning a good reputation via prosocial and proenvironmetal behavior and action can increase an individual’s status in a group. Original study also showed that all selection of all three green-products (green car, green cleaner, green dishwasher) was higher in the status condition.
+
+In this multi-lab replication study we followed the analytical strategy as in the original study. As part of pre-registered confirmatory analysis we tested whether effect exists when green score is calculated as composite, and our results resulted in lack of statistically significant effect. We also analyzed separate if effect exists for each of the green vs non-green products. For all three products, we did not detect significant effect for none of the products. Overall, our findings do not support main conclusion of Griskevicius et al (2010). 
+
+Per recommendation of original authors, exploratory analyses included testing if political orientation moderates significantly main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on selection of green products, but the main effect of condition was absent. When political party was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but moderation effect of political party on product select was absent again. 
+
+Add: discuss reliability of composite score
+Discuss that only some moderators had sufficient number of data collected to be analyzed
+Discuss differences -online and lab
+2 vs 3 conditions
+What else?
+	Effect over time
+	US vs rest
+
+
+
 
 ## References
 
