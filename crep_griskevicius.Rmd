@@ -427,12 +427,62 @@ test.groups.soap
 test.groups.dishwasher <- chisq.test(table(data$Groups.New, data$greendishwasher))
 test.groups.dishwasher
 
+# Make a variable to see if there are differences for US versus elsewhere on prefs
+data$US_or_other <- recode(data$country, "USA" = "USA", "The Netherlands" = "other", "Germany" = "other", "UK" = "other", "Iceland" = "other", "Canada" = "other")
+test.location.car <- chisq.test(table(data$US_or_other, data$greencar))
+test.location.car
+table(data$US_or_other, data$greencar)
+
+test.location.soap <- chisq.test(table(data$US_or_other, data$greensoap))
+test.location.soap
+table(data$US_or_other, data$greensoap)
+
+test.location.dishwasher <- chisq.test(table(data$US_or_other, data$greendishwasher))
+test.location.dishwasher
+table(data$US_or_other, data$greendishwasher)
+
+# Looks like there are stronger preferences for green items outside of the US. Will break down relationship between items and condition both in the US and outside
+
+# Subset just the US participants
+usa.data <- data[which(data$US_or_other == 'USA'),]
+other.location.data <- data[which(data$US_or_other != 'USA'),]
+
+# Do chi squares for just the US participants
+test.groups.car <- chisq.test(table(usa.data$Groups.New, usa.data$greencar))
+test.groups.car
+table(usa.data$Groups.New, usa.data$greencar)
+
+test.groups.soap <- chisq.test(table(usa.data$Groups.New, usa.data$greensoap))
+test.groups.soap
+table(usa.data$Groups.New, usa.data$greensoap)
+
+test.groups.dishwasher <- chisq.test(table(usa.data$Groups.New, usa.data$greendishwasher))
+test.groups.dishwasher
+table(usa.data$Groups.New, usa.data$greendishwasher)
+
+# Do chi squares for just the "other" participants
+test.groups.car2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greencar))
+test.groups.car2
+table(other.location.data$Groups.New, other.location.data$greencar)
+
+test.groups.soap2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greensoap))
+test.groups.soap2
+table(other.location.data$Groups.New, other.location.data$greensoap)
+
+test.groups.dishwasher2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greendishwasher))
+test.groups.dishwasher2
+table(other.location.data$Groups.New, other.location.data$greendishwasher)
+
+# Looks like people outside of the US just like the green products more; no interaction with status prime
 
 ```
 
 JORDAN TO-DO: 
--Look at US versus elsewhere
+
+-Look at US versus elsewhere (code written for this)
+
 -Look at the effect over time
+
 -Look at how to compare effect sizes over time
 
 To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just “lab”) into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
@@ -472,9 +522,7 @@ sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
 
 #### Liberal/conservative
 
-JORDAN TO-DO: Replace results below with full F results
-
-We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r mean.liberal`, *SD* = `r sd.liberal`) than participants who identified as conservative (*M* = `r mean.conservative`, *SD* = `r sd.conservative`), `r apa_anova$full$LiborCon`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (M = `r mean.control`, SD = `r sd.control`) did not differ from those in the status condition (M = `r mean.status`, SD = `r sd.status`), `r apa_anova$full$new_condition` . There was also no interaction between the two variables, `r apa_anova$full$LiborCon_new_condition`.
+We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r round(mean.liberal, digits = 2)`, *SD* = `r round(sd.liberal, digits = 2)`) than participants who identified as conservative (*M* = `r round(mean.conservative, digits = 2)`, *SD* = `r round(sd.conservative, digits = 2)`), `r apa_anova$statistic$LiborCon`, $\eta^2$ = `r apa_anova$table$estimate[1]`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (*M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`) did not differ from those in the status condition (*M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova$statistic$new_condition`, $\eta^2$ = `r apa_anova$table$estimate[2]`. There was also no interaction between the two variables, `r apa_anova$statistic$LiborCon_new_condition`, $\eta^2$ = `r apa_anova$table$estimate[3]`.
 
 Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
 
@@ -507,7 +555,7 @@ sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
 JORDAN TO-DO: Replace results below with full F results
 
-Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r mean.dem`, *SD* = `r sd.dem`) than participants who identified as Republican (*M* = `r mean.rep`, *SD* = `r sd.rep`), `r apa_anova2$statistic$RorD`, `r RorDeta[1,2]`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, `r RorDeta[3,2]`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r mean.control`, *SD* = `r sd.control`; status: *M* = `r mean.status`, *SD* = `r sd.status`), `r apa_anova2$statistic$new_condition`, `r RorDeta[2,2]`.
+Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r round(mean.dem, digits = 2)`, *SD* = `r round(sd.dem, digits = 2)`) than participants who identified as Republican (*M* = `r round(mean.rep, digits = 2)`, *SD* = `r round(sd.rep, digits = 2)`), `r apa_anova2$statistic$RorD`, $\eta^2$ = `r round(RorDeta[1,2], digits = 2)`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, $\eta^2$ = `r round(RorDeta[3,2], digits = 2)`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`); status: *M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova2$statistic$new_condition`, $\eta^2$ = `r round(RorDeta[2,2], digits = 2)`.
 
 ## Discussion
 
