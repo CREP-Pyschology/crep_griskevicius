@@ -14,9 +14,10 @@ output:
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm")
+packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot")
 
 library(tidyverse)
+library(forestplot)
 library(viridis)
 library(colorspace)
 library(gghalves)
@@ -578,13 +579,85 @@ To see if there was an effect that differed across time, we examined effects acr
 # First subset the projects by year
 
 df.14.projects <- c("#14-3","#14-4")
-df.16.projects <- c("#16-18")
-df.17.projects <- c("#17-33")
-df.18.projects <- c("#18-10","#18-17","#18-20","#18-23","18-30","#18-37")
-df.19.projects <- c("#19-04","#19-24","#19-25","#19-33","#19-35","#19-52","#19-56")
-c("#20-04","#20-13","#20-22","#20-34","#20-56","#20-58","#20-59")
+df.14.subset <- subset(data, project %in% df.14.projects)
 
-# Then run a t-test for each subset comparing composite green scores across condition
+df.16.projects <- c("#16-18")
+df.16.subset <- subset(data, project %in% df.16.projects)
+
+df.17.projects <- c("#17-33")
+df.17.subset <- subset(data, project %in% df.17.projects)
+
+df.18.projects <- c("#18-10","#18-17","#18-20","#18-23","18-30","#18-37")
+df.18.subset <- subset(data, project %in% df.18.projects)
+
+df.19.projects <- c("#19-04","#19-24","#19-25","#19-33","#19-35","#19-52","#19-56")
+df.19.subset <- subset(data, project %in% df.19.projects)
+
+df.20.projects <- c("#20-04","#20-13","#20-22","#20-34","#20-56","#20-58","#20-59")
+df.20.subset <- subset(data, project %in% df.20.projects)
+
+# Then get effect sizes for each project year and store their estimates & bounds
+# 2014
+cohen.14 <- cohen.d(total ~ new_condition, data = df.14.subset)
+cohen.14.lower <- round(cohen.14$cohen.d[1], digits = 2)
+cohen.14.estimate <- round(cohen.14$cohen.d[2], digits = 2)
+cohen.14.upper <- round(cohen.14$cohen.d[3], digits = 2)
+
+# 2016
+cohen.16 <- cohen.d(total ~ new_condition, data = df.16.subset)
+cohen.16.lower <- round(cohen.16$cohen.d[1], digits = 2)
+cohen.16.estimate <- round(cohen.16$cohen.d[2], digits = 2)
+cohen.16.upper <- round(cohen.16$cohen.d[3], digits = 2)
+
+# 2017
+cohen.17 <- cohen.d(total ~ new_condition, data = df.17.subset)
+cohen.17.lower <- round(cohen.17$cohen.d[1], digits = 2)
+cohen.17.estimate <- round(cohen.17$cohen.d[2], digits = 2)
+cohen.17.upper <- round(cohen.17$cohen.d[3], digits = 2)
+
+# 2018
+cohen.18 <- cohen.d(total ~ new_condition, data = df.18.subset)
+cohen.18.lower <- round(cohen.18$cohen.d[1], digits = 2)
+cohen.18.estimate <- round(cohen.18$cohen.d[2], digits = 2)
+cohen.18.upper <- round(cohen.18$cohen.d[3], digits = 2)
+
+# 2019
+cohen.19 <- cohen.d(total ~ new_condition, data = df.19.subset)
+cohen.19.lower <- round(cohen.19$cohen.d[1], digits = 2)
+cohen.19.estimate <- round(cohen.19$cohen.d[2], digits = 2)
+cohen.19.upper <- round(cohen.19$cohen.d[3], digits = 2)
+
+# 2020
+cohen.20 <- cohen.d(total ~ new_condition, data = df.20.subset)
+cohen.20.lower <- round(cohen.20$cohen.d[1], digits = 2)
+cohen.20.estimate <- round(cohen.20$cohen.d[2], digits = 2)
+cohen.20.upper <- round(cohen.20$cohen.d[3], digits = 2)
+
+
+# Create a forest plot with effect sizes
+effect.time <- 
+  structure(list(
+    estimate  = c(NA,NA,cohen.14.estimate,cohen.16.estimate,cohen.17.estimate,cohen.18.estimate, cohen.19.estimate,cohen.20.estimate), 
+    lower = c(NA,NA,cohen.14.lower,cohen.16.lower,cohen.17.lower, cohen.18.lower, cohen.19.lower, cohen.20.lower),
+    upper = c(NA,NA, cohen.14.upper, cohen.16.upper, cohen.17.upper, cohen.18.upper, cohen.19.upper, cohen.20.upper)),
+    .Names = c("estimate", "lower", "upper"), 
+    row.names = c(NA,NA,"2014", "2016", "2017", "2018", "2019", "2020"), 
+    class = "data.frame")
+
+tabletext<-cbind(
+  c(NA,"Year", "2014", "2016", "2017", "2018", "2019", "2020"))
+
+forestplot(tabletext, 
+           hrzl_lines = list("3" = gpar(lwd=1),
+                             "8" = gpar(lwd=1)),
+           lwd.zero = 2, 
+           graph.pos = 2,
+            effect.time,new_page = TRUE,
+           is.summary=c(TRUE,TRUE,rep(FALSE,11),TRUE),
+           clip=c(-3,3), 
+           title="TITLE",
+           xlog=FALSE, 
+           col=fpColors(box="black",line="black", summary="black"))
 
 # JORDAN TO - DO
 
@@ -676,11 +749,7 @@ Discuss differences -online and lab
 
 2 vs 3 conditions
 
-What else?
-
-    Effect over time
-
-    US vs rest
+What else? - effect over time, US versus rest
 
 ## References
 
