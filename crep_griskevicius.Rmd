@@ -23,6 +23,17 @@ library(gghalves)
 library(ggthemes)
 library(skimr)
 library(Superpower)
+library(tidyr)
+library(psych)
+library(dplyr)
+library(ggplot2)
+library(sjmisc)
+library(janitor)
+library(rcompanion)
+library(lsr)
+library(papaja)
+library(afex)
+library(ltm)
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -159,7 +170,7 @@ sd.age <- round(sd(data$age, na.rm = TRUE), digits = 2)
 
 Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from `r count(orig.data)` participants. We use datasets collected by `r n_projects` groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here (XXX- do we need a link here?). The complete dataset is available here: <https://osf.io/azq76/>.
 
-We removed 21 participants prior to posting the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with `r count(orig.data)` participants. The final sample included `r n.gender.women` women and `r n.gender.men` men with `r n.gender.else` participants reporting a gender of gender variant/nonconforming, “other,” “prefer not to say,” or transgender/non-binary. An additional `r n.gender.na` participants did not indicate their gender, either by choice or because the survey they completed did not request this information.  The mean reported age for participants was `r mean.age` years (*SD* = `r sd.age`). `r n.age.na` participants did not report their age. 
+We removed 21 participants prior to posting the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with `r count(orig.data)` participants. The final sample included `r n.gender.women` women and `r n.gender.men` men with `r n.gender.else` participants reporting a gender of gender variant/nonconforming, "other," "prefer not to say," or transgender/non-binary. An additional `r n.gender.na` participants did not indicate their gender, either by choice or because the survey they completed did not request this information. The mean reported age for participants was `r mean.age` years (*SD* = `r sd.age`). `r n.age.na` participants did not report their age.
 
 ```{r, include = FALSE}
 frq(data$recoded_race)
@@ -192,8 +203,7 @@ prop.race.na <- round(100*(n.race.na) / (n.race.na + n.total.reported.race), dig
 
 ```
 
-Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: White (*n* = `r n.race.white`, `r prop.race.white`%), Black (*n* = `r n.race.black`, `r prop.race.black`%), Asian (*n* = `r n.race.asian`, `r prop.race.asian`%), Hispanic/Latino (*n* = `r n.race.hispanic`, `r prop.race.hispanic`%), Middle Eastern (*n* = `r n.race.middleeastern`, `r prop.race.middleeastern`%), Multiracial (*n* = `r n.race.multiracial`, `r prop.race.multiracial`%), Native Hawaiian or Pacific Islander (*n* = `r n.race.pacific`, `r prop.race.pacific`%), and “other” (*n* = `r n.race.other`, `r prop.race.other`%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (*n* = `r n.race.na`, `r prop.race.na`% of total).
-
+Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: White (*n* = `r n.race.white`, `r prop.race.white`%), Black (*n* = `r n.race.black`, `r prop.race.black`%), Asian (*n* = `r n.race.asian`, `r prop.race.asian`%), Hispanic/Latino (*n* = `r n.race.hispanic`, `r prop.race.hispanic`%), Middle Eastern (*n* = `r n.race.middleeastern`, `r prop.race.middleeastern`%), Multiracial (*n* = `r n.race.multiracial`, `r prop.race.multiracial`%), Native Hawaiian or Pacific Islander (*n* = `r n.race.pacific`, `r prop.race.pacific`%), and "other" (*n* = `r n.race.other`, `r prop.race.other`%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (*n* = `r n.race.na`, `r prop.race.na`% of total).
 
 ### Procedure
 
@@ -202,7 +212,6 @@ Data were collected in the lab, or online. Each group documented the type of dat
 ### Treatment of missing data, data preparation, and data analysis
 
 > JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
->
 
 We excluded participants without responses for the dependent variables. To create a merged dataset, we accessed all individual datasets through each team's OSF page when this was available, and contacted teams directly for their data when it was not. When necessary, we also contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. A codebook for our merged data set with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. This link includes number of participants, country, institution, race, gender, conditions, and any extension variables added by each team.
 
@@ -274,7 +283,74 @@ cron.x <- round(cron.x, digits = 2)
 
 ```
 
-Despite low internal consistency of the three items (Cronbach's alpha = `r cron.x`), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure X (**INSERT FIGURE X here - also asked Michał to create a figure with distributions by product**). 
+Despite low internal consistency of the three items (Cronbach's alpha = `r cron.x`), we followed the procedure used in the original study and computed a composite green score by assigning the value "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants had three dichotomous choices for three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). A distribution of composite scores can be seen in Figure 1.
+
+```{r, include = FALSE}
+# Michał figure code
+# load data
+df <- read.csv('goingGreenReplicationData.txt')
+
+# create green preference index
+df$greenScore <- rowSums(apply(df[, 9:11], 2, str_count, 'Yes'))
+
+### create Figure 1
+g1 <- ggplot(df, aes(x = condition, y = greenScore))+
+  scale_color_viridis(discrete = T,
+                      option = 'viridis',
+                      begin = .4,
+                      end = .8)+
+  scale_fill_viridis(discrete = T,
+                     option = 'viridis',
+                     begin = .4,
+                     end = .8)+
+  geom_point(
+  aes(color = condition),
+  position = position_jitter(width = .1),
+  size = .55,
+  alpha = .4)+
+  stat_summary(fun = mean,
+               geom = "point", 
+               shape = 21, 
+               size = 6,
+               col = "black",
+               fill = "yellow")+
+  geom_half_boxplot(aes(fill = condition),
+                    alpha = .4,
+                    side = 'r',
+                    outlier.shape = NA,
+                    center = T,
+                    position = position_nudge(x = .15),
+                    errorbar.draw = F,
+                    width = .2)+
+  geom_half_violin(aes(fill = condition),
+                   alpha = .4,
+                   side = 'r',
+                   bw = .3,
+                   position = position_nudge(x = .3))+
+  geom_rangeframe()+
+  theme_tufte()+
+  scale_x_discrete(labels = c('CONTROL STORY', 'NO STORY', 'STATUS STORY'))+
+  xlab("CONDITION")+
+  ylab("GREEN SCORE")+
+  theme(
+    aspect.ratio = .75,
+    legend.position = 'none',
+    text = element_text(size = 24, family = "sans"),
+    axis.title = element_text(size = 20, face = 'bold')
+  )+
+  coord_flip()
+g1
+
+# Figure note:
+# The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values surrounded by individual data points with jitter. Vertical lines in the centers of the boxplots indicate the medians. Shaded areas around them correspond to interquartile ranges, and whiskers encompass 1.5 times the interquartile ranges. The shaded areas above the boxplots indicate the density of the data.
+
+
+ggsave(g1, filename = 'fig1.png', units = 'cm',
+       height = 20, width = 28, dpi = 300)
+
+```
+
+![**Figure 1.** The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values surrounded by individual data points with jitter. Vertical lines in the centers of the boxplots indicate the medians. Shaded areas around them correspond to interquartile ranges, and whiskers encompass 1.5 times the interquartile ranges. The shaded areas above the boxplots indicate the density of the data.](fig1.png)
 
 The original paper by Griskevicius and colleagues reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) together, *F*(1, 166) = 8.53, *p* = .004, *d* = 0.47. The same test using our data did not reveal a significant effect, `r apa.grouped.out$statistic`, $\eta^2$ = `r apa.grouped.eta`. However, when we examined our three conditions (control story, status story, and no story), a small effect was found, `r ungrouped.out$statistic`, $\eta^2$ = `r ungrouped.out$table$estimate`. Post-hoc testing using Tukey's HSD correction for multiple pairwise comparisons resulted in no pairwise comparisons with a *p* \< .05 (no story/control = `r round(tukey.ungrouped$condition[10], digits = 2)`, status story/control = `r round(tukey.ungrouped$condition[11], digits = 2)`, status story/no story = `r round(tukey.ungrouped$condition[12], digits = 2)`).
 
@@ -450,15 +526,29 @@ other.location.data <- data[which(data$US_or_other != 'USA'),]
 # Do chi squares for just the US participants
 test.groups.car <- chisq.test(table(usa.data$Groups.New, usa.data$greencar))
 test.groups.car
-table(usa.data$Groups.New, usa.data$greencar)
+usa.car.table <- table(usa.data$Groups.New, usa.data$greencar)
+chisq.groups.usa.car.stat <-round(as.numeric(test.groups.car[1]), digits = 2)
+chisq.groups.usa.car.p <- round(as.numeric(test.groups.car[3]), digits = 2)
+chisq.groups.usa.car.df <- round(as.numeric(test.groups.car[2]), digits = 2)
+total.usa.car.n <- as.numeric(usa.car.table[1] + usa.car.table[2] + usa.car.table[3] + usa.car.table[4])
+
 
 test.groups.soap <- chisq.test(table(usa.data$Groups.New, usa.data$greensoap))
 test.groups.soap
-table(usa.data$Groups.New, usa.data$greensoap)
+usa.soap.table <- table(usa.data$Groups.New, usa.data$greensoap)
+chisq.groups.usa.soap.stat <-round(as.numeric(test.groups.soap[1]), digits = 2)
+chisq.groups.usa.soap.p <- round(as.numeric(test.groups.soap[3]), digits = 2)
+chisq.groups.usa.soap.df <- round(as.numeric(test.groups.soap[2]), digits = 2)
+total.usa.soap.n <- as.numeric(usa.soap.table[1] + usa.soap.table[2] + usa.soap.table[3] + usa.soap.table[4])
+
 
 test.groups.dishwasher <- chisq.test(table(usa.data$Groups.New, usa.data$greendishwasher))
 test.groups.dishwasher
-table(usa.data$Groups.New, usa.data$greendishwasher)
+usa.dishwasher.table <- table(usa.data$Groups.New, usa.data$greendishwasher)
+chisq.groups.usa.dishwasher.stat <-round(as.numeric(test.groups.dishwasher[1]), digits = 2)
+chisq.groups.usa.dishwasher.p <- round(as.numeric(test.groups.dishwasher[3]), digits = 2)
+chisq.groups.usa.dishwasher.df <- round(as.numeric(test.groups.dishwasher[2]), digits = 2)
+total.usa.dishwasher.n <- as.numeric(usa.dishwasher.table[1] + usa.dishwasher.table[2] + usa.dishwasher.table[3] + usa.dishwasher.table[4])
 
 # Do chi squares for just the "other" participants
 test.groups.car2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greencar))
@@ -477,15 +567,31 @@ table(other.location.data$Groups.New, other.location.data$greendishwasher)
 
 ```
 
-JORDAN TO-DO: 
+Because the original study was conducted only with individuals in the United States, we conducted an exploratory test of the data to determine whether there was an association between condition and green choice for only US-based participants. For US-based participants, we found no association between condition (two levels: control and status) and green car selection ($\chi^2$(`r chisq.groups.usa.car.df`, N = `r total.usa.car.n`)) = `r chisq.groups.usa.car.stat`, *p* = `r chisq.groups.usa.car.p`, $\phi$ = `r round(phi(usa.car.table), digits = 2)`), green cleaner selection ($\chi^2$(`r chisq.groups.usa.soap.df`, N = `r total.usa.soap.n`)) = `r chisq.groups.usa.soap.stat`, *p* = `r chisq.groups.usa.soap.p`, $\phi$ = `r round(phi(usa.soap.table), digits = 2)`), or green dishwasher ($\chi^2$(`r chisq.groups.usa.dishwasher.df`, N = `r total.usa.dishwasher.n`)) = `r chisq.groups.usa.dishwasher.stat`, *p* = `r chisq.groups.usa.dishwasher.p`, $\phi$ = `r round(phi(usa.dishwasher.table), digits = 2)`) selection.
 
--Look at US versus elsewhere (code written for this)
+To see if there was an effect that differed across time, we examined effects across projects from different years, as determined by their project codes assigned at the time they signed up for the study (e.g. project #14-3 was initiated in 2014). For each project year, we examined whether we could detect any differences in composite green scores across conditions (control and status). XXX JORDAN -- DO THIS AND LOOK AT RESULT
 
--Look at the effect over time
+```{r, include = FALSE}
 
--Look at how to compare effect sizes over time
+# Calculate effect sizes over time -> Projects that start with 14, then 15, etc.
 
-To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just “lab”) into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
+# First subset the projects by year
+
+df.14.projects <- c("#14-3","#14-4")
+df.16.projects <- c("#16-18")
+df.17.projects <- c("#17-33")
+df.18.projects <- c("#18-10","#18-17","#18-20","#18-23","18-30","#18-37")
+df.19.projects <- c("#19-04","#19-24","#19-25","#19-33","#19-35","#19-52","#19-56")
+c("#20-04","#20-13","#20-22","#20-34","#20-56","#20-58","#20-59")
+
+# Then run a t-test for each subset comparing composite green scores across condition
+
+# JORDAN TO - DO
+
+
+```
+
+To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just "lab") into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
 
 When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
@@ -524,8 +630,7 @@ sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
 
 We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r round(mean.liberal, digits = 2)`, *SD* = `r round(sd.liberal, digits = 2)`) than participants who identified as conservative (*M* = `r round(mean.conservative, digits = 2)`, *SD* = `r round(sd.conservative, digits = 2)`), `r apa_anova$statistic$LiborCon`, $\eta^2$ = `r apa_anova$table$estimate[1]`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (*M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`) did not differ from those in the status condition (*M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova$statistic$new_condition`, $\eta^2$ = `r apa_anova$table$estimate[2]`. There was also no interaction between the two variables, `r apa_anova$statistic$LiborCon_new_condition`, $\eta^2$ = `r apa_anova$table$estimate[3]`.
 
-Note from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
-
+**NOTE** from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
 
 ```{r, include = FALSE}
 n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
@@ -553,17 +658,15 @@ sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
 #### Democrat/republican
 
-JORDAN TO-DO: Replace results below with full F results
-
 Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r round(mean.dem, digits = 2)`, *SD* = `r round(sd.dem, digits = 2)`) than participants who identified as Republican (*M* = `r round(mean.rep, digits = 2)`, *SD* = `r round(sd.rep, digits = 2)`), `r apa_anova2$statistic$RorD`, $\eta^2$ = `r round(RorDeta[1,2], digits = 2)`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, $\eta^2$ = `r round(RorDeta[3,2], digits = 2)`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`); status: *M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova2$statistic$new_condition`, $\eta^2$ = `r round(RorDeta[2,2], digits = 2)`.
 
 ## Discussion
 
-Original study conducted by Griskevicius et al (2010) concluded that proenviromental behavior can be promoted using status competition. That is, earning a good reputation via prosocial and proenvironmetal behavior and action can increase an individual’s status in a group. Original study also showed that all selection of all three green-products (green car, green cleaner, green dishwasher) was higher in the status condition.
+Original study conducted by Griskevicius et al (2010) concluded that proenviromental behavior can be promoted using status competition. That is, earning a good reputation via prosocial and proenvironmetal behavior and action can increase an individual's status in a group. Original study also showed that all selection of all three green-products (green car, green cleaner, green dishwasher) was higher in the status condition.
 
-In this multi-lab replication study we followed the analytical strategy as in the original study. As part of pre-registered confirmatory analysis we tested whether effect exists when green score is calculated as composite, and our results resulted in lack of statistically significant effect. We also analyzed separate if effect exists for each of the green vs non-green products. For all three products, we did not detect significant effect for none of the products. Overall, our findings do not support main conclusion of Griskevicius et al (2010). 
+In this multi-lab replication study we followed the analytical strategy as in the original study. As part of pre-registered confirmatory analysis we tested whether effect exists when green score is calculated as composite, and our results resulted in lack of statistically significant effect. We also analyzed separate if effect exists for each of the green vs non-green products. For all three products, we did not detect significant effect for none of the products. Overall, our findings do not support main conclusion of Griskevicius et al (2010).
 
-Per recommendation of original authors, exploratory analyses included testing if political orientation moderates significantly main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on selection of green products, but the main effect of condition was absent. When political party was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but moderation effect of political party on product select was absent again. 
+Per recommendation of original authors, exploratory analyses included testing if political orientation moderates significantly main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on selection of green products, but the main effect of condition was absent. When political party was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but moderation effect of political party on product select was absent again.
 
 Add: discuss reliability of composite score
 
@@ -575,12 +678,9 @@ Discuss differences -online and lab
 
 What else?
 
-	Effect over time
+    Effect over time
 
-	US vs rest
-
-
-
+    US vs rest
 
 ## References
 
