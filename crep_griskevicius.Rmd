@@ -3,38 +3,18 @@ title: "Collaborative registered replication of Griskevicius et al (2010): Can p
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  word_document: 
-    highlight: monochrome
+  pdf_document: 
+    highlight: tango
   html_document: 
     toc_float: yes
     highlight: monochrome
     theme: journal
-  pdf_document: 
-    highlight: tango
+  word_document: 
+    highlight: monochrome
 ---
 
 ```{r packages, include=FALSE}
 packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot")
-
-library(tidyverse)
-library(forestplot)
-library(viridis)
-library(colorspace)
-library(gghalves)
-library(ggthemes)
-library(skimr)
-library(Superpower)
-library(tidyr)
-library(psych)
-library(dplyr)
-library(ggplot2)
-library(sjmisc)
-library(janitor)
-library(rcompanion)
-library(lsr)
-library(papaja)
-library(afex)
-library(ltm)
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -570,7 +550,7 @@ table(other.location.data$Groups.New, other.location.data$greendishwasher)
 
 Because the original study was conducted only with individuals in the United States, we conducted an exploratory test of the data to determine whether there was an association between condition and green choice for only US-based participants. For US-based participants, we found no association between condition (two levels: control and status) and green car selection ($\chi^2$(`r chisq.groups.usa.car.df`, N = `r total.usa.car.n`)) = `r chisq.groups.usa.car.stat`, *p* = `r chisq.groups.usa.car.p`, $\phi$ = `r round(phi(usa.car.table), digits = 2)`), green cleaner selection ($\chi^2$(`r chisq.groups.usa.soap.df`, N = `r total.usa.soap.n`)) = `r chisq.groups.usa.soap.stat`, *p* = `r chisq.groups.usa.soap.p`, $\phi$ = `r round(phi(usa.soap.table), digits = 2)`), or green dishwasher ($\chi^2$(`r chisq.groups.usa.dishwasher.df`, N = `r total.usa.dishwasher.n`)) = `r chisq.groups.usa.dishwasher.stat`, *p* = `r chisq.groups.usa.dishwasher.p`, $\phi$ = `r round(phi(usa.dishwasher.table), digits = 2)`) selection.
 
-To see if there was an effect that differed across time, we examined effects across projects from different years, as determined by their project codes assigned at the time they signed up for the study (e.g. project #14-3 was initiated in 2014). For each project year, we examined whether we could detect any differences in composite green scores across conditions (control and status). XXX JORDAN -- DO THIS AND LOOK AT RESULT
+To see if there was an effect that differed across time, we examined effects across projects from different years, as determined by their project codes assigned at the time they signed up for the study (e.g. project #14-3 was initiated in 2014). For each project year, we examined whether we could detect any differences in composite green scores across conditions (control and status). As demonstrated by Figure 2, there doesn't appear to be any meaningful change in effect size over time, such that an effect could be detected at an early point in time but not later or vice versa.
 
 ```{r, include = FALSE}
 
@@ -637,32 +617,36 @@ cohen.20.upper <- round(cohen.20$cohen.d[3], digits = 2)
 # Create a forest plot with effect sizes
 effect.time <- 
   structure(list(
-    estimate  = c(NA,NA,cohen.14.estimate,cohen.16.estimate,cohen.17.estimate,cohen.18.estimate, cohen.19.estimate,cohen.20.estimate), 
-    lower = c(NA,NA,cohen.14.lower,cohen.16.lower,cohen.17.lower, cohen.18.lower, cohen.19.lower, cohen.20.lower),
-    upper = c(NA,NA, cohen.14.upper, cohen.16.upper, cohen.17.upper, cohen.18.upper, cohen.19.upper, cohen.20.upper)),
+    mean  = c(NA,cohen.14.estimate,cohen.16.estimate,cohen.17.estimate,cohen.18.estimate, cohen.19.estimate,cohen.20.estimate), 
+    lower = c(NA,cohen.14.lower,cohen.16.lower,cohen.17.lower, cohen.18.lower, cohen.19.lower, cohen.20.lower),
+    upper = c(NA, cohen.14.upper, cohen.16.upper, cohen.17.upper, cohen.18.upper, cohen.19.upper, cohen.20.upper)),
     .Names = c("estimate", "lower", "upper"), 
-    row.names = c(NA,NA,"2014", "2016", "2017", "2018", "2019", "2020"), 
+    row.names = c(NA,"2014", "2016", "2017", "2018", "2019", "2020"), 
     class = "data.frame")
 
 tabletext<-cbind(
-  c(NA,"Year", "2014", "2016", "2017", "2018", "2019", "2020"))
+  c("Year", "2014", "2016", "2017", "2018", "2019", "2020"))
+
+png(file='forestplot.png') # Open PNG device with specific file name
 
 forestplot(tabletext, 
-           hrzl_lines = list("3" = gpar(lwd=1),
-                             "8" = gpar(lwd=1)),
-           lwd.zero = 2, 
+           hrzl_lines = list("2" = gpar(lwd=2),
+                             "8" = gpar(lwd=2)),
+           line.margin = .1,
+           xticks = c(-1.00, -.50, 0, .50, 1.00),
+           lwd.zero = 1, 
            graph.pos = 2,
             effect.time,new_page = TRUE,
-           is.summary=c(TRUE,TRUE,rep(FALSE,11),TRUE),
-           clip=c(-3,3), 
-           title="TITLE",
+           is.summary=FALSE,
+           clip=c(-1,1), 
+           title="Effect of Condition (Control/Status) on Composite Green Score \n by Project Initation Year",
            xlog=FALSE, 
            col=fpColors(box="black",line="black", summary="black"))
 
-# JORDAN TO - DO
-
-
+dev.off()
 ```
+
+![**Figure 2.** Forest plot caption stuff](forestplot.png)
 
 To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just "lab") into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
 
@@ -726,12 +710,36 @@ mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
 sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
 
+RorDtable <- table(data$RorD, data$new_condition)
+
 
 ```
 
 #### Democrat/republican
 
 Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r round(mean.dem, digits = 2)`, *SD* = `r round(sd.dem, digits = 2)`) than participants who identified as Republican (*M* = `r round(mean.rep, digits = 2)`, *SD* = `r round(sd.rep, digits = 2)`), `r apa_anova2$statistic$RorD`, $\eta^2$ = `r round(RorDeta[1,2], digits = 2)`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, $\eta^2$ = `r round(RorDeta[3,2], digits = 2)`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`); status: *M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova2$statistic$new_condition`, $\eta^2$ = `r round(RorDeta[2,2], digits = 2)`.
+
+Importantly, we did not have adequate power to detect any interaction effects. Using the Superpower package in r, we determined that we would need at least 418 participants *per cell* to detect an interaction effect between political party and condition. In our four cells created by the two variables political party (Republican or Democrat) and condition (status or control), our cell sizes were `r RorDtable[1]`, `r RorDtable[2]`, `r RorDtable[3]`, and `r RorDtable[4]`.
+
+```{r eval=FALSE, include=FALSE}
+# power analysis with Superpower
+design  <-  ANOVA_design(
+  design = "2b*2b",
+  n = round(739/4, 0), # our cell size assuming we had EQUAL cell sizes - a very non-conservative approach (because we had between 81 and 322 participants per cell with the total sample of 739)
+  mu = c(1.90, 1.38, 1.95, 1.15), # means for each cell (condition x political orientation)
+  sd = 1.02) 
+
+ANOVA_exact(design, alpha_level = 0.05)
+
+# plot power simulation
+plot_power(design,
+           alpha_level = 0.05,
+           desired_power = 80,
+           min_n = 100,
+           max_n = 500)$plot_ANOVA
+
+# 418 participants per cell needed for .80 power to detect this interaction, assuming conventional alpha levels of .05
+```
 
 ## Discussion
 
