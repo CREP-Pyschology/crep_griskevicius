@@ -1,20 +1,20 @@
 ---
-title: "Collaborative registered replication of Griskevicius et al (2010): Can pro-environmental behavior be promoted by inducing status competition?"
+title: "Collaborative registered replication of Griskevicius et al. (2010): Can pro-environmental behavior be promoted by inducing status competition?"
 author: "Jordan Wagge"
 date: "Last Updated `r Sys.Date()`"
 output:
-  pdf_document: 
-    highlight: tango
   html_document: 
     toc_float: yes
     highlight: monochrome
     theme: journal
   word_document: 
     highlight: monochrome
+  pdf_document: 
+    highlight: tango
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot")
+packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot","trackdown")
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -50,7 +50,7 @@ Ljiljana B. Lazarević, Faculty of Philosophy, University of Belgrade Čika Ljub
 
 **Funding statement:** This project was funded in part by NSF Award 2141930 to J. Wagge.
 
-**Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol #2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study (all ethics approvals can be found on the project pages from the individual sites: <https://osf.io/4bfwu/>). This study complied with the ethics code outlined in the Declaration of Helsinki.
+**Ethics committee approval:** This research was approved under an "umbrella" ethics proposal at the Institutional Review Board of the Department of Psychology, University of Belgrade (Protocol #2021-069). At each site where there was a local ethics board and where ethics approval was required, the local board approved the study. This study complied with the ethics code outlined in the Declaration of Helsinki.
 
 **Acknowledgment:** The authors would like to thank all students, supervisors, and reviewers who contributed to this CREP project. The authors would like to specifically thank Drs. Jon Grahe, Mark Brandt, and Hans IJzerman for their vision and early dedication to the CREP.
 
@@ -72,39 +72,45 @@ n_institutes <- length(unique(data$institute_code[data$institute_code != "NANA"]
 n_country <- length(unique(data$country[data$country != "NANA"]))
 ```
 
-## Introduction
+## Introduction 
 
-The Collaborative Replications and Education Project (Wagge et al., 2019b), or CREP, is one of several initiatives that seeks to improve undergraduate training in research methods. CREP's role includes selecting studies to be closely replicated by students, structuring the methods for the replication, reviewing projects both before and after data collection, and facilitating the publication of a pooled analysis (such as the present paper). While CREP has a pedagogical mission, we hope to also advance science by providing additional evidence for the boundaries of published effects.
+The Collaborative Replications and Education Project (Wagge, Brandt, et al., 2019), or CREP, is one of several initiatives seeking to improve undergraduate training in research methods. CREP’s role includes selecting studies to be closely replicated by students, structuring the methods for the replication, reviewing projects both before and after data collection, and facilitating the publication of a pooled analysis (such as the present paper). While CREP primarily has a pedagogical mission, we hope to also advance science by providing additional evidence for the boundaries of published effects.
 
-CREP participants are students and instructors at institutions around the world. We offer CREP as one alternative to the traditional undergraduate research project; while different models may work better for some instructors, institutions, and students, the CREP offers some benefits that other models may not. First, students learn methods by closely matching the work of scholars in the field. Second, students get to participate in authentic research (Grahe, CITE) that may eventually be published in a pooled analysis and will also be available on the Open Science Framework (osf.io) to meta-analytic researchers in the future. Third, students learn the importance of many key open science practices and issues such as preregistration, replication, open methods, and open data (Kidwell et al., 2016). Fourth, students engage with reviewers (CREP team members) external to their institution. Several CREP studies have been published (e.g., Ghelfi et al., 2020; Leighton et al., 2018; Wagge et al., 2019a) and others have been included in meta-analyses (Lehman et al., 2018).
+CREP participants are students and instructors at institutions around the world. We offer CREP as one alternative to the traditional undergraduate research project; while different models may work better for some instructors, institutions, and students, the CREP offers some benefits that other models may not. First, students learn methods by directly replicating the work of scholars in the field. Second, students get to participate in authentic research (Grahe, 2017) that may eventually be published in a pooled analysis and will also be available on the Open Science Framework (osf.io) to meta-analytic researchers in the future. Third, students learn the importance of many key open science practices and issues such as preregistration, replication, open methods, and open data (Kidwell et al., 2016). Fourth, students engage with reviewers (CREP team members) external to their institution. Until now, several CREP studies have been published (e.g., Ghelfi et al., 2020; Leighton et al., 2018; Wagge, Baciu, et al., 2019), and others have been included in meta-analyses (Lehmann et al., 2018), which testifies to the quality of the project.
 
 The present report documents a pooled analysis of data collected by teams who signed up to replicate one of CREP's earliest selections for replication: Experiment 1 from Griskevicius et al. (2010).
 
 ### The original study: Status competition and pro-environmental behavior
 
-Can pro-environmental behavior be promoted by inducing status competition? Griskevicius and colleagues (2010) tried to give an answer to this question and reported the results of three experiments suggesting that status competition can be used to promote pro-environmental behavior. Namely, the authors of the original study showed that activating status motives incites people to choose green products over more luxurious non-green products. In other words, Griskevicius and his associates claimed that green purchases are motivated by competitive altruism, that is the notion that people are trying to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests people care, these altruistic tendencies are positively valued by others and it gives people prestige and status. These authors claimed that people are even more motivated to shop for green products when they are costly, and not when these products are cheaper than luxurious products. To conclude, the original study suggested that status competition can promote pro-environmental behavior.
+Can pro-environmental behavior be promoted by inducing status competition? Griskevicius and colleagues (2010) tried to answer this question and reported the results of three experiments suggesting that status competition can promote pro-environmental behavior. Namely, the authors of the original study showed that activating status motives incites people to choose “green” (environmentally-friendly) products over more luxurious non-green products (Study 1), and that this effect is specific to public behavior (Study 2) and cases in which green products are more costly than the alternative instead of the “cheap” (i.e. low-status) option. In other words, Griskevicius and his associates claimed that green purchases are motivated by competitive altruism:  the attempt to appear more altruistic when competing for status. Showing publicly pro-environmental behavior suggests to others that you care; these altruistic tendencies are valued by others, conferring prestige and status. 
 
-In CREP, the first experiment from the Griskevicius et al (2010) study was selected. Experiment 1 investigated how activating a motive for status influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions, i.e., condition activating status motives and two control motive conditions. Non-green products were selected so they are more desirable than their green counterparts. In the experimental condition participants read a cover "status" story that elicited "a desire for social status", and it was predicted that it will increase the likelihood of choosing prosocial, green products. In the first control condition, participants read a story that elicited similar levels of affect but did not elicit status motives. It was predicted that participants will select non-green products more frequently in the control motive condition. The second control condition did not include a cover story, and participants simply selected among products. In the original paper, using a one-way analysis of variance (ANOVA) on the product composite found a large effect of status prime (d=0.47). To summarize, the first experiment of Griskevicius et al (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior.
+Per CREP procedures (described in more detail in the next section), only one study in a multi-study paper is typically selected for replication. In this case, the CREP team selected the first experiment fromGriskevicius et al. (2010) because it was the focal study that was conceptually replicated and extended in their next two experiments. Experiment 1 investigated how activating a status motive influenced respondents to choose between relatively luxurious non-green and less-luxurious pro-environmental products. Importantly, the prices of both groups of products were equal. The experiment included three conditions: one condition activating status motives through a story, and two control conditions (control . Non-green products were selected to be more desirable than their green counterparts. In the experimental condition, participants read a cover “status” story that had been shown to elicit “a desire for social status” (Griskevicius et al., 2010, p. 395); the authors predicted that it would increase the likelihood of choosing prosocial (green) products compared to control In the first control condition, participants read a story that elicited similar levels of affect, but did not elicit status motives. The second control condition did not include a cover story, and participants simply selected among products. Participants were given choices between three products: a car, a dishwasher, and soap, and a composite “green” score was calculated by adding up the number of “green” choices the participant made (no green choices = 0; all green choices = 3). The original study, using a one-way analysis of variance (ANOVA) on the product composite, found a large effect of status prime (*d* = 0.47). To summarize, the first experiment from Griskevicius et al. (2010) suggested that activating status motives inclines people towards choosing pro-environmental products over more luxurious nongreen products that might signal prosocial, self-sacrificing behavior.
 
 ## Method
 
 ### CREP Procedures
 
-This study was selected for replication using the process outlined in Wagge and colleagues (2019). Briefly, in 2014, CREP volunteers located citations for the most-cited 2010 papers from the flagship empirical journals in psychology and its subdisciplines. In this way, CREP was able to narrow down the pool for selection while also guaranteeing that the paper we selected was both recent and high-interest. The goal was not to find the **best** paper for replication in terms of the field's specific needs, but rather to find a set of recent, high-interest papers, that is, **good** candidates for replication. Once the pool of citations had been gathered, CREP coders read the Method section for each paper and indicated whether it was feasible for student teams to replicate in a semester on a scale of 1 (low) -5 (high) and also whether they thought it would be interesting to students, again, on a scale of 1 (low) -5(high). The feasibility ratings were used to narrow down a final pool, while the interest ratings were used in the final decision-making process if all other factors weighted equally. Documentation of the coding process can be found here: <https://osf.io/9kzje/wiki/home/>. Once a final pool of papers was narrowed down, CREP recruited psychology professors to look again at the feasibility and interest to narrow it down more, and then the CREP leadership team engaged in internal conversation to select the study or studies that would be selected that year. The process in 2014 resulted in several selected studies, including Experiment 1 from Griskevicius and colleagues.
+This paper was selected for replication by following the standard CREP selection process, outlined by Wagge and colleagues (Wagge, Brandt, et al., 2019). Briefly, in 2013, CREP volunteers located citations for the most-cited 2010 papers from ten different flagship empirical journals in psychology and its subdisciplines. In this way, CREP was able to narrow down the pool for selection while also guaranteeing that the paper we selected was both recent and high-interest. The goal was not to find the best paper for replication in terms of the field’s specific needs, but rather to find a set of recent, high-interest papers – good candidates for replication. Once the pool of citations had been gathered, CREP coders read the Method section for each paper and indicated whether it was feasible for student teams to replicate in a semester on a scale of 1 (low) - 5 (high) and also whether they thought it would be interesting to students, again, on a scale of 1 (low) - 5 (high). The feasibility ratings were used to narrow down a final pool, while the interest ratings were used in the final decision-making process if all other factors were weighted equally. Documentation of the coding process can be found here: https://osf.io/9kzje/wiki/home/. 
 
-Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius are available here: <https://osf.io/vdo0i/wiki/home/>. Two key points from this correspondence will be discussed in the context of our results in this paper. First, Dr. Griskevicius noted that the effect may not replicate if participants didn't equate "green" choices with prosocial behavior. Second, Dr. Griskevicius noted that the connection between "green" choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
+Once a final pool of papers was narrowed down, CREP recruited psychology professors to look again at the feasibility and interest to narrow it down more, and then the CREP leadership team engaged in internal conversation to select the study or studies that would be selected that year. The process in 2013 resulted in several selected studies, including Experiment 1 from Griskevicius and colleagues.
+
+Once this study was selected, the CREP leadership team sent an email to Dr. Griskevicius as the corresponding author of the original work. The CREP team communicated our process and goals and asked for input on possible extension hypotheses and guidance for replication teams. The key parts of the correspondence from Dr. Griskevicius are available here: https://osf.io/vdo0i/wiki/home/. There are two key points from this correspondence:  first, Dr. Griskevicius noted that the effect may not replicate if participants didn’t equate “green” choices with prosocial behavior; second, Dr. Griskevicius noted that the connection between “green” choices and status was unique to politically liberal groups. The first note will provide us with a lens through which we will interpret our results, while the second provides some context for why many student teams included political ideology in extension hypotheses.
 
 ### CREP Project Process
 
-Groups signed up for the project and prepared OSF project pages for pre-data collection review. Prepared pre-data collection project pages had to include materials, analytical strategy, video of procedure, and IRB approval. Project pages were reviewed by two reviewers and the executive reviewer. After revisions, project pages were reviewed again and after obtaining positive feedback, groups were cleared for data collection. Groups had to pre-register project pages before data-collection. After data-collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was completed. Since 2013, 49 groups from nine different countries expressed interest in conducting CREP Griskevicius et al (2010). Eleven groups did not provide their data and one group did not provide the codebook with us, five groups did not complete data collection, three groups did not create the OSF page, four groups dropped out before data collection, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by `r n_projects` groups from `r n_country` different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is provided in Table XX in Supplementary materials (<https://osf.io/vc5rh/>) (XXX THIS LINK IS BAD). Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
+Once the study became available for replication in 2014, groups signed up for the project and prepared OSF project pages for pre-data collection review. These pre-data collection project pages had to include materials, analytical strategy, a video documenting the procedure, and IRB approval. The project pages were reviewed by two reviewers and the executive reviewer, at which point projects were either approved or sent back for revisions until approval could be granted. Groups were asked to pre-register project pages before data collection. After data collection was completed, project pages were reviewed again by two reviewers and the executive reviewer. At this stage, project pages were revised to include the dataset, a short report about the obtained results, and a completion pledge. Following a positive review, replication was considered successful and the project was considered complete. Early on in CREP, teams were awarded $300 - $500 upon completion, depending on the difficulty of the study. The Griskevicius et al. (2010) replication earned $300 and was awarded to only one team included in this analysis (#14-03).
+
+### Datasets included in the study
+
+From 2013 to  2020, 49 groups from nine different countries expressed interest in conducting a CREP replication of Griskevicius et al. (2010). Of these 49 groups, 25 groups did not contribute data to the final analysis: eleven groups did not provide their data, one group did not provide their codebook, five groups did not complete data collection, four groups did not begin data collection, three groups did not create their OSF page, and one group did not follow the CREP procedure. The final sample of completed projects included data collected by 24 groups from 6 different countries: USA, UK, Germany, Canada, Netherlands, and Iceland. The overview of groups participating in this project is can be found at <https://osf.io/vc5rh>. Over the years, this particular project included about 30 reviewers, 3 CREP assistants, and 3 executive reviewers.
 
 #### Target sample size
 
-The sample size for each group was set to 82 respondents. In CREP, for each project, the sample size was determined to be at least half of the original N. For this study, the targeted sample size was set to 84, but unfortunately, in the documentation file, there was a typo (N=82). However, with multiple groups collecting data, and in this particular case with `r count(orig.data)` participants, we have adequate statistical power to detect a very small focal effect.
+The target sample size for each group was set to 82 respondents. Per early CREP policies, the required sample size was at least half of the original N. For this study, the targeted sample size should have been 84 (half of the original N of 168), but unfortunately, in the documentation file, there was a typo (N = 82). However, with multiple groups collecting data, and in this particular case with `r count(orig.data)` participants, we have adequate statistical power to detect a small focal effect.
 
 #### Differences from the original study
 
-The original study was conducted in a lab, where participants were tested in small groups. Replications were conducted both in the lab and online. Some groups conducted direct replication and some groups included extension variables. Characteristics of the replications are given in Table XX in Supplementary materials (<https://osf.io/7zybp/>).
+The original study was conducted in a lab, where participants were tested in small groups. Replications were conducted both in the lab and online. Some groups conducted direct replications, and some groups included extension variables. Characteristics of the replications can be found at <https://osf.io/gt39p>.
 
 ### Disclosures
 
@@ -112,9 +118,9 @@ The original study was conducted in a lab, where participants were tested in sma
 
 Each lab preregistered its materials, protocol, and analytical strategy on Open Science Framework (OSF) before data collection. Additionally, this meta-analysis was pre-registered: <https://osf.io/ach3n>.
 
-#### Data, Materials and Resources
+#### Data, Materials, and Resources
 
-The authors of the original study provided materials for replications. All groups who completed data collection, uploaded data, analysis, and a short description of results to their OSF project page. All datasets, materials, analytical scripts, and other materials can be found on the central project OSF page (<https://osf.io/rh2nw/>). The complete codebook for the dataset is available at <https://osf.io/7nkhq/>.
+The authors of the original study provided materials for replications. All groups who completed projects uploaded their data, analyses, and a short description of results to their OSF project page. All datasets, materials, analytical scripts, and other materials can be found on the central project OSF page (<https://osf.io/rh2nw/>). The complete codebook for the dataset is available at <https://osf.io/7nkhq/>.
 
 #### Reporting
 
@@ -122,7 +128,7 @@ We report how we determined our sample size, all data exclusions, all manipulati
 
 #### Ethical approval
 
-Data were collected in accordance with the Declaration of Helsinki. This research was approved under an "umbrella" ethics proposal at the University of Belgrade, Serbia. Overarching IRB approval was obtained from the IRB of the Department of Psychology, University of Belgrade, Serbia (<https://osf.io/pcwhg/>). In addition, all groups obtained local IRB approvals which are available on our OSF project page: <https://osf.io/4bfwu/>
+Data were collected in accordance with the Declaration of Helsinki. This research was approved under an "umbrella" ethics proposal at the University of Belgrade, Serbia. Overarching IRB approval was obtained from the IRB of the Department of Psychology, University of Belgrade, Serbia (<https://osf.io/pcwhg/>). In addition, all groups obtained local IRB approvals when needed.
 
 ### Sample
 
@@ -149,9 +155,9 @@ sd.age <- round(sd(data$age, na.rm = TRUE), digits = 2)
 
 ```
 
-Data were collected by student groups in USA, UK, Germany, Canada, Netherlands, and Iceland who participated in the CREP project. In total, the merged data set contained data collected from `r count(orig.data)` participants. We use datasets collected by `r n_projects` groups. All individual data sets are available here: <https://osf.io/vc5rh/>. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here (XXX- do we need a link here?). The complete dataset is available here: <https://osf.io/azq76/>.
+Data were collected by student groups in the USA, UK, Germany, Canada, the Netherlands, and Iceland who participated in the CREP project. In total, the final  data set contained data collected from `r count(orig.data)` participants by `r n_projects` groups. All individual data sets are available here: **[INSERT LINK WHEN READY]**. All groups collected at least 82 respondents, except for one that collected 70 participants. Nine groups did not collect data on at least one of the following: age, gender, or race/ethnicity. Details about the missing data are available here: <https://osf.io/vc5rh>. The complete, anonymized dataset is available here: <https://osf.io/3xrdf>.
 
-We removed 21 participants prior to posting the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with `r count(orig.data)` participants. The final sample included `r n.gender.women` women and `r n.gender.men` men with `r n.gender.else` participants reporting a gender of gender variant/nonconforming, "other," "prefer not to say," or transgender/non-binary. An additional `r n.gender.na` participants did not indicate their gender, either by choice or because the survey they completed did not request this information. The mean reported age for participants was `r mean.age` years (*SD* = `r sd.age`). `r n.age.na` participants did not report their age.
+We removed 21 participants prior to posting the public compiled dataset because they reported ages of 16 (n = 3) or 17 (n = 18), for a total final dataset with `r count(orig.data)` participants. The final sample included `r n.gender.women` women and `r n.gender.men` men with `r n.gender.else` participants reporting a gender of gender variant/non-conforming, "other," "prefer not to say," or transgender/non-binary. An additional `r n.gender.na` participants did not indicate their gender, either by choice or because the survey they completed did not request this information. The mean reported age for participants was `r mean.age` years (*SD* = `r sd.age`), while for `r n.age.na` age was not reported.
 
 ```{r, include = FALSE}
 frq(data$recoded_race)
@@ -181,24 +187,21 @@ prop.race.pacific <- round(100*(n.race.pacific / n.total.reported.race), digits 
 prop.race.other <- round(100*(n.race.other / n.total.reported.race), digits = 2)
 prop.race.na <- round(100*(n.race.na) / (n.race.na + n.total.reported.race), digits = 2)
 
-
 ```
 
-Information about participant race/ethnicity was reported by some sites and not others, and within each site the question could vary in how it was asked. We therefore recoded the original race information to include the following categories: White (*n* = `r n.race.white`, `r prop.race.white`%), Black (*n* = `r n.race.black`, `r prop.race.black`%), Asian (*n* = `r n.race.asian`, `r prop.race.asian`%), Hispanic/Latino (*n* = `r n.race.hispanic`, `r prop.race.hispanic`%), Middle Eastern (*n* = `r n.race.middleeastern`, `r prop.race.middleeastern`%), Multiracial (*n* = `r n.race.multiracial`, `r prop.race.multiracial`%), Native Hawaiian or Pacific Islander (*n* = `r n.race.pacific`, `r prop.race.pacific`%), and "other" (*n* = `r n.race.other`, `r prop.race.other`%). These reported percentages do not include the participants who either did not report their race/ethnicity, or were not asked this question (*n* = `r n.race.na`, `r prop.race.na`% of total).
+Information about participant race/ethnicity was reported by some sites and not others, and within each site, the question could vary in how it was asked. We, therefore, recoded the original race information to include the following categories: White (*n* = `r n.race.white`, `r prop.race.white`%), Black (*n* = `r n.race.black`, `r prop.race.black`%), Asian (*n* = `r n.race.asian`, `r prop.race.asian`%), Hispanic/Latino (*n* = `r n.race.hispanic`, `r prop.race.hispanic`%), Middle Eastern (*n* = `r n.race.middleeastern`, `r prop.race.middleeastern`%), Multiracial (*n* = `r n.race.multiracial`, `r prop.race.multiracial`%), Native Hawaiian or Pacific Islander (*n* = `r n.race.pacific`, `r prop.race.pacific`%), and "other" (*n* = `r n.race.other`, `r prop.race.other`%). These reported percentages do not include the participants who either did not report their race/ethnicity or were not asked this question (*n* = `r n.race.na`, `r prop.race.na`% of the total).
 
 ### Procedure
 
-Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration of their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available in Table XX in Supplementary materials (<https://osf.io/vc5rh/>).
+Data were collected in the lab, or online. Each group documented the type of data collection. Respondents were recruited from the student or general population. Each group underwent a pre-data-collection review procedure by CREP reviewers and executive reviewers and made preregistration for their project. After data collection was completed, project pages were again reviewed (post-data-collection review) by the executive reviewer and CREP reviewers. Descriptions of individual datasets, along with all deviations are available at <https://osf.io/t8h3k>.
 
 ### Treatment of missing data, data preparation, and data analysis
 
-> JORDAN TO-DO: work on this section, address comments from Nate: "What does this mean? What metrics were used to determine if the data from a given study was of a sufficient quality to be included in the analysis? Were there any datasets that did not surpass these metrics? Also, how does the online versus in lab data collection impact the data quality? Were there any methods to ensure online data collection consisted of high quality respondents? Were online participants students from universities, or recruited from crowdsourcing platforms?"
+We excluded participants without responses for the dependent variables. To create a merged dataset, we accessed all individual datasets through each team's OSF page when this was available, and contacted teams directly for their data when it was not. When necessary, we also contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks. We left missing data as missing. The merged dataset is available on the OSF project page (<https://osf.io/3xrdf>). A codebook for our merged data set with all variables collected as part of the project is available at <https://osf.io/7nkhq/>. 
 
-We excluded participants without responses for the dependent variables. To create a merged dataset, we accessed all individual datasets through each team's OSF page when this was available, and contacted teams directly for their data when it was not. When necessary, we also contacted groups to obtain information on whether the dataset was raw or transformed and to obtain codebooks. We left missing data as missing. The merged dataset is available on the OSF project page (**ADD LINK HERE)**. A codebook for our merged data set with all variables collected as part of the project is available on <https://osf.io/7nkhq/>. This link includes number of participants, country, institution, race, gender, conditions, and any extension variables added by each team.
+We conducted the same analyses as the original paper: for each product (car, soap, and dishwater) we reported percentages by condition, Chi-square tests, and Phi coefficients. We also computed a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
 
-To note, the original study conducted data collection in a computer lab and tested participants in small groups; therefore, we use ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). We also conduct the same analyses as the original paper: for each product (car, soap, and dishwater) we report percentages by condition, Chi-square tests, and Phi coefficients. We also compute a composite green score and run ANOVA across conditions (story, no story, and control story) and report effect size and posthoc comparisons using the LSD test.
-
-In our exploratory analyses, we test the moderating role of political orientation. We also run 2 x 2 factorial ANOVAs to determine whether political orientation (liberal/conservative) or political party (democrat/republican) interacts with the condition in its association with the composite green score.
+We also performed several exploratory analyses. First, the original study conducted data collection in a computer lab and tested participants in small groups; therefore, we used ANOVA to explore differences between settings (online/lab, testing in-group/testing individually). Second, we tested the moderating role of political orientation. We also ran 2 x 2 factorial ANOVAs to determine whether political orientation (liberal/conservative) or political party (democrat/republican) interacts with the condition (control/status) in its association with the composite green score. Third, we explored whether the main effects replicated in other countries in which we collected data, and tested potential differences between the US and other countries. Fourth, the long-lasting nature of our project enabled testing if the effect differs across time. Lastly, the original authors stated that it would be worth testing for potential gender differences, thus, as part of our exploratory analyses we studied gender differences in status motives by running a 2 x 2 factorial ANOVA (gender: female or male; condition: control vs. status). 
 
 ## Results
 
@@ -249,7 +252,6 @@ grouped.aov <- aov(data$total ~ new_condition, data = data)
 summary(grouped.aov)
 apa.grouped.out <- apa_print(grouped.aov)
 apa.grouped.eta <- apa.grouped.out$table$estimate
-
 
 data$total<- as.numeric(data$total)
 
@@ -324,7 +326,6 @@ g1
 
 # Figure note:
 # The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values surrounded by individual data points with jitter. Vertical lines in the centers of the boxplots indicate the medians. Shaded areas around them correspond to interquartile ranges, and whiskers encompass 1.5 times the interquartile ranges. The shaded areas above the boxplots indicate the density of the data.
-
 
 ggsave(g1, filename = 'fig1.png', units = 'cm',
        height = 20, width = 28, dpi = 300)
@@ -421,7 +422,7 @@ prop.control.soap.yes <- round(100*n.control.soap.yes/(n.control.soap.yes + n.co
 
 ```
 
-Similarly, the original paper found that participants in the status condition selected the green cleaner more frequently than participants in the control condition (41.8% and 25.7%, respectively), $\chi^2$(1, N = 168) = 4.52, *p* = .034, $\phi$ = .164. In our sample, `r prop.control.soap.yes`% of the control and `r prop.status.soap.yes`% of the status participants selected the green cleaner. As with the "car" selection, we were unable to detect an effect of condition on choice of cleaner, $\chi^2$(`r chisq.soap.df`, N = `r total.soap.n`) = `r chisq.soap.stat`, *p* = `r chisq.soap.p`, $\phi$ = `r soap.phi`.
+Similarly, the original paper found that participants in the status condition selected the green cleaner more frequently than participants in the control condition (41.8% and 25.7%, respectively), $\chi^2$(1, N = 168) = 4.52, *p* = .034, $\phi$ = .164. In our sample, `r prop.control.soap.yes`% of the control and `r prop.status.soap.yes`% of the status participants selected the green cleaner. As with the "car" selection, we were unable to detect an effect of condition on the choice of cleaner, $\chi^2$(`r chisq.soap.df`, N = `r total.soap.n`) = `r chisq.soap.stat`, *p* = `r chisq.soap.p`, $\phi$ = `r soap.phi`.
 
 #### Green dishwasher
 
@@ -461,29 +462,105 @@ prop.status.dishwasher.yes <- round(100*n.status.dishwasher.yes/(n.status.dishwa
 prop.control.dishwasher.yes <- round(100*n.control.dishwasher.yes/(n.control.dishwasher.yes + n.control.dishwasher.no), digits = 2)
 ```
 
-Finally, the original paper also reported greater that selection of the green dishwasher was more likely in the status condition than the control condition (49.1% and 34.5%, respectively), $\chi^2$(1, N = 168) = 3.30, *p* = .069, $\phi$ = .140, while we found no such effect when comparing the `r prop.control.dishwasher.yes`% of control participants who selected the green dishwasher to the `r prop.status.dishwasher.yes`% of status prime participants who did the same, $\chi^2$(`r chisq.dishwasher.df`, N = `r total.dishwasher.n`) = `r chisq.dishwasher.stat`, *p* = `r chisq.dishwasher.p`, $\phi$ = `r dishwasher.phi`.
+Finally, in the original paper the selection of the green dishwasher was more likely in the status condition than the control condition (49.1% and 34.5%, respectively), $\chi^2$(1, N = 168) = 3.30, *p* = .069, $\phi$ = .140, while we found no such effect when comparing the `r prop.control.dishwasher.yes`% of control participants who selected the green dishwasher to the `r prop.status.dishwasher.yes`% of status prime participants who did the same, $\chi^2$(`r chisq.dishwasher.df`, N = `r total.dishwasher.n`) = `r chisq.dishwasher.stat`, *p* = `r chisq.dishwasher.p`, $\phi$ = `r dishwasher.phi`.
 
 ### Exploratory Analyses
 
 ```{r, include= FALSE}
+
+## SETTING FOR RESEARCH
 # Make a variable that combines lab, lab individual and lab groups and compare results across that with in-person
 
 data$Groups.New <- 0
 data$Groups.New <- ifelse(data$setting=="Online",1,0)
 frq(data$Groups.New)
 
-# Chi square test of independence for green car
+# Chi square test of independence for green car across lab/in-person
 test.groups.car <- chisq.test(table(data$Groups.New, data$greencar))
 test.groups.car
+chisq.groups.car.p <- round(as.numeric(test.groups.car[3]), digits = 2)
 
-# Chi square test of independence for green soap
+# Chi square test of independence for green soap across lab/in-person
 test.groups.soap <- chisq.test(table(data$Groups.New, data$greensoap))
 test.groups.soap
+chisq.groups.soap.p <- round(as.numeric(test.groups.soap[3]), digits = 2)
 
-# Chi square test of independence for green dishwasher
+# Chi square test of independence for green dishwasher across lab/in-person
 test.groups.dishwasher <- chisq.test(table(data$Groups.New, data$greendishwasher))
 test.groups.dishwasher
+chisq.groups.dishwasher.p <- round(as.numeric(test.groups.dishwasher[3]), digits = 2)
 
+```
+
+*Lab vs. Online*. To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just "lab") into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (*p*s of `r chisq.groups.car.p`, `r chisq.groups.soap.p`, and `r chisq.groups.dishwasher.p` for the green car, soap, and dishwasher, respectively).
+
+*Political orientation*. When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative and excluded any "neutral" or "other" responses from this variable.
+
+```{r, include = FALSE}
+n.conservative = sum(data$LiborCon=='Conservative', na.rm = TRUE)
+n.liberal = sum(data$LiborCon=='Liberal', na.rm = TRUE)
+```
+
+Using this method of collapsing data, we found that n = `r n.conservative` participants identified as conservative, while n = `r n.liberal` participants identified as liberal.
+
+```{r, include = FALSE}
+# Insert 2 x 2 factorial ANOVA with condition & political orientation on composite green score
+
+aov.out <- aov(total ~ LiborCon * new_condition, data = data)
+apa_anova <- apa_print(aov.out)
+
+mean.liberal <- mean(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
+mean.conservative <- mean(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
+sd.liberal <- sd(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
+sd.conservative <- sd(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
+
+mean.control <- mean(data$total[data$new_condition=="Control"], na.rm = TRUE)
+mean.status <- mean(data$total[data$new_condition=="Status"], na.rm = TRUE)
+sd.control <- sd(data$total[data$new_condition=="Control"], na.rm = TRUE)
+sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
+
+# Let's report if there are any differences between the two control conditions - "no story" and "control"
+aov.outUP <- aov(total ~ LiborCon * condition, data = data)
+apa_anovaUP <- apa_print(aov.outUP)
+
+```
+
+#### Liberal/conservative
+
+We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r round(mean.liberal, digits = 2)`, *SD* = `r round(sd.liberal, digits = 2)`) than participants who identified as conservative (*M* = `r round(mean.conservative, digits = 2)`, *SD* = `r round(sd.conservative, digits = 2)`), `r apa_anova$statistic$LiborCon`, $\eta^2$ = `r apa_anova$table$estimate[1]`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (*M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`) did not differ from those in the status condition (*M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova$statistic$new_condition`, $\eta^2$ = `r apa_anova$table$estimate[2]`. There was also no interaction between the two variables, `r apa_anova$statistic$LiborCon_new_condition`, $\eta^2$ = `r apa_anova$table$estimate[3]`.
+
+We found a similar pattern of results when the control conditions (no story and control story) were ungrouped: a main effect of liberal/conservative (`r apa_anovaUP$statistic$LiborCon`, $\eta^2$ = `r apa_anovaUP$table$estimate[1]`), no main effect of ungrouped condition (`r apa_anovaUP$statistic$condition`, $\eta^2$ = `r apa_anovaUP$table$estimate[2]`), and no interaction between the variables (`r apa_anovaUP$statistic$LiborCon_condition`, $\eta^2$ = `r apa_anovaUP$table$estimate[3]`).
+
+```{r, include = FALSE}
+n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
+n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
+```
+
+```{r, include = FALSE}
+# Insert 2 x 2 factorial ANOVA with condition & political party on composite green score
+
+aov.out2 <- aov(total ~ RorD * new_condition, data = data)
+apa_anova2 <- apa_print(aov.out2)
+
+RorDeta <- etaSquared(aov.out2)
+
+mean.rep <- mean(data$total[data$RorD=="Republican"], na.rm = TRUE)
+mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
+
+sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
+sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
+
+RorDtable <- table(data$RorD, data$new_condition)
+```
+
+#### Democrat/republican
+
+Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r round(mean.dem, digits = 2)`, *SD* = `r round(sd.dem, digits = 2)`) than participants who identified as Republican (*M* = `r round(mean.rep, digits = 2)`, *SD* = `r round(sd.rep, digits = 2)`), `r apa_anova2$statistic$RorD`, $\eta^2$ = `r round(RorDeta[1,2], digits = 2)`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, $\eta^2$ = `r round(RorDeta[3,2], digits = 2)`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`); status: *M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova2$statistic$new_condition`, $\eta^2$ = `r round(RorDeta[2,2], digits = 2)`.
+
+Importantly, we did not have adequate power to detect any interaction effects. Using the *Superpower* package in R, we determined that we would need at least 418 participants *per cell* to detect an interaction effect between political party and condition. In our four cells created by the two variables political party (Republican or Democrat) and condition (status or control), our cell sizes were `r RorDtable[1]`, `r RorDtable[2]`, `r RorDtable[3]`, and `r RorDtable[4]`, respectively. Because of these issues with power, we did not conduct a test with ungrouped control conditions.
+
+```{r, include = FALSE}
+## LOCATION - US/OTHER
 # Make a variable to see if there are differences for US versus elsewhere on prefs
 data$US_or_other <- recode(data$country, "USA" = "USA", "The Netherlands" = "other", "Germany" = "other", "UK" = "other", "Iceland" = "other", "Canada" = "other")
 test.location.car <- chisq.test(table(data$US_or_other, data$greencar))
@@ -505,52 +582,69 @@ usa.data <- data[which(data$US_or_other == 'USA'),]
 other.location.data <- data[which(data$US_or_other != 'USA'),]
 
 # Do chi squares for just the US participants
-test.groups.car <- chisq.test(table(usa.data$Groups.New, usa.data$greencar))
+test.groups.car <- chisq.test(table(usa.data$new_condition, usa.data$greencar))
 test.groups.car
-usa.car.table <- table(usa.data$Groups.New, usa.data$greencar)
+usa.car.table <- table(usa.data$new_condition, usa.data$greencar)
 chisq.groups.usa.car.stat <-round(as.numeric(test.groups.car[1]), digits = 2)
 chisq.groups.usa.car.p <- round(as.numeric(test.groups.car[3]), digits = 2)
 chisq.groups.usa.car.df <- round(as.numeric(test.groups.car[2]), digits = 2)
 total.usa.car.n <- as.numeric(usa.car.table[1] + usa.car.table[2] + usa.car.table[3] + usa.car.table[4])
 
-
-test.groups.soap <- chisq.test(table(usa.data$Groups.New, usa.data$greensoap))
+test.groups.soap <- chisq.test(table(usa.data$new_condition, usa.data$greensoap))
 test.groups.soap
-usa.soap.table <- table(usa.data$Groups.New, usa.data$greensoap)
+usa.soap.table <- table(usa.data$new_condition, usa.data$greensoap)
 chisq.groups.usa.soap.stat <-round(as.numeric(test.groups.soap[1]), digits = 2)
 chisq.groups.usa.soap.p <- round(as.numeric(test.groups.soap[3]), digits = 2)
 chisq.groups.usa.soap.df <- round(as.numeric(test.groups.soap[2]), digits = 2)
 total.usa.soap.n <- as.numeric(usa.soap.table[1] + usa.soap.table[2] + usa.soap.table[3] + usa.soap.table[4])
 
-
-test.groups.dishwasher <- chisq.test(table(usa.data$Groups.New, usa.data$greendishwasher))
+test.groups.dishwasher <- chisq.test(table(usa.data$new_condition, usa.data$greendishwasher))
 test.groups.dishwasher
-usa.dishwasher.table <- table(usa.data$Groups.New, usa.data$greendishwasher)
+usa.dishwasher.table <- table(usa.data$new_condition, usa.data$greendishwasher)
 chisq.groups.usa.dishwasher.stat <-round(as.numeric(test.groups.dishwasher[1]), digits = 2)
 chisq.groups.usa.dishwasher.p <- round(as.numeric(test.groups.dishwasher[3]), digits = 2)
 chisq.groups.usa.dishwasher.df <- round(as.numeric(test.groups.dishwasher[2]), digits = 2)
 total.usa.dishwasher.n <- as.numeric(usa.dishwasher.table[1] + usa.dishwasher.table[2] + usa.dishwasher.table[3] + usa.dishwasher.table[4])
 
 # Do chi squares for just the "other" participants
-test.groups.car2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greencar))
+test.groups.car2 <- chisq.test(table(other.location.data$new_condition, other.location.data$greencar))
 test.groups.car2
-table(other.location.data$Groups.New, other.location.data$greencar)
+table(other.location.data$new_condition, other.location.data$greencar)
 
-test.groups.soap2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greensoap))
+test.groups.soap2 <- chisq.test(table(other.location.data$new_condition, other.location.data$greensoap))
 test.groups.soap2
-table(other.location.data$Groups.New, other.location.data$greensoap)
+table(other.location.data$new_condition, other.location.data$greensoap)
 
-test.groups.dishwasher2 <- chisq.test(table(other.location.data$Groups.New, other.location.data$greendishwasher))
+test.groups.dishwasher2 <- chisq.test(table(other.location.data$new_condition, other.location.data$greendishwasher))
 test.groups.dishwasher2
-table(other.location.data$Groups.New, other.location.data$greendishwasher)
+table(other.location.data$new_condition, other.location.data$greendishwasher)
 
 # Looks like people outside of the US just like the green products more; no interaction with status prime
 
+# Ungrouped control conditions + US/other -> composite?
+test.ungrouped.location <- aov(total ~ US_or_other * condition, data = data)
+summary(test.ungrouped.location)
+p_value_me_location <-summary(test.ungrouped.location)[[1]]$`Pr(>F)`[1]
+p_value_me_condition <-summary(test.ungrouped.location)[[1]]$`Pr(>F)`[2]
+p_value_me_int <-summary(test.ungrouped.location)[[1]]$`Pr(>F)`[3]
+loc.eta <- etaSquared(test.ungrouped.location)
+
+other.green.m <- round(mean(data$total[data$US_or_other=="other"], na.rm = TRUE), digits = 2)
+other.green.sd <- round(sd(data$total[data$US_or_other=="other"], na.rm = TRUE), digits = 2)
+USA.green.m <- round(mean(data$total[data$US_or_other=="USA"], na.rm = TRUE), digits = 2)
+USA.green.sd <- round(sd(data$total[data$US_or_other=="USA"], na.rm = TRUE), digits = 2)
+
+apa.anovaUL <- apa_print(test.ungrouped.location)
+
+
+
 ```
 
-Because the original study was conducted only with individuals in the United States, we conducted an exploratory test of the data to determine whether there was an association between condition and green choice for only US-based participants. For US-based participants, we found no association between condition (two levels: control and status) and green car selection ($\chi^2$(`r chisq.groups.usa.car.df`, N = `r total.usa.car.n`)) = `r chisq.groups.usa.car.stat`, *p* = `r chisq.groups.usa.car.p`, $\phi$ = `r round(phi(usa.car.table), digits = 2)`), green cleaner selection ($\chi^2$(`r chisq.groups.usa.soap.df`, N = `r total.usa.soap.n`)) = `r chisq.groups.usa.soap.stat`, *p* = `r chisq.groups.usa.soap.p`, $\phi$ = `r round(phi(usa.soap.table), digits = 2)`), or green dishwasher ($\chi^2$(`r chisq.groups.usa.dishwasher.df`, N = `r total.usa.dishwasher.n`)) = `r chisq.groups.usa.dishwasher.stat`, *p* = `r chisq.groups.usa.dishwasher.p`, $\phi$ = `r round(phi(usa.dishwasher.table), digits = 2)`) selection.
+*US vs. others*. The original study was conducted only with individuals in the United States. Here, we conducted an exploratory test of the data to determine whether there was an association between condition and green choice for only US-based participants. For US-based participants, we found no association between condition (two levels: control and status) and green car selection ($\chi^2$(`r chisq.groups.usa.car.df`, N = `r total.usa.car.n`)) = `r chisq.groups.usa.car.stat`, *p* = `r chisq.groups.usa.car.p`, $\phi$ = `r round(phi(usa.car.table), digits = 2)`), green cleaner selection ($\chi^2$(`r chisq.groups.usa.soap.df`, N = `r total.usa.soap.n`)) = `r chisq.groups.usa.soap.stat`, *p* = `r chisq.groups.usa.soap.p`, $\phi$ = `r round(phi(usa.soap.table), digits = 2)`), or green dishwasher ($\chi^2$(`r chisq.groups.usa.dishwasher.df`, N = `r total.usa.dishwasher.n`)) = `r chisq.groups.usa.dishwasher.stat`, *p* = `r chisq.groups.usa.dishwasher.p`, $\phi$ = `r round(phi(usa.dishwasher.table), digits = 2)`) selection.
 
-To see if there was an effect that differed across time, we examined effects across projects from different years, as determined by their project codes assigned at the time they signed up for the study (e.g. project #14-3 was initiated in 2014). For each project year, we examined whether we could detect any differences in composite green scores across conditions (control and status). As demonstrated by Figure 2, there doesn't appear to be any meaningful change in effect size over time, such that an effect could be detected at an early point in time but not later or vice versa.
+We then conducted a 2 x 3 ANOVA to test whether there was a main effect of ungrouped condition (status story plus both types of control: no story and control story) or interaction with geographic setting (US/non-US), and detected no main effect of ungrouped condition (*p* = `r round(p_value_me_location, digits = 2)`) or interaction (*p* = `r round(p_value_me_int, digits = 2)`). We did find a small main effect of location, such that individuals from non-US countries selected significantly more green products (*M* = `r other.green.m`, *SD* = `r other.green.sd`) than individuals from the United States (*M* = `r USA.green.m`, *SD* = `r USA.green.sd`), `r apa.anovaUL$statistic$US_or_other`, $\eta^2$ = `r round(loc.eta[1,2], digits = 2)`.
+
+*Stability of effect over time*. To see if there was an effect that differed across time, we examined effects across projects from different years, as determined by their project codes assigned at the time they signed up for the study (e.g. project #14-3 was initiated in 2014). For each project year, we examined whether we could detect any differences in composite green scores across conditions (control and status). As demonstrated by Figure 2, there doesn't appear to be any meaningful change in effect size over time, such that an effect could be detected at an early point in time but not later or vice versa.
 
 ```{r, include = FALSE}
 
@@ -613,7 +707,6 @@ cohen.20.lower <- round(cohen.20$cohen.d[1], digits = 2)
 cohen.20.estimate <- round(cohen.20$cohen.d[2], digits = 2)
 cohen.20.upper <- round(cohen.20$cohen.d[3], digits = 2)
 
-
 # Create a forest plot with effect sizes
 effect.time <- 
   structure(list(
@@ -648,78 +741,51 @@ dev.off()
 
 ![**Figure 2.** Forest plot caption stuff](forestplot.png)
 
-To determine if there were differences in setting type, we first collapsed all reported lab settings (group, individual, and just "lab") into one variable level, and then conducted chi-square tests of independence using a dichotomous setting variable (lab versus online). We found no relationship between green choice and setting type for all three types of product (ps of .24, .11, and .63 for the green car, soap, and dishwasher).
 
-When the CREP team first contacted the original authors about the replication, they recommended examining political orientation as a possible extension variable. Therefore, many groups decided to add a question about political orientation (liberal/conservative) and others added a question about political party (Republican/Democrat/Independent); some groups added both questions, and some groups added questions with responses that were more fitting to their particular country (e.g., Canada). We decided to use this data to compare liberal/conservative on green selections. Some institutions measured this with a scale (from very liberal to very conservative, for example), while others measured it with categorical response types (e.g., liberal, conservative, neutral). We collapsed over these responses to create a variable with one category for "liberal" that included all responses indicating any degree of being liberal, another category for "conservative" that included any response indicating being conservative, and excluded any "neutral" or "other" responses from this variable.
 
-```{r, include = FALSE}
-n.conservative = sum(data$LiborCon=='Conservative', na.rm = TRUE)
-n.liberal = sum(data$LiborCon=='Liberal', na.rm = TRUE)
+
+```{r, include = FALSE, echo = TRUE}
+# Insert 2 x 2 factorial ANOVA with condition & gender on composite green score
+
+# Filter out participants who don't identify as Male or Female
+mf_data <- subset(data, gender == "Male" | gender == "Female")
+
+aov.out3 <- aov(total ~ gender * new_condition, data = mf_data)
+apa_anova3 <- apa_print(aov.out3)
+
+mfeta <- etaSquared(aov.out3)
+
+mean.male <- mean(mf_data$total[mf_data$gender=="Male"], na.rm = TRUE)
+mean.female <- mean(mf_data$total[mf_data$gender=="Female"], na.rm = TRUE)
+
+sd.male <- sd(mf_data$total[mf_data$gender=="Male"], na.rm = TRUE)
+sd.female <- sd(mf_data$total[mf_data$gender=="Female"], na.rm = TRUE)
+
+mftable <- table(mf_data$gender, mf_data$new_condition)
+
+# do ungrouped condition, same thing
+aov.outUG <- aov(total ~ gender * condition, data = mf_data)
+summary(aov.outUG)
+apa_anovaUG <- apa_print(aov.outUG)
+mfetaUG <- etaSquared(aov.outUG)
+
+mean.nostory <- round(mean(mf_data$total[mf_data$condition=="no story"], na.rm = TRUE), digits = 2)
+mean.control <- round(mean(mf_data$total[mf_data$condition=="control story"], na.rm = TRUE), digits = 2)
+mean.status <- round(mean(mf_data$total[mf_data$condition=="status story"], na.rm = TRUE), digits = 2)
+
+
+sd.nostory <- round(sd(mf_data$total[mf_data$condition=="no story"], na.rm = TRUE), digits = 2)
+sd.control <- round(sd(mf_data$total[mf_data$condition=="control story"], na.rm = TRUE), digits = 2)
+sd.status <- round(sd(mf_data$total[mf_data$condition=="status story"], na.rm = TRUE), digits = 2)
+
+tukeyUG <- TukeyHSD(aov.outUG)
 ```
 
-Using this method of collapsing data, we found that n = `r n.conservative` participants identified as conservative, while n = `r n.liberal` participants identified as liberal.
+*Gender differences*. In their original paper, Griskevicius stated that exploring gender differences would be relevant in future studies. They hypothesized that men could be more likely to engage in proenvironmental “show-off” behavior than women since men could be more concerned about status motive. Their findings suggested that in both men and women status motives influenced product selection similarly, but suggested that this should be explored further. Since our study is high-powered we sought to test these differences and as part of our exploratory analyses, we examine potential gender differences. 
 
-```{r, include = FALSE}
-# Insert 2 x 2 factorial ANOVA with condition & political orientation on composite green score
+We conducted a 2 x 2 factorial ANOVA (gender: female or male; condition: control vs. status). We did find a main effect of gender such that participants who identified as female selected significantly more green products (*M* = `r round(mean.female, digits = 2)`, *SD* = `r round(sd.female, digits = 2)`) than participants who identified as male (*M* = `r round(mean.male, digits = 2)`, *SD* = `r round(sd.male, digits = 2)`), `r apa_anova3$statistic$gender`, $\eta^2$ = `r round(mfeta[1,2], digits = 2)`. We were unable to detect an interaction between gender and condition, `r apa_anova3$statistic$gender_new_condition`, $\eta^2$ = `r round(mfeta[3,2], digits = 2)`.
 
-aov.out <- aov(total ~ LiborCon * new_condition, data = data)
-apa_anova <- apa_print(aov.out)
-
-
-
-mean.liberal <- mean(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
-mean.conservative <- mean(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
-
-sd.liberal <- sd(data$total[data$LiborCon=="Liberal"], na.rm = TRUE)
-sd.conservative <- sd(data$total[data$LiborCon=="Conservative"], na.rm = TRUE)
-
-mean.control <- mean(data$total[data$new_condition=="Control"], na.rm = TRUE)
-
-mean.status <- mean(data$total[data$new_condition=="Status"], na.rm = TRUE)
-
-sd.control <- sd(data$total[data$new_condition=="Control"], na.rm = TRUE)
-
-sd.status <- sd(data$total[data$new_condition=="Status"], na.rm = TRUE)
-
-```
-
-#### Liberal/conservative
-
-We conducted a 2 x 2 factorial ANOVA (political orientation: liberal vs. conservative; condition: control vs. experimental) to determine whether political orientation interacted with condition in its association with the composite green score. As predicted, we did find a main effect of political orientation such that participants who identified as liberal selected significantly more green products on average (*M* = `r round(mean.liberal, digits = 2)`, *SD* = `r round(sd.liberal, digits = 2)`) than participants who identified as conservative (*M* = `r round(mean.conservative, digits = 2)`, *SD* = `r round(sd.conservative, digits = 2)`), `r apa_anova$statistic$LiborCon`, $\eta^2$ = `r apa_anova$table$estimate[1]`. As we found earlier, there was also no main effect of condition; the mean scores for participants in the grouped control condition (*M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`) did not differ from those in the status condition (*M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova$statistic$new_condition`, $\eta^2$ = `r apa_anova$table$estimate[2]`. There was also no interaction between the two variables, `r apa_anova$statistic$LiborCon_new_condition`, $\eta^2$ = `r apa_anova$table$estimate[3]`.
-
-**NOTE** from Michał re: grouping control conditions: but still I would report whether there was a difference between no story and control; I suggest reporting at least p-values and effect sizes
-
-```{r, include = FALSE}
-n.republican = sum(data$RorD=='Republican', na.rm = TRUE)
-n.democrat = sum(data$RorD=='Democrat', na.rm = TRUE)
-```
-
-```{r, include = FALSE}
-# Insert 2 x 2 factorial ANOVA with condition & political party on composite green score
-
-aov.out2 <- aov(total ~ RorD * new_condition, data = data)
-apa_anova2 <- apa_print(aov.out2)
-
-RorDeta <- etaSquared(aov.out2)
-
-
-
-mean.rep <- mean(data$total[data$RorD=="Republican"], na.rm = TRUE)
-mean.dem <- mean(data$total[data$RorD=="Democrat"], na.rm = TRUE)
-
-sd.rep <- sd(data$total[data$RorD=="Republican"], na.rm = TRUE)
-sd.dem <- sd(data$total[data$RorD=="Democrat"], na.rm = TRUE)
-
-RorDtable <- table(data$RorD, data$new_condition)
-
-
-```
-
-#### Democrat/republican
-
-Similarly, for political party ("Democrat" or "Republican"), we conducted a 2 x 2 factorial ANOVA (political party: Democrat vs. Republican; condition: control vs. status). When we grouped participants into "Republican" (*n* = `r n.republican`) and "Democrat" (*n* = `r n.democrat`) categories, we did find a main effect of political party such that participants who identified as Democrat selected significantly more green products (*M* = `r round(mean.dem, digits = 2)`, *SD* = `r round(sd.dem, digits = 2)`) than participants who identified as Republican (*M* = `r round(mean.rep, digits = 2)`, *SD* = `r round(sd.rep, digits = 2)`), `r apa_anova2$statistic$RorD`, $\eta^2$ = `r round(RorDeta[1,2], digits = 2)`. We were unable to detect an interaction between political party and condition, `r apa_anova2$statistic$RorD_new_condition`, $\eta^2$ = `r round(RorDeta[3,2], digits = 2)`, and as reported in the "Liberal/Conservative" subsection above, we found no main effect of condition (control: *M* = `r round(mean.control, digits = 2)`, *SD* = `r round(sd.control, digits = 2)`); status: *M* = `r round(mean.status, digits = 2)`, *SD* = `r round(sd.status, digits = 2)`), `r apa_anova2$statistic$new_condition`, $\eta^2$ = `r round(RorDeta[2,2], digits = 2)`.
-
-Importantly, we did not have adequate power to detect any interaction effects. Using the Superpower package in r, we determined that we would need at least 418 participants *per cell* to detect an interaction effect between political party and condition. In our four cells created by the two variables political party (Republican or Democrat) and condition (status or control), our cell sizes were `r RorDtable[1]`, `r RorDtable[2]`, `r RorDtable[3]`, and `r RorDtable[4]`.
+When we conducted a 2 x 3 factorial ANOVA with the conditions (control and status) ungrouped (control, status, and no story), we found a similar pattern of results except we did find an effect the of story, `r apa_anovaUG$statistic$condition`, $\eta^2$ = `r round(mfetaUG[2,2], digits = 2)`. Post-hoc testing with Tukey's HSD correction revealed significant differences between the "no story" condition and the other two conditions (95% CI of the difference for no story v. control: [`r round(tukeyUG$condition[1,2], digits = 2)`, `r round(tukeyUG$condition[1,3], digits = 2)`], *p* = `r round(tukeyUG$condition[1,4], digits = 2)`); 95% CI of the difference for no story v. status: [`r round(tukeyUG$condition[3,2], digits = 2)`, `r round(tukeyUG$condition[3,3], digits = 2)`], *p* = `r round(tukeyUG$condition[3,4], digits = 2)`). There was virtually no difference between the control story and the status story, *p* = `r round(tukeyUG$condition[2,4], digits = 2)`). Participants in the "no story" condition made more "green" choices (*M* = `r mean.nostory`, *SD* = `r sd.nostory`) than participants in the control condition (*M* = `r mean.control`, *SD* = `r sd.control`) or status condition (*M* = `r mean.status`, *SD* = `r sd.status`). This effect was not detected when the ungrouped conditions were examined in the entire data set; it was detected only when participants were excluded who did not respond to the question about gender or listed a gender other than "Male" or "Female."
 
 ```{r eval=FALSE, include=FALSE}
 # power analysis with Superpower
@@ -743,31 +809,46 @@ plot_power(design,
 
 ## Discussion
 
-Original study conducted by Griskevicius et al (2010) concluded that proenviromental behavior can be promoted using status competition. That is, earning a good reputation via prosocial and proenvironmetal behavior and action can increase an individual's status in a group. Original study also showed that all selection of all three green-products (green car, green cleaner, green dishwasher) was higher in the status condition.
+The original study conducted by Griskevicius et al. (2010) suggested that pro-environmental behavior can be promoted using status competition. Griskevicius and his associates link this to the competitive altruism hypothesis which proposes a connection between altruistic behavior and public good (Hardy & Van Vugt, 2006) as a starting point. That is, earning a good reputation via prosocial and pro-environmental behavior and action can increase an individual’s status in a group. The original study also showed that selection of all three green products (green car, green cleaner, green dishwasher) was higher in the status condition compared to the control condition.
 
-In this multi-lab replication study we followed the analytical strategy as in the original study. As part of pre-registered confirmatory analysis we tested whether effect exists when green score is calculated as composite, and our results resulted in lack of statistically significant effect. We also analyzed separate if effect exists for each of the green vs non-green products. For all three products, we did not detect significant effect for none of the products. Overall, our findings do not support main conclusion of Griskevicius et al (2010).
+In this multi-lab replication study, we followed the same analytical strategy as the original study. As part of our pre-registered confirmatory analysis, we tested whether an effect exists when the green score is calculated as a composite; this analysis did not result in a statistically significant effect. We also analyzed separately if an effect exists for each of the green vs. non-green products. For all three products, we failed to detect a significant effect. Similar to what was done in the original study, we tested whether the two control conditions differ, and found no reliable differences between them, although there appeared to be potential differences between both “story” conditions (status and control) and the “no story” control such that exposure to any story resulted in fewer “green” choices. Overall, our findings do not replicate the main conclusion of Experiment 1 from Griskevicius et al. (2010). One strength of this study is that data were collected in 6 different countries, on a very large sample which gives additional support to our conclusions. 
 
-Per recommendation of original authors, exploratory analyses included testing if political orientation moderates significantly main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on selection of green products, but the main effect of condition was absent. When political party was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but moderation effect of political party on product select was absent again.
+Per the recommendation of the original authors, exploratory analyses included testing if political orientation significantly moderates the main effect. In this study, data on political orientation and/or political party were collected as extension variables. When political orientation was defined as liberal-conservative we detected a main effect of political orientation on the selection of green products, but the main effect of condition was absent. When political party (Republican vs. Conservative) was tested as moderator, a main effect of political party was detected (i.e., people who identified as democrat more often select green products), but the moderation effect of political party on product selection was absent again. 
 
-Add: discuss reliability of composite score
+We also explored whether the test setting might have influenced the results. Different from the original study which was conducted in-lab, more than half of the groups participating in this project collected data online. This is not a surprise since online data collection has become increasingly popular and offers several advantages, like reducing cost and increasing the effectiveness of the testing, the generalizability of results to wider populations, automatization of the data collection process, etc. (Dandurand et al., 2008; Gosling et al., 2004). In addition, findings show that the reliabilities of the studies where data are collected online are of equivalent quality as lab studies (e.g., Riva et al., 2003). Thus, our findings that there were no differences between the datasets where data were collected online and in a laboratory do not come as surprise and are in line with previous studies.  
 
-Discuss that only some moderators had sufficient number of data collected to be analyzed
+The original study was conducted in the United States, while this multi-site replication study collected data in five other countries, i.e., Canada, Netherlands, UK, Germany, and Iceland. Our findings showed no differences between the samples from different countries. Still, we believe this finding is expected as all countries belong to the group of the so-called WEIRD (Western, Educated, Industrialized, Rich, and Democratic; Henrich et al., 2010) states. 
 
-Discuss differences -online and lab
+Another feature of this multi-site replication study is that data collection lasted several years, which gave us the opportunity to explore if the effect sizes change over time. Our findings did not show substantial differences in effect sizes throughout time. 
 
-2 vs 3 conditions
+Finally, in their paper, Griskevicius and associates stated that gender differences in status motives would be worth exploring. Our findings suggest that women are more inclined toward green products, but a moderating effect of gender on the relationship between experimental condition and product preference was not obtained. Therefore, our findings corroborate the results obtained in the original study. 
 
-What else? - effect over time, US versus rest
+*Limitations of the study*
+
+Although this multi-site replication study was conducted on a very large sample, and in several countries, we should note some limitations. First, all countries in which the study was conducted are WEIRD countries. Our findings suggest that people overall are more inclined toward consuming pro-environmental products, but this was not related to the status that might be associated with it. In other words, their selection was not elicited by status motives. It could be that participants from non-WEIRD countries which start to develop, implement and promote individual pro-environmental behaviors would be more sensitive to obtaining higher social status via prosocial and pro-environmental action. Therefore, it could be worth exploring whether results of the original study would replicate in non-WEIRD countries. 
+
+Second, we tested moderation effects only for those variables that had sufficient power. Thus, most of the extension variables that were used by different groups could not be used in meta-analytical analyses. To be able to more thoroughly explore the role of extension variables in testing effects being replicated, future CREP studies could pose stricter guidelines on the usage of extension variables in student groups. 
+**Conclusion**
+
+This high-powered multi-site replication of the Griskevicius et al (2010) study performed by student teams did not replicate the main finding of the study that pro-environmental behavior can be promoted by inducing status competition. Despite being conducted by students, the quality of the studies has been insured by continuous and careful supervision of senior researchers (faculty member, two reviewers, CREP board member), involvement of original authors, and rigorous documentation of the research process (see also Wagge et al., 2019). In addition to independent testing of the robustness of the effect from the original study that CREP offers, students through carefully planned pedagogical means obtain high-quality research opportunities which can also contribute to the advancement of psychological science (Grahe et al., 2020; Wagge et al., 2023).
 
 ## References
 
-Frank, M. C., & Saxe, R. (2012). Teaching Replication. *Perspectives on Psychological Science*, *7*(6), 600--604. <https://doi.org/10.1177/1745691612460686>
+Dandurand, F., Shultz, T. R., & Onishi, K. H. (2008). Comparing online and lab methods in a problem-solving experiment. *Behavior Research Methods, 40*(2), 428-434.
 
 Ghelfi, E., Christopherson, C. D., Urry, H. L., Lenne, R. L., Legate, N., Ann Fischer, M., Wagemans, F. M. A., Wiggins, B., Barrett, T., Bornstein, M., de Haan, B., Guberman, J., Issa, N., Kim, J., Na, E., O'Brien, J., Paulk, A., Peck, T., Sashihara, M., ... Sullivan, D. (2020). Reexamining the effect of gustatory disgust on moral judgment: A multilab direct replication of Eskine, Kacinik, and Prinz (2011). *Advances in Methods and Practices in Psychological Science*, *3*(1), 3--23. <https://doi.org/10.1177/2515245919881152>
 
-Grahe, J. E., Reifman, A., Hermann, A. D., Walker, M., Oleson, K. C., Nario-Redmond, M., & Wiebe, R. P. (2012). Harnessing the undiscovered resource of student research projects. *Perspectives on Psychological Science*, *7*(6), 605--607. <https://doi.org/10.1177/1745691612459057>
+Gosling, S. D., Vazire, S., Srivastava, S., & John, O. P. (2004). Should We Trust Web-Based Studies? A Comparative Analysis of Six Preconceptions About Internet Questionnaires. *American Psychologist, 59*(2), 93–104. https://doi.org/10.1037/0003-066X.59.2.93
+
+Grahe, J. E. (2017). Authentic research projects benefit students, their instructors, and science. In How we teach now: The GSTA guide to student-centered teaching. (pp. 352–368). Society for the Teaching of Psychology.
+
+Grahe, J. E., Cuccolo, K., Leighton, D. C., & Cramblet Alvarez, L. D. (2020). Open science promotes diverse, just, and sustainable research and educational outcomes. *Psychology Learning & Teaching, 19*(1), 5–20.
 
 Griskevicius, V., Tybur, J. M., & Van den Bergh, B. (2010). Going green to be seen: Status, reputation, and conspicuous conservation. *Journal of Personality and Social Psychology*, *98*(3), 392--404. <https://doi.org/10.1037/a0017346>
+
+Hardy, C. L., & Van Vugt, M. (2006). Nice guys finish first: The competitive altruism hypothesis. *Personality and Social Psychology Bulletin, 32,* 1402–1413.
+
+Henrich, J., Heine, S. J., & Norenzayan, A. (2010). The weirdest people in the world?. *Behavioral and Brain sciences, 33*(2-3), 61-83. doi:10.1017/S0140525X0999152X
 
 Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., Kennett, C., Slowik, A., Sonnleitner, C., Hess-Holden, C., Errington, T. M., Fiedler, S., & Nosek, B. A. (2016). Badges to acknowledge open practices: A simple, low-Cost, effective method for increasing transparency. *PLOS Biology*, *14*(5), e1002456. <https://doi.org/10.1371/journal.pbio.1002456>
 
@@ -775,16 +856,14 @@ Lehmann, G. K., Elliot, A. J., & Calin-Jageman, R. J. (2018). Meta-analysis of t
 
 Leighton, D. C., Legate, N., LePine, S., Anderson, S. F., & Grahe, J. (2018). Self-esteem, self-disclosure, self-expression, and connection on Facebook: A collaborative replication meta-analysis. *Psi Chi Journal of Psychological Research*, *23*(2), 98--109. <https://doi.org/10.24839/2325-7342.JN23.2.98>
 
-Perlman, B., & McCann, L. I. (1999). The most frequently listed courses in the undergraduate psychology curriculum. *Teaching of Psychology*, *26*(3), 177--182. <https://doi.org/10.1207/S15328023TOP260303>
-
 R Core Team. (2021). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. <https://www.R-project.org/>
 
-RStudio Team. (2020). *RStudio: Integrated Development Environment for R*. RStudio, PBC. <http://www.rstudio.com/>
+Riva, G., Teruzzi, T., & Anolli, L. (2003). The use of the Internet in psychology research: Comparison of online and offline questionnaires. *CyberPsychology & Behavior, 6*(1), 73–80. https://doi.org/10.1089/109493103321167983
 
-Standing, L. G., Grenier, M., Lane, E. A., Roberts, M. S., & Sykes, S. J. (2014). Using replication projects in teaching research methods. *Psychology Teaching Review*, *20*(1), 96--104.
+RStudio Team. (2020). *RStudio: Integrated Development Environment for R*. RStudio, PBC. <http://www.rstudio.com/>
 
 Wagge, J. R., Baciu, C., Banas, K., Nadler, J. T., Schwarz, S., Weisberg, Y., IJzerman, H., Legate, N., & Grahe, J. (2019). A demonstration of the Collaborative Replication and Education Project: Replication attempts of the red-romance effect. *Collabra: Psychology*, *5*(1), 5. <https://doi.org/10.1525/collabra.177>
 
 Wagge, J. R., Brandt, M. J., Lazarevic, L. B., Legate, N., Christopherson, C., Wiggins, B., & Grahe, J. E. (2019). Publishing research with undergraduate students via replication work: The Collaborative Replications and Education Project. *Frontiers in Psychology*, *10*, 247. <https://doi.org/10.3389/fpsyg.2019.00247>
 
-Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. (2022). Teaching research in principle and in practice: What do psychology instructors think of research projects in their courses? *Psychology Learning & Teaching*, 147572572211019. <https://doi.org/10.1177/14757257221101942>
+Wagge, J. R., Hurst, M. A., Brandt, M. J., Lazarevic, L. B., Legate, N., & Grahe, J. E. (2023). Teaching research in principle and in practice: What do psychology instructors think of research projects in their courses? *Psychology Learning & Teaching, 22*(1), 4–19. https://doi.org/10.1177/14757257221101942
