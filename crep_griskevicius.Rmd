@@ -14,7 +14,7 @@ output:
 ---
 
 ```{r packages, include=FALSE}
-packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot","trackdown","effsize")
+packages = c("tidyverse", "viridis", "colorspace","gghalves","ggthemes","skimr","Superpower","tidyr", "psych", "dplyr", "ggplot2", "sjmisc", "janitor", "rcompanion", "lsr", "papaja", "afex", "ltm","forestplot","trackdown","effsize","misty")
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -740,40 +740,38 @@ cohen.20.estimate <- round(cohen.20$cohen.d[2], digits = 2)
 cohen.20.upper <- round(cohen.20$cohen.d[3], digits = 2)
 
 # Original Paper
-
+cohen.original.lower <- .46
+cohen.original.estimate <- .46
+cohen.original.upper <- .46
 
 # Create a forest plot with effect sizes
 effect.time <- 
   structure(list(
-    mean  = c(NA,cohen.14.estimate,cohen.16.estimate,cohen.17.estimate,cohen.18.estimate, cohen.19.estimate,cohen.20.estimate), 
-    lower = c(NA,cohen.14.lower,cohen.16.lower,cohen.17.lower, cohen.18.lower, cohen.19.lower, cohen.20.lower),
-    upper = c(NA, cohen.14.upper, cohen.16.upper, cohen.17.upper, cohen.18.upper, cohen.19.upper, cohen.20.upper)),
+    mean  = c(NA,cohen.original.estimate, cohen.14.estimate,cohen.16.estimate, cohen.17.estimate, cohen.18.estimate, cohen.19.estimate, cohen.20.estimate), 
+    lower = c(NA,cohen.original.lower, cohen.14.lower,cohen.16.lower,cohen.17.lower, cohen.18.lower, cohen.19.lower, cohen.20.lower),
+    upper = c(NA, cohen.original.upper, cohen.14.upper, cohen.16.upper, cohen.17.upper, cohen.18.upper, cohen.19.upper, cohen.20.upper)),
     .Names = c("estimate", "lower", "upper"), 
-    row.names = c(NA,"2014", "2016", "2017", "2018", "2019", "2020"), 
+    row.names = c(NA, "Original Study (2010)","2014", "2016", "2017", "2018", "2019", "2020"), 
     class = "data.frame")
 
 tabletext<-cbind(
-  c("Year", "2014", "2016", "2017", "2018", "2019", "2020"))
+  c("Year", "Original Study (2010)", "2014 (2 groups, N = 288)", "2016 (1 group, N = 306)", "2017 (1 groups, N = 169)", "2018 (5 groups, N = 900)", "2019 (7 groups, N = 1245)", "2020 (7 groups, N = 692)"))
 
 png(file='forestplot.png') # Open PNG device with specific file name
 
-
 forestplot(tabletext, 
            hrzl_lines = list("2" = gpar(lwd=2),
-                             "8" = gpar(lwd=2)),
+                             "9" = gpar(lwd=2)),
            line.margin = .1,
            xticks = c(-1.00, -.50, 0, .50, 1.00),
            lwd.zero = 1, 
            graph.pos = 2,
-           effect.time, new_page = TRUE,
+            effect.time,new_page = TRUE,
            is.summary=FALSE,
            clip=c(-1,1), 
            title="Effect of Condition (Control/Status) on Composite Green Score \n by Project Initation Year",
            xlog=FALSE, 
-           col=fpColors(box="black",line="black", summary="black"),
-           fpDrawSummary = function(lower, upper, size, ...) {
-             points(x = 0.46, y = 1, pch = 19, col = "blue", cex = size) # Add your overall effect size symbol
-           })
+           col=fpColors(box="black",line="black", summary="black"))
 
 dev.off()
 ```
@@ -854,6 +852,54 @@ Given this possible alternative explanation, we examined whether there appeared 
 
 ![**Figure 3.** Mean composite scores by year. There were no noticeable differences in mean composite scores between the earliest projects (2014 and 2015) and the latest projects (2021 and 2022).](plot.png)
 
+```{r green_nice, include = FALSE, echo=FALSE}
+# site #19-25 examined whether participants rated the people who owned the green products as nicer, more altruistic, and more caring. Adding that analysis here
+
+# Loading data from source
+url2 <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/data_w_extension_variables.csv"
+data.ext <- read.csv(url2)
+
+# Subset project 19-25
+ext.1925 <- subset(data.ext, project == "#19-25")
+
+# add up niceness, caring, and altruism score for green products
+ext.1925$nice.green.total <- ext.1925$X1925_NiceGreenCar + ext.1925$X1925_NiceGreenCleaner + ext.1925$X1925_NiceGreenDishwasher
+ext.1925$nice.notgreen.total <- ext.1925$X1925_NiceNonGreenCar + ext.1925$X1925_NiceNonGreenCleaner + ext.1925$X1925_NiceNonGreenDishwasher
+
+ext.1925$caring.green.total <- ext.1925$X1925_CaringGreenCar + ext.1925$X1925_CaringGreenCleaner + ext.1925$X1925_CaringGreenDishwasher
+ext.1925$caring.notgreen.total <- ext.1925$X1925_CaringNonGreenCar + ext.1925$X1925_CaringNonGreenCleaner + ext.1925$X1925_CaringNonGreenDishwasher
+
+ext.1925$altruism.green.total <- ext.1925$X1925_AltruismGreenCar + ext.1925$X1925_AltruismGreenCleaner + ext.1925$X1925_AltruismGreenDishwasher
+ext.1925$altruism.notgreen.total <- ext.1925$X1925_AltruismNonGreenCar + ext.1925$X1925_AltruismNonGreenCleaner + ext.1925$X1925_AltruismNonGreenDishwasher
+
+
+
+# do paired-samples t-test on "nice"
+# lower scores indicate greater ratings of altruism, 1 totally agree that the typical owner has this quality to 9 totally disagree (see https://osf.io/kwugc)
+nice.t.1925 <- t.test(ext.1925$nice.green.total, ext.1925$nice.notgreen.total, paired = TRUE, alternative = "two.sided")
+nice.d.1925 <- cohens.d(ext.1925$nice.green.total, ext.1925$nice.notgreen.total, paired = TRUE, alternative = "two.sided")
+nice.green.mean <- format(round(mean(ext.1925$nice.green.total, na.rm = TRUE), 2), nsmall = 2)
+nice.notgreen.mean <- format(round(mean(ext.1925$nice.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+nice.green.sd <- format(round(sd(ext.1925$nice.green.total, na.rm = TRUE), 2), nsmall = 2)
+nice.notgreen.sd <- format(round(sd(ext.1925$nice.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+
+caring.t.1925 <- t.test(ext.1925$caring.green.total, ext.1925$caring.notgreen.total, paired = TRUE, alternative = "two.sided")
+caring.d.1925 <- cohens.d(ext.1925$caring.green.total, ext.1925$caring.notgreen.total, paired = TRUE, alternative = "two.sided")
+caring.green.mean <- format(round(mean(ext.1925$caring.green.total, na.rm = TRUE), 2), nsmall = 2)
+caring.notgreen.mean <- format(round(mean(ext.1925$caring.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+caring.green.sd <- format(round(sd(ext.1925$caring.green.total, na.rm = TRUE), 2), nsmall = 2)
+caring.notgreen.sd <- format(round(sd(ext.1925$caring.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+
+altruism.t.1925 <- t.test(ext.1925$altruism.green.total, ext.1925$altruism.notgreen.total, paired = TRUE, alternative = "two.sided")
+altruism.d.1925 <- cohens.d(ext.1925$altruism.green.total, ext.1925$altruism.notgreen.total, paired = TRUE, alternative = "two.sided")
+altruism.green.mean <- format(round(mean(ext.1925$altruism.green.total, na.rm = TRUE), 2), nsmall = 2)
+altruism.notgreen.mean <- format(round(mean(ext.1925$altruism.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+altruism.green.sd <- format(round(sd(ext.1925$altruism.green.total, na.rm = TRUE), 2), nsmall = 2)
+altruism.notgreen.sd <- format(round(sd(ext.1925$altruism.notgreen.total, na.rm = TRUE), 2), nsmall = 2)
+
+
+```
+Anticipating this issue, one group added an extension variable to determine whether participants found owners of the green products in the study to be more nice, caring, or altruistic than owners of the non-green products. They had participants rate these characteristics from 1 (totally agree that the owner has this quality) to 9 (totally disagree that the owner has this quality), and found that participants rated the owners of green products as nicer (*M* = `r nice.green.mean`, *SD* = `r nice.green.sd`) than owners of non-green products (*M* = `r nice.notgreen.mean`, *SD* = `r nice.notgreen.sd`), *t*(`r nice.t.1925$parameter`) = `r format(round(nice.t.1925$statistic, 2), nsmall = 2)`, *p* < .001, *d* = `r format(round(nice.d.1925$result$d, 2), nsmall = 2)`. Likewise, participants rated green product owners as more caring (*M* = `r caring.green.mean`, *SD* = `r caring.green.sd`) than non-green product owners (*M* = `r caring.notgreen.mean`, *SD* = `r caring.notgreen.sd`), *t*(`r caring.t.1925$parameter`) = `r format(round(caring.t.1925$statistic, 2), nsmall = 2)`, *p* < .001, *d* = `r format(round(caring.d.1925$result$d, 2), nsmall = 2)`, and more altruistic (*M* = `r altruism.green.mean`, *SD* = `r altruism.green.sd`) than non-green product owners (*M* = `r altruism.notgreen.mean`, *SD* = `r altruism.notgreen.sd`) as well, *t*(`r altruism.t.1925$parameter`) = `r format(round(altruism.t.1925$statistic, 2), nsmall = 2)`, *p* < .001, *d* = `r format(round(altruism.d.1925$result$d, 2), nsmall = 2)`. This site did not replicate the main findings of the original study, thereby weakening the argument that the effects might not replicate because participants might not find these products to be associated with prosocial behavior.
 
 Per the recommendation of the original authors, we performed exploratory analyses to test whether political orientation significantly moderates the effect of status motives on pro-environmental choices. In this study, some testing sites collected data on political orientation and/or political party as extension variables. Whether we defined political orientation as liberal-conservative or Democrat-Republican, we found that liberals and Democrats selected more green products than conservatives and Republicans. This effect did not, however, interact with any effect of status motives.
 
@@ -862,7 +908,6 @@ One difference between the original study and many team replications was that in
 It is important to note that the original study was conducted in the United States, while this multi-site replication project collected data in five other countries: Canada, Netherlands, UK, Germany, and Iceland. We found no significant differences in findings between the samples from different countries. Still, we believe this finding is expected as all countries belong to the group of the so-called WEIRD (Western, Educated, Industrialized, Rich, and Democratic; Henrich et al., 2010) states, and highly sustainable countries with sound environmental policies according to the Fragile State Index (Fund for Peace, 2022).
 
 Another feature of this multi-site replication study is that data collection lasted several years, which gave us the opportunity to explore whether the tested effects changed over time. We did not find substantial differences in effect sizes obtained from replication studies completed between 2014 and 2020. 
-
 Finally, in their paper, Griskevicius and associates stated that gender differences in status motives would be worth exploring. Our findings suggest that women are more inclined toward green products than men, but a moderating effect of gender on the relationship between experimental condition and product preference was not obtained. 
 
 ### Limitations of the study
