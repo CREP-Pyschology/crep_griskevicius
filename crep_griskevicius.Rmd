@@ -408,92 +408,6 @@ cron.x <- round(cron.x, digits = 2)
 
 Internal consistency of the three items (i.e., products) was low (Cronbach's alpha = `r cron.x`) which was expected (Rammstedt & Beierlein, 2014; Malkewitz et al., 2023). Despite this, we followed the procedure used in the original study and computed a composite green score by assigning a score of "1" to all "green" selections and a score of "0" to all non-"green" selections. Because participants made a dichotomous choice for each of the three products, scores ranged from 0 (no "green" products) to 3 (all "green" products). The mean composite score was `r mean.composite` (*SD* = `r sd.composite`). The distribution of composite scores can be seen in Figure 1.
 
-```{r rain_cloud, include = FALSE}
-# Michał figure code
-### Title: CREP Going green to be seen replication Figure 1
-### Author: Michal Folwarczny (michal.folwarczny@universityofgalway.ie)
-
-# load packages
-library(tidyverse)
-library(viridis)
-library(colorspace)
-library(gghalves)
-library(ggthemes)
-
-# load data (edited by Jordan to pull from github)
-# dfx <- read.csv('goingGreenReplicationData.txt')
-url <- "https://raw.githubusercontent.com/jorowags/crep_griskevicius/main/All%20data%20without%20extension%20variables.csv"
-df <- read.csv(url)
-
-##remove 54 NAs; N = 3774 -> 3720
-df <- df %>% filter(greendishwasher == 'Yes' | greendishwasher == 'No')
-df <- df %>% filter(greensoap == 'Yes' | greensoap == 'No')
-df <- df %>% filter(greencar == 'Yes' | greencar == 'No')
-df <- df %>% filter(condition == 'control story' | condition == 'no story' | condition == 'status story')
-
-#recode variable type
-df$condition <- as.factor(df$condition)
-
-# create green preference index
-df$greenScore <- rowSums(apply(df[, 11:13], 2, str_count, 'Yes'))
-
-### create Figure 1
-g1 <- ggplot(df, aes(x = condition, y = greenScore))+
-  scale_color_viridis(discrete = T,
-                      option = 'viridis',
-                      begin = .4,
-                      end = .8)+
-  scale_fill_viridis(discrete = T,
-                     option = 'viridis',
-                     begin = .4,
-                     end = .8)+
-  # geom_point(
-  # aes(color = condition),
-  # position = position_jitter(width = .1),
-  # size = .55,
-  # alpha = .4)+
-  stat_summary(fun = mean,
-               geom = "point", 
-               shape = 21, 
-               size = 6,
-               col = "black",
-               fill = "yellow")+
-  geom_half_boxplot(aes(fill = condition),
-                    alpha = 1,
-                    side = 'r',
-                    outlier.shape = NA,
-                    center = T,
-                    position = position_nudge(x = -.2),
-                    errorbar.draw = F,
-                    width = .2)+
-  geom_half_violin(aes(fill = condition),
-                   alpha = 1,
-                   side = 'r',
-                   bw = .3,
-                   position = position_nudge(x = 0))+
-  geom_rangeframe()+
-  theme_tufte()+
-  scale_x_discrete(labels = c('CONTROL STORY', 'NO STORY', 'STATUS STORY'))+
-  xlab("CONDITION")+
-  ylab("GREEN SCORE")+
-  theme(
-    aspect.ratio = .75,
-    legend.position = 'none',
-    text = element_text(size = 24, family = "sans"),
-    axis.title = element_text(size = 20, face = 'bold')
-  )+
-  coord_flip()
-g1
-
-# Figure note: (from Jordan -- I think this has changed a bit - see new figure caption in paragraph)
-# The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values. Vertical lines in the centers of the boxplots indicate the medians. Shaded areas around them correspond to interquartile ranges, and whiskers encompass 1.5 times the interquartile ranges. The shaded areas above the boxplots indicate the density of the data.
-
-#save figure
-ggsave(g1, filename = 'fig1.png', units = 'cm',
-       height = 20, width = 28, dpi = 300)
-
-
-```
 
 ![**Figure 1. The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values. Shaded areas below them correspond to 1.5 times the interquartile ranges.](fig1.png)
 
@@ -1182,6 +1096,10 @@ p
 
 # Save the plot as a jpg file
 ggsave("fig3.jpg", plot = p, device = "jpg", width = 12, height = 8, units = "in", bg = "white")
+
+# Save processed data
+write.csv(data, "processed_data.csv", row.names = TRUE)
+
 
 
 ```
