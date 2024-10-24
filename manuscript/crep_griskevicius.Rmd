@@ -940,7 +940,7 @@ effect.time <-
 tabletext<-cbind(
   c("Year", "Original Study (2010)", "2014 (2 groups, N = 288)", "2016 (1 group, N = 306)", "2017 (1 groups, N = 169)", "2018 (5 groups, N = 900)", "2019 (7 groups, N = 1245)", "2020 (7 groups, N = 692)"))
 
-jpeg(file='forestplot.jpg') # Open JPEG device with specific file name
+jpeg(file='../figures/forestplot.jpg') # Open JPEG device with specific file name
 
 forestplot(tabletext, 
            hrzl_lines = list("2" = gpar(lwd=2),
@@ -1095,10 +1095,10 @@ p <- ggplot(df, aes(x = Year, y = Mean, ymin = Lower_CI, ymax = Upper_CI)) +
 p
 
 # Save the plot as a jpg file
-ggsave("fig3.jpg", plot = p, device = "jpg", width = 12, height = 8, units = "in", bg = "white")
+ggsave("../figures/fig3.jpg", plot = p, device = "jpg", width = 12, height = 8, units = "in", bg = "white")
 
 # Save processed data
-write.csv(data, "processed_data.csv", row.names = TRUE)
+write.csv(data, "../data/processed_data.csv", row.names = TRUE)
 
 
 
