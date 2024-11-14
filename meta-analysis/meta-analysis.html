@@ -11,7 +11,7 @@
 
 <meta name="author" content="Erin M. Buchanan" />
 
-<meta name="date" content="2024-10-22" />
+<meta name="date" content="2024-11-13" />
 
 <title>Meta Analysis</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Meta Analysis</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">2024-10-22</h4>
+<h4 class="date">2024-11-13</h4>
 
 </div>
 
@@ -434,7 +434,12 @@ DF &lt;- DF %&gt;%
 DF &lt;- DF %&gt;%
   group_by(project_code) %&gt;%
   mutate(proportion_conservative = mean(LiborCon_code, na.rm = TRUE)) %&gt;%
-  ungroup()</code></pre>
+  ungroup()
+
+DF &lt;- DF %&gt;% 
+  mutate(location = factor(location, 
+                           levels = c(&quot;USA&quot;, &quot;other&quot;),
+                           labels = c(&quot;USA&quot;, &quot;Other&quot;)))</code></pre>
 </div>
 <div id="effect-size" class="section level2">
 <h2>Effect Size</h2>
@@ -485,7 +490,8 @@ effect_sizes &lt;- DF %&gt;%
     mean_age = first(mean_age),
     proportion_male = first(proportion_male),
     proportion_republican = first(proportion_republican),
-    proportion_conservative = first(proportion_conservative)
+    proportion_conservative = first(proportion_conservative), 
+    location = first(location)
   ) %&gt;%
   mutate(
     total_effect_d = map_dbl(es_result, ~ .x$d_value),
@@ -497,7 +503,8 @@ effect_sizes &lt;- DF %&gt;%
     sd_control = map_dbl(es_result, ~ .x$sd_control),
     sd_status = map_dbl(es_result, ~ .x$sd_status),
   ) %&gt;%
-  filter(!is.na(total_effect_d) &amp; !is.na(variance))  # Remove rows with NA effect sizes</code></pre>
+  filter(!is.na(total_effect_d) &amp; !is.na(variance))  %&gt;%  # Remove rows with NA effect sizes
+  mutate(mean_age = format(round(mean_age, digits = 2), nsmall = 2)) </code></pre>
 <pre><code>## Warning: There was 1 warning in `summarize()`.
 ## ℹ In argument: `es_result = list(calculate_effect_size(cur_data()))`.
 ## ℹ In group 1: `project_code = 1`.
@@ -531,7 +538,7 @@ print(missing_summary_effect_sizes)</code></pre>
 <pre><code>## # A tibble: 1 × 18
 ##   project_code location setting  year mean_age proportion_male
 ##          &lt;int&gt;    &lt;int&gt;   &lt;int&gt; &lt;int&gt;    &lt;int&gt;           &lt;int&gt;
-## 1            0        0       1     0        7               4
+## 1            0        0       1     0        0               4
 ## # ℹ 12 more variables: proportion_republican &lt;int&gt;,
 ## #   proportion_conservative &lt;int&gt;, total_effect_d &lt;int&gt;, variance &lt;int&gt;,
 ## #   n_control &lt;int&gt;, n_status &lt;int&gt;, m_control &lt;int&gt;, m_status &lt;int&gt;,
@@ -544,17 +551,17 @@ effect_sizes &lt;- effect_sizes %&gt;%
 print(effect_sizes)</code></pre>
 <pre><code>## # A tibble: 24 × 19
 ##    project_code location setting  year mean_age proportion_male
-##           &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;
-##  1            1 USA      Lab      2018     21.3           0.461
-##  2            2 USA      Online   2019     36.5           0.234
-##  3            3 USA      Online   2019     19.3           0.238
-##  4            4 USA      Online   2020     19.5           0.207
-##  5            5 USA      Online   2020     22.4           0.741
-##  6            6 USA      Lab      2020    NaN           NaN    
-##  7            7 other    Online   2020    NaN           NaN    
-##  8            8 other    Lab      2019    NaN             0.133
-##  9            9 other    Online   2020    NaN           NaN    
-## 10           10 other    Online   2020    NaN           NaN    
+##           &lt;int&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
+##  1            1 USA      Lab      2018 &quot;21.33&quot;            0.461
+##  2            2 USA      Online   2019 &quot;36.46&quot;            0.234
+##  3            3 USA      Online   2019 &quot;19.35&quot;            0.238
+##  4            4 USA      Online   2020 &quot;19.51&quot;            0.207
+##  5            5 USA      Online   2020 &quot;22.42&quot;            0.741
+##  6            6 USA      Lab      2020 &quot;  NaN&quot;          NaN    
+##  7            7 Other    Online   2020 &quot;  NaN&quot;          NaN    
+##  8            8 Other    Lab      2019 &quot;  NaN&quot;            0.133
+##  9            9 Other    Online   2020 &quot;  NaN&quot;          NaN    
+## 10           10 Other    Online   2020 &quot;  NaN&quot;          NaN    
 ## # ℹ 14 more rows
 ## # ℹ 13 more variables: proportion_republican &lt;dbl&gt;,
 ## #   proportion_conservative &lt;dbl&gt;, total_effect_d &lt;dbl&gt;, variance &lt;dbl&gt;,
@@ -562,6 +569,16 @@ print(effect_sizes)</code></pre>
 ## #   sd_control &lt;dbl&gt;, sd_status &lt;dbl&gt;, mf_d &lt;dbl&gt;, mf_v &lt;dbl&gt;, vi &lt;dbl&gt;</code></pre>
 <pre class="r"><code># arrange in order 
 effect_sizes &lt;- effect_sizes %&gt;% arrange(year, project_code)
+
+# Loop over each column and replace NaN with NA where applicable
+effect_sizes[] &lt;- lapply(effect_sizes, function(x) {
+  if (is.numeric(x)) {
+    x[is.nan(x)] &lt;- NA
+  } else {
+    x[grepl(&quot;NaN&quot;, x)] &lt;- NA
+  }
+  return(x)
+})
 
 # Save the effect sizes and meta-analysis results to a file
 write.csv(effect_sizes, &quot;../data/effect_sizes.csv&quot;, row.names = FALSE)</code></pre>
@@ -677,7 +694,7 @@ png(&quot;../figures/meta_mods_setting.png&quot;,
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model2_mods$yi) + 26,
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model2_mods$yi) + 25,
        labels = c(&quot;Lab ID&quot;, &quot;Setting&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
@@ -739,7 +756,7 @@ png(&quot;../figures/meta_mods_year.png&quot;,
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model3_mods$yi) + 26,
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model3_mods$yi) + 26,
        labels = c(&quot;Lab ID&quot;, &quot;Year&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
@@ -754,7 +771,7 @@ dev.off()</code></pre>
 <pre class="r"><code># Conduct meta-analysis using metafor without
 model4_mods &lt;- rma(yi = total_effect_d, 
                      vi = vi, 
-                     mods = ~ mean_age,
+                     mods = ~ as.numeric(mean_age),
                      data = effect_sizes,
                      method = &quot;REML&quot;)</code></pre>
 <pre><code>## Warning: 7 studies with NAs omitted from model fitting.</code></pre>
@@ -763,7 +780,7 @@ model4_mods &lt;- rma(yi = total_effect_d,
 ## Mixed-Effects Model (k = 17; tau^2 estimator: REML)
 ## 
 ##   logLik  deviance       AIC       BIC      AICc   
-##   0.5779   -1.1558    4.8442    6.9683    7.0260   
+##   0.5781   -1.1562    4.8438    6.9680    7.0257   
 ## 
 ## tau^2 (estimated amount of residual heterogeneity):     0.0276 (SE = 0.0202)
 ## tau (square root of estimated tau^2 value):             0.1662
@@ -775,13 +792,13 @@ model4_mods &lt;- rma(yi = total_effect_d,
 ## QE(df = 15) = 30.4088, p-val = 0.0105
 ## 
 ## Test of Moderators (coefficient 2):
-## QM(df = 1) = 0.1072, p-val = 0.7434
+## QM(df = 1) = 0.1075, p-val = 0.7431
 ## 
 ## Model Results:
 ## 
-##           estimate      se     zval    pval    ci.lb   ci.ub    
-## intrcpt    -0.1260  0.2947  -0.4276  0.6690  -0.7037  0.4516    
-## mean_age    0.0040  0.0121   0.3273  0.7434  -0.0197  0.0277    
+##                       estimate      se     zval    pval    ci.lb   ci.ub    
+## intrcpt                -0.1261  0.2947  -0.4280  0.6686  -0.7037  0.4514    
+## as.numeric(mean_age)    0.0040  0.0121   0.3278  0.7431  -0.0197  0.0277    
 ## 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -801,8 +818,8 @@ png(&quot;../figures/meta_mods_age.png&quot;,
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model4_mods$yi) + 26,
-       labels = c(&quot;Lab ID&quot;, &quot;Age&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model4_mods$yi) + 19,
+       labels = c(&quot;Lab ID&quot;, &quot;M Age&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -859,12 +876,14 @@ png(&quot;../figures/meta_mods_male.png&quot;,
   forest(model5_mods, 
          xlab = &quot;Effect Size (Cohen&#39;s d)&quot;, 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_male, digits = 2), nsmall = 2), 
+                        effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model5_mods$yi) + 26,
-       labels = c(&quot;Lab ID&quot;, &quot;Age&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model5_mods$yi) + 22,
+       labels = c(&quot;Lab ID&quot;, &quot;Male&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -921,12 +940,14 @@ png(&quot;../figures/meta_mods_rep.png&quot;,
   forest(model6_mods, 
          xlab = &quot;Effect Size (Cohen&#39;s d)&quot;, 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_republican, digits = 2), nsmall = 2), 
+                      effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model6_mods$yi) + 26,
-       labels = c(&quot;Lab ID&quot;, &quot;Age&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model6_mods$yi) + 5.25,
+       labels = c(&quot;Lab ID&quot;, &quot;Republican&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -983,12 +1004,76 @@ png(&quot;../figures/meta_mods_cons.png&quot;,
   forest(model7_mods, 
          xlab = &quot;Effect Size (Cohen&#39;s d)&quot;, 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_conservative, digits = 2), nsmall = 2), 
+           effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op &lt;- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model7_mods$yi) + 26,
-       labels = c(&quot;Lab ID&quot;, &quot;Age&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model7_mods$yi) + 11.5,
+       labels = c(&quot;Lab ID&quot;, &quot;Conservative&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
+       cex = 0.75, font = 2)
+  par(op)
+}
+
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="moderator-location" class="section level2">
+<h2>Moderator: Location</h2>
+<pre class="r"><code># Conduct meta-analysis using metafor without
+model8_mods &lt;- rma(yi = total_effect_d, 
+                     vi = vi, 
+                     mods = ~ location,
+                     data = effect_sizes,
+                     method = &quot;REML&quot;)
+
+summary(model8_mods)</code></pre>
+<pre><code>## 
+## Mixed-Effects Model (k = 24; tau^2 estimator: REML)
+## 
+##   logLik  deviance       AIC       BIC      AICc   
+##   3.2905   -6.5809   -0.5809    2.6922    0.7524   
+## 
+## tau^2 (estimated amount of residual heterogeneity):     0.0151 (SE = 0.0134)
+## tau (square root of estimated tau^2 value):             0.1228
+## I^2 (residual heterogeneity / unaccounted variability): 34.06%
+## H^2 (unaccounted variability / sampling variability):   1.52
+## R^2 (amount of heterogeneity accounted for):            0.00%
+## 
+## Test for Residual Heterogeneity:
+## QE(df = 22) = 31.8736, p-val = 0.0796
+## 
+## Test of Moderators (coefficient 2):
+## QM(df = 1) = 0.2225, p-val = 0.6372
+## 
+## Model Results:
+## 
+##                estimate      se     zval    pval    ci.lb   ci.ub    
+## intrcpt         -0.0163  0.0567  -0.2874  0.7738  -0.1274  0.0948    
+## locationOther   -0.0418  0.0886  -0.4717  0.6372  -0.2153  0.1318    
+## 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Create a PNG file with high resolution (300 DPI)
+png(&quot;../figures/meta_mods_location.png&quot;,
+    width = 8,
+    height = 6,
+    units = &quot;in&quot;,
+    res = 300)
+
+{
+  # Create a forest plot for the mixed-effects meta-analysis
+  forest(model8_mods, 
+         xlab = &quot;Effect Size (Cohen&#39;s d)&quot;, 
+         slab = paste(effect_sizes$project_code),
+         ilab = cbind(effect_sizes$location, effect_sizes$n_control, effect_sizes$n_status),
+         ilab.xpos = c(-2, -1.5, -1),
+         cex = 0.75)
+  op &lt;- par(xpd = NA)
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model8_mods$yi) + 26,
+       labels = c(&quot;Lab ID&quot;, &quot;Location&quot;, &quot;n\nControl&quot;, &quot;n\nStatus&quot;, &quot;95% CI&quot;),
        cex = 0.75, font = 2)
   par(op)
 }

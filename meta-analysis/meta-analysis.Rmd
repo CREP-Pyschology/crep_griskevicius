@@ -78,6 +78,11 @@ DF <- DF %>%
   group_by(project_code) %>%
   mutate(proportion_conservative = mean(LiborCon_code, na.rm = TRUE)) %>%
   ungroup()
+
+DF <- DF %>% 
+  mutate(location = factor(location, 
+                           levels = c("USA", "other"),
+                           labels = c("USA", "Other")))
 ```
 
 ## Effect Size
@@ -132,7 +137,8 @@ effect_sizes <- DF %>%
     mean_age = first(mean_age),
     proportion_male = first(proportion_male),
     proportion_republican = first(proportion_republican),
-    proportion_conservative = first(proportion_conservative)
+    proportion_conservative = first(proportion_conservative), 
+    location = first(location)
   ) %>%
   mutate(
     total_effect_d = map_dbl(es_result, ~ .x$d_value),
@@ -144,7 +150,8 @@ effect_sizes <- DF %>%
     sd_control = map_dbl(es_result, ~ .x$sd_control),
     sd_status = map_dbl(es_result, ~ .x$sd_status),
   ) %>%
-  filter(!is.na(total_effect_d) & !is.na(variance))  # Remove rows with NA effect sizes
+  filter(!is.na(total_effect_d) & !is.na(variance))  %>%  # Remove rows with NA effect sizes
+  mutate(mean_age = format(round(mean_age, digits = 2), nsmall = 2)) 
 
 # double check variance 
 effect_compare <- escalc(
@@ -180,6 +187,16 @@ print(effect_sizes)
 
 # arrange in order 
 effect_sizes <- effect_sizes %>% arrange(year, project_code)
+
+# Loop over each column and replace NaN with NA where applicable
+effect_sizes[] <- lapply(effect_sizes, function(x) {
+  if (is.numeric(x)) {
+    x[is.nan(x)] <- NA
+  } else {
+    x[grepl("NaN", x)] <- NA
+  }
+  return(x)
+})
 
 # Save the effect sizes and meta-analysis results to a file
 write.csv(effect_sizes, "../data/effect_sizes.csv", row.names = FALSE)
@@ -252,7 +269,7 @@ png("../figures/meta_mods_setting.png",
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model2_mods$yi) + 26,
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model2_mods$yi) + 25,
        labels = c("Lab ID", "Setting", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
@@ -293,7 +310,7 @@ png("../figures/meta_mods_year.png",
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model3_mods$yi) + 26,
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model3_mods$yi) + 26,
        labels = c("Lab ID", "Year", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
@@ -312,7 +329,7 @@ dev.off()
 # Conduct meta-analysis using metafor without
 model4_mods <- rma(yi = total_effect_d, 
                      vi = vi, 
-                     mods = ~ mean_age,
+                     mods = ~ as.numeric(mean_age),
                      data = effect_sizes,
                      method = "REML")
 
@@ -334,8 +351,8 @@ png("../figures/meta_mods_age.png",
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model4_mods$yi) + 26,
-       labels = c("Lab ID", "Age", "n\nControl", "n\nStatus", "95% CI"),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model4_mods$yi) + 19,
+       labels = c("Lab ID", "M Age", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -367,12 +384,14 @@ png("../figures/meta_mods_male.png",
   forest(model5_mods, 
          xlab = "Effect Size (Cohen's d)", 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_male, digits = 2), nsmall = 2), 
+                        effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model5_mods$yi) + 26,
-       labels = c("Lab ID", "Age", "n\nControl", "n\nStatus", "95% CI"),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model5_mods$yi) + 22,
+       labels = c("Lab ID", "Male", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -404,12 +423,14 @@ png("../figures/meta_mods_rep.png",
   forest(model6_mods, 
          xlab = "Effect Size (Cohen's d)", 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_republican, digits = 2), nsmall = 2), 
+                      effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model6_mods$yi) + 26,
-       labels = c("Lab ID", "Age", "n\nControl", "n\nStatus", "95% CI"),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model6_mods$yi) + 5.25,
+       labels = c("Lab ID", "Republican", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
 }
@@ -441,12 +462,51 @@ png("../figures/meta_mods_cons.png",
   forest(model7_mods, 
          xlab = "Effect Size (Cohen's d)", 
          slab = paste(effect_sizes$project_code),
-         ilab = cbind(effect_sizes$mean_age, effect_sizes$n_control, effect_sizes$n_status),
+         ilab = cbind(
+           format(round(effect_sizes$proportion_conservative, digits = 2), nsmall = 2), 
+           effect_sizes$n_control, effect_sizes$n_status),
          ilab.xpos = c(-2, -1.5, -1),
          cex = 0.75)
   op <- par(xpd = NA)
-  text(x = c(-2.6, -2, -1.5, -1, 1.25), y = max(model7_mods$yi) + 26,
-       labels = c("Lab ID", "Age", "n\nControl", "n\nStatus", "95% CI"),
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model7_mods$yi) + 11.5,
+       labels = c("Lab ID", "Conservative", "n\nControl", "n\nStatus", "95% CI"),
+       cex = 0.75, font = 2)
+  par(op)
+}
+
+dev.off()
+```
+
+## Moderator: Location
+
+```{r}
+# Conduct meta-analysis using metafor without
+model8_mods <- rma(yi = total_effect_d, 
+                     vi = vi, 
+                     mods = ~ location,
+                     data = effect_sizes,
+                     method = "REML")
+
+summary(model8_mods)
+
+# Create a PNG file with high resolution (300 DPI)
+png("../figures/meta_mods_location.png",
+    width = 8,
+    height = 6,
+    units = "in",
+    res = 300)
+
+{
+  # Create a forest plot for the mixed-effects meta-analysis
+  forest(model8_mods, 
+         xlab = "Effect Size (Cohen's d)", 
+         slab = paste(effect_sizes$project_code),
+         ilab = cbind(as.character(effect_sizes$location), effect_sizes$n_control, effect_sizes$n_status),
+         ilab.xpos = c(-2, -1.5, -1),
+         cex = 0.75)
+  op <- par(xpd = NA)
+  text(x = c(-2.75, -2, -1.5, -1, 1.25), y = max(model8_mods$yi) + 26,
+       labels = c("Lab ID", "Location", "n\nControl", "n\nStatus", "95% CI"),
        cex = 0.75, font = 2)
   par(op)
 }
