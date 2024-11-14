@@ -1,0 +1,47 @@
+---
+title: "Effect Size CI"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(MOTE)
+```
+
+## Effect Sizes
+
+```{r}
+v.chi.sq(x2 = 4.56, n = 168, r = 2, c = 2)
+
+v.chi.sq(x2 = .13, n = 3726, r = 2, c = 2)
+
+v.chi.sq(x2 = 4.52, n = 168, r = 2, c = 2)
+
+v.chi.sq(x2 = 1.06, n = 3726, r = 2, c = 2)
+
+v.chi.sq(x2 = 3.30, n = 168, r = 2, c = 2)
+
+v.chi.sq(x2 = .49, n = 3726, r = 2, c = 2)
+```
+
+```{r}
+eta.F(Fvalue = 8.53, dfm = 1, dfe = 166)
+eta.F(Fvalue = 1.16, dfm = 1, dfe = 3718)
+```
+
+```{r}
+d.dep.t.avg(
+  m1 = 7.38,
+  m2 = 4.82,
+  sd1 = 1.98,
+  sd2 = 2.32,
+  n = 127
+)
+```
