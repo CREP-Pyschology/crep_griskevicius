@@ -39,4 +39,12 @@
   - [Rmarkdown file](https://osf.io/vmrht): RMarkdown that was used to create the manuscript and Analyses
   - [Effect size RMarkdown](https://osf.io/u5t9w): Rmarkdown used to calculate confidence intervals for effect sizes
   - [Meta analysis html](https://osf.io/y4p7b): Knitted meta analysis files
-  - 
+  - [Meta analysis RMarkdown](https://osf.io/j8f2n): The markdown file used to calculate the meta-analyses
+
+## Manuscript
+
+- https://osf.io/rh2nw/
+- This component links to our GitHub repository that includes the files in the appropriate structure to recreate our manuscript and analyses.
+- Files not found elsewhere:
+  - figures: all figures created for the manuscript, meta-analysis, and replication
+  - power: [r script power](https://osf.io/tmuap) power analysis script used to originally estimate number of participants needed  
