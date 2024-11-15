@@ -37,11 +37,74 @@ eta.F(Fvalue = 1.16, dfm = 1, dfe = 3718)
 ```
 
 ```{r}
-d.dep.t.avg(
-  m1 = 7.38,
-  m2 = 4.82,
-  sd1 = 1.98,
-  sd2 = 2.32,
+ci_r <- function(r, df){
+  n <- df + 2
+  se <- 1 / sqrt(n - 3)
+  z <- atanh(r)
+  z_score <- 1.96
+  z_lower <- z - z_score * se
+  z_upper <- z + z_score * se
+  r_lower <- tanh(z_lower)
+  r_upper <- tanh(z_upper)
+  return(list(r_lower = r_lower,
+         r_upper = r_upper))
+}
+
+ci_r(.11, 125)
+ci_r(.01, 125)
+ci_r(.06, 125)
+```
+
+```{r}
+d.dep.t.diff(
+  mdiff = -2.56,
+  sddiff = 2.61,
   n = 127
 )
+```
+
+```{r}
+eta.F(Fvalue = .22, dfm = 1, dfe = 230)
+
+d.dep.t.diff(
+  mdiff = 3.01,
+  sddiff = 4.18,
+  n = 227
+)
+
+d.dep.t.diff(
+  mdiff = 5.51,
+  sddiff = 5.07,
+  n = 226
+)
+
+d.dep.t.diff(
+  mdiff = 4.09,
+  sddiff = 6.03,
+  n = 225
+)
+
+eta.F(Fvalue = .78, dfm = 1, dfe = 225)
+eta.F(Fvalue = 130.73, dfm = 1, dfe = 1287)
+eta.F(Fvalue = .41, dfm = 1, dfe = 1287)
+eta.F(Fvalue = .28, dfm = 1, dfe = 1287)
+
+eta.F(Fvalue = 51.95, dfm = 1, dfe = 505)
+eta.F(Fvalue = .14, dfm = 1, dfe = 505)
+eta.F(Fvalue = .80, dfm = 1, dfe = 505)
+
+eta.F(Fvalue = .09, dfm = 1, dfe = 3547)
+eta.F(Fvalue = 1.27, dfm = 1, dfe = 3547)
+eta.F(Fvalue = 1.19, dfm = 1, dfe = 3547)
+```
+
+```{r}
+v.chi.sq(x2 = .12, n = 2151, r = 2, c = 2)
+v.chi.sq(x2 = .004, n = 2103, r = 2, c = 2)
+v.chi.sq(x2 = .001, n = 2107, r = 2, c = 2)
+
+eta.F(Fvalue = 36.22, dfm = 1, dfe = 3263)
+eta.F(Fvalue = .001, dfm = 1, dfe = 3263)
+eta.F(Fvalue = 4.23, dfm = 1, dfe = 3261)
+
 ```

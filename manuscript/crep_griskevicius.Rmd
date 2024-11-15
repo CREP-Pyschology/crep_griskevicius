@@ -515,6 +515,7 @@ prosocial.t.1837 <- t.test(X1837_prosocial ~ new_condition, data = ext.prosocial
 
 #paired t comparing prosocial to next highest mean, caring
 paired.t.1837 <- t.test(ext.prosocial$X1837_prosocial, ext.prosocial$X1837_caring, paired = TRUE, alternative = "two.sided")
+paired.d.1837 <- cohens.d(ext.prosocial$X1837_prosocial, ext.prosocial$X1837_caring, paired = TRUE, alternative = "two.sided")
 
 # any correlations with composite score?
 # calculate composite in this data set
@@ -610,7 +611,7 @@ The original authors made two important notes regarding conditions that might in
 
 The first site (project #15, *N* = `r n_1837`) asked participants to respond to the following question (translated from German: "Please indicate on a scale from 1 (disagree completely) to 9 (agree completely) how much you agree with the following statements: 'Consumers of pro-environmental products are [kinder/more empathetic/more altruistic] than consumers of conventional products.'" Here, the terms "kind" and "more empathetic" are used as measures of "nice" and "caring," respectively. This rating does not allow us to make any inferences about how participants would rate green product choosers versus non-green product choosers, but the means for each characteristic rating are below 5 (kind/nice: *M* = `r nice.1837.mean`, *SD* = `r nice.1837.sd`; empathetic/caring: *M* = `r caring.1837.mean`, *SD* = `r caring.1837.sd`; altruistic: *M* = `r altruistic.1837.mean`, *SD* = `r altruistic.1837.sd`). Importantly, the correlations between the total composite score and these characteristic ratings were small and nonsignificant (kind/nice: *r*(`r cor_test_results[1,5]`) = `r cor.1837.ck.r.formatted`, *p* = `r cor.1837.ck.p.formatted`; empathetic/caring: *r*(`r cor_test_results[2,5]`) = `r cor.1837.cc.r.formatted`, *p* = `r cor.1837.cc.p.formatted`; altruistic: *r*(`r cor_test_results[3,5]`) = `r cor.1837.ca.r.formatted`, *p* = `r cor.1837.ca.p.formatted`), indicating that for these participants, green product choices may not have been associated with how nice, caring, or altruistic the choices appeared to be.
 
-The researchers at this site also included a general question assessing prosociality of green choices. Using the same rating scale as above, the asked to what extent participants agreed with this statement (again, translated from German): "Choosing to buy pro-environmental products is a behavior that is beneficial for the general public." Participant ratings for this characteristic were much higher (*M* = `r prosocial.1837.mean`, *SD* = `r prosocial.1837.sd`) than the next highest rating (empathic/caring, reported above), *t*(`r paired.t.1837$parameter`) = `r format(round(paired.t.1837$statistic, 2), nsmall = 2)`, *p* < .001, *d* = `r format(round(paired.t.1837$estimate, 2), nsmall = 2)`. This site did not replicate the main findings of the original study (results of one-way ANOVA comparing composite scores across condition[status/control]: *F*(`r aov.1837.results$table$df`, `r aov.1837.results$table$df.residual`) = `r aov.1837.results$table$statistic`, *p* = `r aov.1837.results$table$p.value`, $\eta^2$ = `r aov.1837.results$table$estimate`.
+The researchers at this site also included a general question assessing prosociality of green choices. Using the same rating scale as above, the asked to what extent participants agreed with this statement (again, translated from German): "Choosing to buy pro-environmental products is a behavior that is beneficial for the general public." Participant ratings for this characteristic were much higher (*M* = `r prosocial.1837.mean`, *SD* = `r prosocial.1837.sd`) than the next highest rating (empathic/caring, reported above), *t*(`r paired.t.1837$parameter`) = `r format(round(paired.t.1837$statistic, 2), nsmall = 2)`, *p* < .001, *d* = `r format(round(paired.d.1837$result$d, 2), nsmall = 2)`. This site did not replicate the main findings of the original study (results of one-way ANOVA comparing composite scores across condition[status/control]: *F*(`r aov.1837.results$table$df`, `r aov.1837.results$table$df.residual`) = `r aov.1837.results$table$statistic`, *p* = `r aov.1837.results$table$p.value`, $\eta^2$ = `r aov.1837.results$table$estimate`.
 
 ```{r 1837 moderation, include = FALSE, echo = FALSE}
 ext.prosocial.1837$new_condition <- as.factor(ext.prosocial.1837$new_condition)
@@ -723,17 +724,17 @@ frq(data$Groups.New)
 # Chi square test of independence for green car across lab/in-person
 test.groups.car <- chisq.test(table(data$Groups.New, data$greencar))
 test.groups.car
-chisq.groups.car.p <- round(as.numeric(test.groups.car[3]), digits = 2)
+chisq.groups.car.p <- round(as.numeric(test.groups.car[3]), digits = 3)
 
 # Chi square test of independence for green soap across lab/in-person
 test.groups.soap <- chisq.test(table(data$Groups.New, data$greensoap))
 test.groups.soap
-chisq.groups.soap.p <- round(as.numeric(test.groups.soap[3]), digits = 2)
+chisq.groups.soap.p <- round(as.numeric(test.groups.soap[3]), digits = 3)
 
 # Chi square test of independence for green dishwasher across lab/in-person
 test.groups.dishwasher <- chisq.test(table(data$Groups.New, data$greendishwasher))
 test.groups.dishwasher
-chisq.groups.dishwasher.p <- round(as.numeric(test.groups.dishwasher[3]), digits = 2)
+chisq.groups.dishwasher.p <- round(as.numeric(test.groups.dishwasher[3]), digits = 3)
 
 # 2 x 2 ANOVA comparing composite score across conditions (status and control) and settings (lab and online)
 aov.out.2 <- aov(total ~ Groups.New * new_condition, data = data)
