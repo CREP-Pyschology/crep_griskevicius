@@ -1,5 +1,9 @@
 # Readme
 
+## Pre-registration
+
+- [Link to registration](https://osf.io/ach3n)
+
 ## Ethics Component
 
 - https://osf.io/c7afr/
@@ -27,6 +31,13 @@
     - [Extension variables csv](https://osf.io/m8uda): CSV file that includes information about the extensions included in each lab. Note that the file "blank" lines are tied to the lab listed above it.
     - [Lab characteristics table docx](https://osf.io/cghyv): Lab information from the previous files in a pretty table format.
     - [Dataset table csv](https://osf.io/pmgv2): A CSV file that includes all lab links to OSF pages and datasets.
+  - Merged data:
+    - [All data without extensions](https://osf.io/s2bfe): CSV file with all the data from individual teams merged together, no extension variables
+    - [Codebook](https://osf.io/wdcmv): explanation for processed and merged data to understand variables in the data.
+    - [All data with extension variables](https://osf.io/rknex): CSV file with the extensions variables included.
+    - [Extension variables](https://osf.io/ucx26): a list of the extension variables included by each lab
+  - [Processed data](https://osf.io/dax6g): Data used for analyses.
+  - [Replication Data](https://osf.io/fh96u): Data from the original study used to calculate sample size and power.
 
 ## Analyses
 
