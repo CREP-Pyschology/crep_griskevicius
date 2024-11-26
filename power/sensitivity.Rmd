@@ -1,0 +1,51 @@
+---
+title: "Sensitivity"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(pwr)
+```
+
+## Sensitivity
+
+There was also no interaction between the two variables, F(1, 1,287) = 0.28, p = .597, η2 < .001, 95% CI [<.001, .005]. However, using the pwr package in R (Champely, 2020), we determined our observed power to detect an interaction to be .08. Therefore, these results should be interpreted with caution.
+
+
+```{r}
+# Define the parameters
+alpha <- 0.05        # Significance level
+power <- 0.8         # Desired power
+
+# Perform the sensitivity analysis
+saved <- pwr.f2.test(u = 1,
+            v = 1287,
+            f2 = NULL, 
+            sig.level = alpha,
+            power = power)
+
+saved$f2 # f2 convert to eta squared
+
+saved$f2 / (1 + saved$f2)
+```
+
+```{r}
+# Perform the sensitivity analysis
+saved <- pwr.f2.test(u = 1,
+            v = 505,
+            f2 = NULL, 
+            sig.level = alpha,
+            power = power)
+
+saved$f2 # f2 convert to eta squared
+
+saved$f2 / (1 + saved$f2)
+```
