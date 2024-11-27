@@ -58,4 +58,5 @@
 - This component links to our GitHub repository that includes the files in the appropriate structure to recreate our manuscript and analyses.
 - Files not found elsewhere:
   - figures: all figures created for the manuscript, meta-analysis, and replication
-  - power: [r script power](https://osf.io/tmuap) power analysis script used to originally estimate number of participants needed  
+  - power: [r script power](https://osf.io/tmuap) power analysis script used to originally estimate number of participants needed
+    - Within this folder: a [sensitivity analysis Rmd](https://osf.io/xtbrz) to calculate the smallest effect size detectable given the sample size of the study. 
