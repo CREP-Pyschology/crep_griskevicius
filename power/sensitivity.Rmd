@@ -124,6 +124,26 @@ power_function(
 )
 ```
 
+### Year
+
+```{r}
+effect_sizes <- read.csv("../data/effect_sizes.csv")
+
+model.results <- lm(
+  total_effect_d ~ year,
+  data = effect_sizes
+)
+
+summary(model.results)
+
+power_function(
+  u = 1,
+  v = 22,
+  etasquare = .001,
+  k = 1, 
+)
+```
+
 ### Gender
 
 F(1, 3,263) = 0.00, p = .964, η2 < .001, 95% CI [<.001, <.001].

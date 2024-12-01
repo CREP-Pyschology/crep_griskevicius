@@ -480,6 +480,44 @@ values:</p>
 ## $sample_size
 ## [1] 7845</code></pre>
 </div>
+<div id="year" class="section level3">
+<h3>Year</h3>
+<pre class="r"><code>effect_sizes &lt;- read.csv(&quot;../data/effect_sizes.csv&quot;)
+
+model.results &lt;- lm(
+  total_effect_d ~ year,
+  data = effect_sizes
+)
+
+summary(model.results)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = total_effect_d ~ year, data = effect_sizes)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.35986 -0.12451  0.03462  0.16576  0.28135 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -0.50091   49.23617  -0.010    0.992
+## year         0.00023    0.02439   0.009    0.993
+## 
+## Residual standard error: 0.2009 on 22 degrees of freedom
+## Multiple R-squared:  4.041e-06,  Adjusted R-squared:  -0.04545 
+## F-statistic: 8.891e-05 on 1 and 22 DF,  p-value: 0.9926</code></pre>
+<pre class="r"><code>power_function(
+  u = 1,
+  v = 22,
+  etasquare = .001,
+  k = 1, 
+)</code></pre>
+<pre><code>## $eta_squared
+## [1] 0.2636728
+## 
+## $sample_size
+## [1] 7843</code></pre>
+</div>
 <div id="gender" class="section level3">
 <h3>Gender</h3>
 <p>F(1, 3,263) = 0.00, p = .964, η2 &lt; .001, 95% CI [&lt;.001,
