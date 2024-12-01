@@ -1,0 +1,94 @@
+---
+title: "Figures"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(gghalves)
+library(ggthemes)
+```
+
+
+## Data
+
+```{r}
+# load data
+df <- read.csv('../data/processed_data_ext.csv') %>% 
+  filter(condition != "")
+```
+
+## Figure 1
+
+```{r}
+# create green preference index
+df$greencar <- recode(df$greencar, "Yes" = 1, "No" = 0)
+df$greendishwasher <- recode(df$greendishwasher, "Yes" = 1, "No" = 0)
+df$greensoap <- recode(df$greensoap, "Yes" = 1, "No" = 0)
+df$greenScore <- df$greencar + df$greendishwasher + df$greensoap
+
+### create Figure 1
+g1 <- ggplot(df, aes(x = condition, y = greenScore))+
+  scale_color_viridis(discrete = T,
+                      option = 'viridis',
+                      begin = .4,
+                      end = .8)+
+  scale_fill_viridis(discrete = T,
+                     option = 'viridis',
+                     begin = .4,
+                     end = .8)+
+  # geom_point(
+  # aes(color = condition),
+  # position = position_jitter(width = .1),
+  # size = .55,
+  # alpha = .4)+
+  stat_summary(fun = mean,
+               geom = "point", 
+               shape = 21, 
+               size = 4,
+               col = "black",
+               fill = "black")+
+  geom_half_boxplot(aes(fill = condition),
+                    alpha = .4,
+                    side = 'r',
+                    outlier.shape = NA,
+                    center = T,
+                    position = position_nudge(x = -.05),
+                    errorbar.draw = F,
+                    width = .2)+
+  geom_half_violin(aes(fill = condition),
+                   alpha = .4,
+                   side = 'r',
+                   bw = .3,
+                   position = position_nudge(x = .07))+
+  geom_rangeframe()+
+  theme_tufte()+
+  scale_x_discrete(labels = c('CONTROL STORY', 'NO STORY', 'STATUS STORY'))+
+  xlab("CONDITION")+
+  ylab("GREEN SCORE")+
+  theme(
+    axis.line.x = element_line(color = "black"),
+    aspect.ratio = .75,
+    legend.position = 'none',
+    text = element_text(size = 24, family = "sans"),
+    axis.title = element_text(size = 20, face = 'bold')
+  ) +
+  coord_flip()
+g1
+
+# Figure note:
+# The rain cloud diagram shows the distribution of responses under different conditions. Yellow dots represent mean values surrounded by individual data points with jitter. Vertical lines in the centers of the boxplots indicate the medians. Shaded areas around them correspond to interquartile ranges, and whiskers encompass 1.5 times the interquartile ranges. The shaded areas above the boxplots indicate the density of the data.
+
+ggsave(g1, filename = 'fig1_updated.png', units = 'cm',
+       height = 20, width = 28, dpi = 300)
+```

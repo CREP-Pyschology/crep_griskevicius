@@ -15,37 +15,124 @@ knitr::opts_chunk$set(echo = TRUE)
 library(pwr)
 ```
 
-## Sensitivity
-
-There was also no interaction between the two variables, F(1, 1,287) = 0.28, p = .597, η2 < .001, 95% CI [<.001, .005]. However, using the pwr package in R (Champely, 2020), we determined our observed power to detect an interaction to be .08. Therefore, these results should be interpreted with caution.
-
+## Variables
 
 ```{r}
-# Define the parameters
-alpha <- 0.05        # Significance level
-power <- 0.8         # Desired power
+power_function <- function(u, v, alpha = .05, power = .80,
+                           etasquare, k){
+  # Perform the sensitivity analysis
+  saved <- pwr.f2.test(u = u,
+              v = v,
+              f2 = NULL, 
+              sig.level = alpha,
+              power = power)
+  saved$f2 # f2 convert to eta squared
+  eta_squared <- saved$f2 / (1 + saved$f2)
 
-# Perform the sensitivity analysis
-saved <- pwr.f2.test(u = 1,
-            v = 1287,
-            f2 = NULL, 
-            sig.level = alpha,
-            power = power)
+  # Figure out sample size for this effect
+  saved_2 <- pwr.f2.test(u = u,
+              v = NULL,
+              f2 = etasquare / (1 - etasquare), 
+              sig.level = alpha,
+              power = power)
 
-saved$f2 # f2 convert to eta squared
-
-saved$f2 / (1 + saved$f2)
+return(list(
+  eta_squared = eta_squared,
+  sample_size = round(saved_2$v + 1 + k)
+  ))
+}
 ```
 
+
+## Sensitivity
+
+### Prosocial
+
+F(1, 230) = 0.22, p = .639, η2 = .001, 95% CI [<.001, .024].
+
 ```{r}
-# Perform the sensitivity analysis
-saved <- pwr.f2.test(u = 1,
-            v = 505,
-            f2 = NULL, 
-            sig.level = alpha,
-            power = power)
+power_function(
+  u = 1,
+  v = 230,
+  etasquare = .001,
+  k = 1, 
+)
+```
 
-saved$f2 # f2 convert to eta squared
+F(1, 225) = 0.78, p = .378, η2 = .003, 95% CI [<.001, .035]
 
-saved$f2 / (1 + saved$f2)
+```{r}
+power_function(
+  u = 1,
+  v = 225,
+  etasquare = .003,
+  k = 1, 
+)
+```
+
+### Liberal/Conservative
+
+F(1, 1,287) = 0.28, p = .597, η2 < .001, 95% CI [<.001, .005].
+
+```{r}
+power_function(
+  u = 1,
+  v = 1287,
+  etasquare = .001,
+  k = 3, 
+)
+```
+
+### Democratic/Republican
+
+F(1, 505) = 0.14, p = .709, η2 < .001, 95% CI [<.001, .010]
+
+```{r}
+power_function(
+  u = 1,
+  v = 505,
+  etasquare = .001,
+  k = 3, 
+)
+```
+
+### Lab/Online
+
+F(1, 3547) = 1.19, p = .275, η2 < .001, 95% CI [<.001, .003].
+
+```{r}
+power_function(
+  u = 1,
+  v = 3547,
+  etasquare = .001,
+  k = 3, 
+)
+```
+
+### US/Other
+
+F not included in the manuscript, but the other F gives us the df values:
+
+F(1, 3,714) = 115.62, p < .001, η2 = .030, 95% CI [.020, .042]
+
+```{r}
+power_function(
+  u = 1,
+  v = 3714,
+  etasquare = .001,
+  k = 3, 
+)
+```
+
+### Gender
+
+F(1, 3,263) = 0.00, p = .964, η2 < .001, 95% CI [<.001, <.001].
+
+```{r}
+power_function(
+  u = 1,
+  v = 3263,
+  etasquare = .001,
+  k = 3, 
+)
 ```
