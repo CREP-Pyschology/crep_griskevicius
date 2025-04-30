@@ -1253,8 +1253,10 @@ calculate_stats <- function(data) {
   sd_value <- sd(data$total, na.rm = TRUE) # Add na.rm = TRUE to handle NAs
   n <- sum(!is.na(data$total)) # Only count non-NA values for n
   error_margin <- 1.96 * (sd_value / sqrt(n)) # Use non-NA n for error margin calculation
+  sample_size <- nrow(data)
+  projects <- length(unique(data$project))
   
-  return(c(Mean = mean_value, Lower_CI = mean_value - error_margin, Upper_CI = mean_value + error_margin))
+  return(c(Mean = mean_value, Lower_CI = mean_value - error_margin, Upper_CI = mean_value + error_margin, Sample_Size = sample_size, Projects = projects))
 }
 
 # Apply the function to each dataset
@@ -1265,24 +1267,34 @@ df <- data.frame(
   Year = as.factor(c("2014", "2016", "2017", "2018", "2019", "2020")),
   Mean = stats[, "Mean"],
   Lower_CI = stats[, "Lower_CI"],
-  Upper_CI = stats[, "Upper_CI"]
+  Upper_CI = stats[, "Upper_CI"],
+  Sample_Size = stats[ , "Sample_Size"],
+  Projects = stats[ , "Projects"]
 )
 
-# Create the forest plot
+# Add a label column combining project count and sample size
+df$Label <- paste0("n = ", df$Projects, "\nN = ", df$Sample_Size)
+
+# Create the forest plot with dual annotations
 p <- ggplot(df, aes(x = Year, y = Mean, ymin = Lower_CI, ymax = Upper_CI)) +
   geom_errorbar(width = 0.2, color = "black") +
   geom_point(size = 3, color = "black") +
+  geom_text(aes(label = Label), 
+            hjust = 0,     # Align text to the left of its anchor
+            vjust = 0.5,   # Vertically center the label with the point
+            nudge_x = 0.2, # Push label slightly to the right
+            size = 4) +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(size = 14, angle = 0, vjust = 0.5, hjust = 1), # Adjust size for x-axis text
-    axis.text.y = element_text(size = 14), # Adjust size for y-axis text
-    axis.title.x = element_text(size = 16), # Adjust size for x-axis label
-    axis.title.y = element_text(size = 16), # Adjust size for y-axis label
-    plot.title = element_text(size = 18, hjust = 0.5) # Adjust size for title
+    axis.text.x = element_text(size = 14),
+    axis.text.y = element_text(size = 14),
+    axis.title.x = element_text(size = 16),
+    axis.title.y = element_text(size = 16),
+    plot.title = element_text(size = 18, hjust = 0.5)
   ) +
   labs(x = "Year", y = "Mean Total Score", title = "Mean Total Scores by Year with 95% CI")
 
-# Print the plot to display in the R Markdown document
+# Print the plot
 p
 
 # Save the plot as a jpg file
