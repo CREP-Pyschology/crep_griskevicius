@@ -1581,12 +1581,12 @@ Conceptualization: LBL, JRW, JG, and SL
 Data curation: LBL, JRW, BB, EMB, VS, MF, and JG
 Formal analysis: JRW, MF, AL, and EMB
 Funding acquisition: JRW
-Investigation: SCW, PD, AJK, KT, JT, LS, JHF, SCW, NS, EH, LB, CDC, AG, JR, KS, LC, and
+Investigation: SCW, PD, AJK, KT, JT, LS, JHF, SCW, NS, EH, LB, CDC, AG, JR, KS, LC, ADP, PJA, and FK.
 ADP
 Methodology: LBL, JRW, and MF
 Project Administration: LBL, BB, SCW, AJK, JHF, SCW, MBP, EH, JG, and CDC
 Resources: SCW, PD, AJK, KT, JT, JHF, SCW, EH, LB, JG, AG, and ADP
-Supervision: LBL, VS, SCW, AJK, SCW, EH, JG, CDC, and MCR
+Supervision: LBL, VS, SCW, AJK, SCW, EH, JG, CDC, MCR, PJA, and FK
 Validation: JRW, BB, EMB, LT, and VS
 Visualization: JWR, MF, EMB
 Writing - Original draft: LBL and JWR
