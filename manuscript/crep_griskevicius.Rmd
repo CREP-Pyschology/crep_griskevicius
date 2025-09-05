@@ -68,7 +68,7 @@ Erin M. Buchanan, Harrisburg University
 
 Nathaniel R. Greene, Department of Psychology, University of Pennsylvania
 
-Michał Folwarczny, J.E. Cairnes School of Business & Economics, Discipline of Marketing, University of Galway
+Michał Folwarczny, Discipline of Marketing, J.E. Cairnes School of Business & Economics, University of Galway
 
 Aleksandra Lazić, Department of Psychology, University of Belgrade
 
@@ -111,6 +111,10 @@ Johanna Richter, No affiliation
 Karina Senftner, No affiliation
 
 Adam D. Pazda, University of South Carolina Aiken
+
+Peter J. Allen, School of Psychological Science, University of Bristol
+
+Francesca Kingston, School of Psychological Science, University of Bristol
 
 Valdimar Sigurdsson, Department of Business Administration, Reykjavik University
 
@@ -1579,15 +1583,17 @@ Conceptualization: LBL, JRW, JG, and SL
 Data curation: LBL, JRW, BB, EMB, VS, MF, and JG
 Formal analysis: JRW, MF, AL, and EMB
 Funding acquisition: JRW
-Investigation: SCW, PD, AJK, KT, JT, LS, JHF, SCW, NS, EH, LB, CDC, AG, JR, KS, and ADP
+Investigation: SCW, PD, AJK, KT, JT, LS, JHF, SCW, NS, EH, LB, CDC, AG, JR, KS, LC, ADP, PJA, and FK.
+ADP
 Methodology: LBL, JRW, and MF
 Project Administration: LBL, BB, SCW, AJK, JHF, SCW, MBP, EH, JG, and CDC
 Resources: SCW, PD, AJK, KT, JT, JHF, SCW, EH, LB, JG, AG, and ADP
-Supervision: LBL, VS, SCW, AJK, SCW, EH, JG, CDC, and MCR
+Supervision: LBL, VS, SCW, AJK, SCW, EH, JG, CDC, MCR, PJA, and FK
 Validation: JRW, BB, EMB, LT, and VS
 Visualization: JWR, MF, EMB
 Writing - Original draft: LBL and JWR
-Writing - Review and Editing: LBL, JWR, MF, AL, SCW, PD, AJK, KT, JT, LC, LT, SL, JHF, SCW, NS, MBP, EH, EMB, LB, JG, CDC, BB, MR, NRG, and AG
+Writing - Review and Editing: LBL, JWR, MF, AL, SCW, PD, AJK, KT, JT, LC, LT, SL, JHF,
+SCW, NS, MBP, EH, EMB, LB, JG, CDC, BB, MCR, NRG, and AG
 
 **Acknowledgments:** 
 The authors would like to thank all students, supervisors, and reviewers who contributed to this CREP project. The authors would like to specifically thank Dr. Mark Brandt and Dr. Hans Rocha IJzerman for their vision and early dedication to the CREP.
