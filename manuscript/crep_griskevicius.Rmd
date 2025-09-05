@@ -488,6 +488,8 @@ grouped.aov.ss.factor <- grouped.aov.summary[[1]]$'Sum Sq'[1]
 grouped.aov.ss.total <- sum(grouped.aov.summary[[1]]$'Sum Sq')
 grouped.aov.eta <- format(round(grouped.aov.ss.factor / grouped.aov.ss.total, 3), nsmall = 3)
 
+grouped.aov.p <- grouped.aov.summary[[1]]$`Pr(>F)`[1]
+
 # Get Cohen's d for grouped condition
 data_grouped_d <- data
 data_grouped_d$new_condition <- as.factor(data_grouped_d$new_condition)
@@ -530,7 +532,7 @@ control_sd_grouped <- format(round(sd(data$total[data$new_condition == "Control"
 
 ```
 
-The original paper by Griskevicius and colleagues (2010) reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) combined, *F*(1, 166) = 8.53, *p* = .004, η^2^ = .05, 95% CI [.005, .129]. The same test on our data did not reveal a significant effect, *F*(`r grouped.aov.df[1]`, `r formatC(grouped.aov.df[2], big.mark = ",")`) = `r round(grouped.aov.F[1], 2)`, η^2^ < .001, 95% CI [.000, .002], and in fact the green score was descriptively lower in the status condition (*M* = `r status_m_grouped`, *SD* = `r status_sd_grouped`) compared to the control condition (*M* = `r control_m_grouped`, *SD* = `r control_sd_grouped`), counter to the original hypothesis. 
+The original paper by Griskevicius and colleagues (2010) reported a significant effect of status on the composite score when the status prime condition was compared to both control conditions (control story and no story) combined, *F*(1, 166) = 8.53, *p* = .004, η^2^ = .05, 95% CI [.005, .129]. The same test on our data did not reveal a significant effect, *F*(`r grouped.aov.df[1]`, `r formatC(grouped.aov.df[2], big.mark = ",")`) = `r round(grouped.aov.F[1], 2)`, *p* = `r apa_num(grouped.aov.p, gt1 = F)`, η^2^ < .001, 95% CI [.000, .002], and in fact the green score was descriptively lower in the status condition (*M* = `r status_m_grouped`, *SD* = `r status_sd_grouped`) compared to the control condition (*M* = `r control_m_grouped`, *SD* = `r control_sd_grouped`), counter to the original hypothesis. 
 
 ### Exploratory Analyses
 
